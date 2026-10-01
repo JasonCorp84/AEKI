@@ -4,7 +4,7 @@
 
 Which visual hierarchy makes product discovery, local availability and comparison easiest to understand? The user invoked the `prototype` skill with its UI branch and clarified that the exploration is about UI design.
 
-Three alternatives are delivered for comparison on `/prototype/search-ui?variant=A|B|C`: image-led catalog, compact shortlist, and room-first discovery. They use the same synthetic products, in-memory state and a shared floating variant switcher. No winner has been selected. Verdict: **awaiting user review**.
+Three alternatives were delivered for comparison on `/prototype/search-ui?variant=A|B|C`: image-led catalog, compact shortlist, and room-first discovery. They use the same synthetic products, in-memory state and a shared floating variant switcher. **Csaba subsequently selected B.** See the [UI direction decision](../../design/search-ui-direction.md). The selection accepts a visual direction; it does not validate a production implementation.
 
 Source: [prototype files and run instructions](../../../apps/web/prototype/README.md). Capture branch: `codex/prototype-search-ui`. The prototype is captured on this local branch; it has not been pushed. Production React/RTK Query implementation is a separate task after a design decision.
 
@@ -52,3 +52,11 @@ Two visual self-revisions followed inspection: make the room illustration visibl
 ## Next Review
 
 Ask the user to compare A, B and C, including combinations of their header, search placement and product layout. Record the selected direction and reason before rewriting the UI as production React. This one task does not prove which technique or skill is most effective.
+
+## Reconciliation and Selection – S32
+
+S31 completed at `2026-10-01T09:57:55.783Z`, for **1,088.925 seconds (18:08.925)** of assistant-turn wall time. The earlier checkpoint remains a separate observation.
+
+The selection-associated turn S32 began at `2026-10-01T10:30:47.832Z`; the choice was recorded at the clock observation `2026-10-01T10:31:26Z`. These do not measure the user's active review time. User evidence: “A B variaciot valasztom”. The reason was not supplied. No additional design correction was requested.
+
+Applied skills: `prototype` (existing guidance reused to capture the selected direction) and `browser:control-in-app-browser` (reused to open and verify B). Outcome: B selected, preview opened to B, English decision document recorded. Production implementation remains a separate task.
