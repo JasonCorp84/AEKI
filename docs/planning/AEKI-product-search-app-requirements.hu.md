@@ -82,7 +82,7 @@ A diagramokat külön fájlokban kezeljük:
 
 - [System Context – szereplők és rendszerhatár](../architecture/01-system-context.md).
 - [Container – React/RTK webalkalmazás, NestJS API és PostgreSQL](../architecture/02-containers.md).
-- [Component – a NestJS backend foglalási része](../architecture/03-components-reservations.md).
+- [Component – backend data flow](../architecture/03-components.md).
 
 ## 3. Javasolt technikai keret
 

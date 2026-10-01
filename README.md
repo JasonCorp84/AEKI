@@ -9,7 +9,7 @@
 - [Engineering alapelvek](docs/architecture/engineering-principles.hu.md).
 - [C4 System Context](docs/architecture/01-system-context.md).
 - [C4 Container](docs/architecture/02-containers.md).
-- [C4 Component – backend készletfoglalás](docs/architecture/03-components-reservations.md).
+- [C4 Component – backend data flow](docs/architecture/03-components.md).
 - [ADR-0001: engineering alapelvek](docs/architecture/adr/0001-engineering-principles.hu.md).
 - [ADR-0002: integrációs és E2E tesztelés](docs/architecture/adr/0002-integration-and-e2e-testing.hu.md).
 

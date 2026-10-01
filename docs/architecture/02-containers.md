@@ -33,7 +33,7 @@ The web application → API relationship combines REST requests and the WebSocke
 
 A C4 container represents an executable application or a data store. It does not necessarily correspond to a Docker container. RTK Query and NestJS modules are internal parts of their respective applications.
 
-The [Component diagram](03-components-reservations.md) provides a detailed view of the Backend API's reservation functionality.
+The [Component diagram](03-components.md) shows the Backend API components and the data flow for search, sessions, reservations and stock updates.
 
 ## Planned B02 Extension
 
