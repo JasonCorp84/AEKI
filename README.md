@@ -10,6 +10,9 @@
 - [C4 System Context](docs/architecture/01-system-context.md).
 - [C4 Container](docs/architecture/02-containers.md).
 - [C4 Component – backend data flow](docs/architecture/03-components.md).
+- [AI-assisted engineering measurement log](docs/engineering/ai-assisted-engineering-log.md).
+- [React UI implementation plan](docs/planning/react-ui-implementation-plan.md).
+- [ADR-0003: frontend theme and localization boundaries (proposed)](docs/architecture/adr/0003-frontend-theme-and-localization.md).
 - [ADR-0001: engineering alapelvek](docs/architecture/adr/0001-engineering-principles.hu.md).
 - [ADR-0002: integrációs és E2E tesztelés](docs/architecture/adr/0002-integration-and-e2e-testing.hu.md).
 
