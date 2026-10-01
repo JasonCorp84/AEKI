@@ -1,14 +1,14 @@
-# IKEA Product Finder – C4 Container diagram
+# AEKI Product Finder – C4 Container diagram
 
 Az alapalkalmazás tervezett felépítése, felülről lefelé: felhasználó → webalkalmazás → API → adatbázis. A felhasználói szerepeket itt egy doboz foglalja össze; külön szerepköreiket a [System Context diagram](01-system-context.hu.md) mutatja.
 
 ```mermaid
 C4Container
-    title IKEA Product Finder – Containers
+    title AEKI Product Finder – Containers
 
     Person(user, "Felhasználó", "Látogató, vásárló vagy áruházi munkatárs.")
 
-    System_Boundary(finder, "IKEA Product Finder") {
+    System_Boundary(finder, "AEKI Product Finder") {
         Container(web, "Webalkalmazás", "React, TypeScript, Redux Toolkit, RTK Query", "Keresés, termékadatlap és foglalási felület.")
         Container(api, "Backend API", "Node.js, NestJS", "Jogosultság, keresés, készlet és foglalás.")
         ContainerDb(db, "Adatbázis", "PostgreSQL", "Termékek, készletek, sessionök és foglalások.")
@@ -44,4 +44,4 @@ A broker és az értesítő microservice a későbbi B02 gyakorlószelet része.
 
 Az outbox-publikáló az első bővítésben a backend alkalmazás része; az outbox-rekord a PostgreSQL-ben, a foglalással közös tranzakcióban készül. Az értesítő deduplikációjához tartós, saját tulajdonú feldolgozási nyilvántartás kell; ennek tárolóját a bővítés tervezésekor rögzítjük. Külső email-szolgáltatás nincs a demóban.
 
-Állapot: architektúraterv, még nem implementált alkalmazás. [Követelményspecifikáció](../planning/ikea-product-search-app-requirements.hu.md) · [Mermaid C4 szintaxis](https://mermaid.js.org/syntax/c4.html).
+Állapot: architektúraterv, még nem implementált alkalmazás. [Követelményspecifikáció](../planning/AEKI-product-search-app-requirements.hu.md) · [Mermaid C4 szintaxis](https://mermaid.js.org/syntax/c4.html).

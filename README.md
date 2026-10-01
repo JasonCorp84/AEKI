@@ -1,10 +1,10 @@
 # AEKI
 
-**AEKI** egy saját, szintetikus adatokkal tervezett termékkereső és készletfoglaló gyakorlóapp. Az IKEA Product Finder üzleti példáját használja; nem hivatalos IKEA-termék és nem kapcsolódik valódi IKEA-rendszerhez.
+**AEKI** egy saját, szintetikus adatokkal tervezett termékkereső és készletfoglaló gyakorlóapp. Az AEKI Product Finder üzleti példáját használja; nem hivatalos AEKI-termék és nem kapcsolódik valódi AEKI-rendszerhez.
 
 ## Projektanyagok
 
-- [Követelményspecifikáció](docs/planning/ikea-product-search-app-requirements.hu.md).
+- [Követelményspecifikáció](docs/planning/aeki-product-search-app-requirements.hu.md).
 - [Architektúra és mappastruktúra-javaslat](docs/architecture/folder-structure-proposal.hu.md).
 - [Engineering alapelvek](docs/architecture/engineering-principles.hu.md).
 - [C4 System Context](docs/architecture/01-system-context.hu.md).

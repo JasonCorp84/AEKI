@@ -1,8 +1,8 @@
-# IKEA-termékkereső – INSPYRE interjúfelkészülési app
+# AEKI-termékkereső – gyakorlo projekt interjúfelkészülési app
 
 Készült: 2026. október 1.
 
-Ez egy saját gyakorlóapp követelményspecifikációja. A cél egy összefüggő üzleti példán gyakorolni az INSPYRE-elvárásokat, és saját kóddal, tesztekkel, magyarázatokkal bemutatni a tudást. Nem ismert IKEA-rendszer vagy hivatalos interjúfeladat leírása.
+Ez egy saját gyakorlóapp követelményspecifikációja. A cél egy összefüggő üzleti példán gyakorolni az gyakorlo projekt-elvárásokat, és saját kóddal, tesztekkel, magyarázatokkal bemutatni a tudást. Nem ismert AEKI-rendszer vagy hivatalos interjúfeladat leírása.
 
 ## Elfogadott engineering alapelvek
 
@@ -12,7 +12,7 @@ Kiegészítő elfogadott alapelv: unit tesztek mellett integrációs tesztek iga
 
 Konkrét alkalmazás és ellenőrzési keret: [engineering útmutató](../architecture/engineering-principles.hu.md). Elfogadott döntés: [ADR-0001](../architecture/adr/0001-engineering-principles.hu.md). Canonical módszertani rekord: belső Linear-rekord. Ez módszertani vállalás, nem új aktív prioritás.
 
-## 1. Az INSPYRE követelményei
+## 1. Az gyakorlo projekt követelményei
 
 ### A. A nyilvános hirdetésben szereplő alapelvárások
 
@@ -28,7 +28,7 @@ Konkrét alkalmazás és ellenőrzési keret: [engineering útmutató](../archit
 | K08 | Git használata |
 | K09 | Jó angol kommunikáció |
 
-Forrás: [INSPYRE – Full Stack Engineer](https://join.com/companies/inspyre1/16734190-full-stack-engineer-node-js-vue-angular-react), ellenőrizve 2026. október 1-jén. A hirdetés többféle projektről szól; nem ad IKEA-specifikus architektúrát vagy interjúkérdéssort.
+Forrás: [INSPYRE – Full Stack Engineer](https://join.com/companies/inspyre1/16734190-full-stack-engineer-node-js-vue-angular-react), ellenőrizve 2026. október 1-jén. A hirdetés többféle projektről szól; nem ad AEKI-specifikus architektúrát vagy interjúkérdéssort.
 
 ### B. A hirdetésben előnyként szereplő területek
 
@@ -64,7 +64,7 @@ Ezeket a gyakorlás teljességéhez adjuk hozzá, nem igazolt külön INSPYRE-el
 
 Az alapkövetelmények nyilvános forrása a fent hivatkozott hirdetés; a további fókuszok saját gyakorlási döntések. A személyes felkészülési jegyzetek külön kezeltek. A projekt belépőpontja: [AEKI README](../../README.md).
 
-## 2. Az appötlet: IKEA Product Finder
+## 2. Az appötlet: AEKI Product Finder
 
 **Üzleti helyzet:** egy vásárló íróasztalt keres megadott árkereten belül. Kiválasztja az áruházat, összehasonlítja a találatokat, majd egy elérhető terméket rövid időre lefoglal. A munkatárs módosítja a készletet; a vásárló felületén ez megjelenik.
 
@@ -72,7 +72,7 @@ Az alapkövetelmények nyilvános forrása a fent hivatkozott hirdetés; a tová
 
 **Desired outcome:** saját kézzel elkészített, helyben futó full-stack függőleges szelet; a többi témához elkülönített bővítés vagy dokumentált tervezési gyakorlat. Egy kérés útját a keresőmezőtől az SQL-lekérdezésen át a képernyőig el tudod magyarázni.
 
-**Adatok:** saját, szintetikus katalógus legalább 50 termékkel és 3 mintabolttal. Legyen több kategória, ismétlődő terméknév, eltérő ár és nullás készlet. Nincs függés valódi IKEA API-tól. A felület jelezze, hogy demóadatokat mutat.
+**Adatok:** saját, szintetikus katalógus legalább 50 termékkel és 3 mintabolttal. Legyen több kategória, ismétlődő terméknév, eltérő ár és nullás készlet. Nincs függés valódi AEKI API-tól. A felület jelezze, hogy demóadatokat mutat.
 
 **Szerepek:** látogató keres és terméket néz; bejelentkezett vásárló saját foglalást kezel; munkatárs készletet módosít. Fizetés, valódi rendelés és valódi ügyféladat nem része a gyakorlatnak.
 
@@ -95,7 +95,7 @@ A diagramokat külön fájlokban kezeljük:
 | Tesztek | Vitest + React Testing Library; Nest HTTP-/DB-integráció; Playwright | Viselkedés a megfelelő határon ellenőrizhető |
 | Helyi futtatás | Frontend, backend és DB; opcionálisan Docker Compose | Más gépen is reprodukálható indulás |
 
-Ez választott gyakorlóstack, nem állítás az IKEA tényleges technológiáiról. A könyvtárverziókat implementációkor rögzítsük a lockfile-ban.
+Ez választott gyakorlóstack, nem állítás az AEKI tényleges technológiáiról. A könyvtárverziókat implementációkor rögzítsük a lockfile-ban.
 
 Alaparchitektúra: böngésző → Nest API → PostgreSQL. Modulok: Products, Inventory, Reservations, Auth. Az üzleti döntések service-be kerülnek; az adatbázis-műveletek repository mögé. A Nest alapértelmezett singleton providereiben ne tároljunk felhasználónkénti keresést vagy sessionállapotot.
 

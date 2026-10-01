@@ -1,4 +1,4 @@
-# IKEA Product Finder – engineering alapelvek és alkalmazásuk
+# AEKI Product Finder – engineering alapelvek és alkalmazásuk
 
 Elfogadott alapelvek, Csaba 2026. október 1-jei utasítása alapján: SOLID, TDD, TypeScript szerződések, OpenAPI, ADR és C4. Canonical módszertani rekord: belső Linear-dokumentum. Első döntésrekord: [ADR-0001](adr/0001-engineering-principles.hu.md).
 
@@ -40,7 +40,7 @@ Csaba kifejezett utasítása alapján, 2026. október 1. Döntésrekord: [ADR-00
 
 **A tesztelésnek az egységek helyessége mellett az összekapcsolt részek együttműködését és a kritikus felhasználói folyamatokat is igazolnia kell.** Zöld unit tesztek vagy magas kódlefedettség önmagukban nem elegendők a rendszerhelyesség bizonyításához.
 
-| Szint | Mit igazol? | IKEA-app példa |
+| Szint | Mit igazol? | AEKI-app példa |
 | --- | --- | --- |
 | Unit | Egy elkülönített egység viselkedése | A bemenet pozitív egész mennyiséget követel |
 | Integráció | Összekapcsolt részek működése, szükséges üzleti sorrendje és időzítése | RTK Query mutation → invalidálás → készlet újralekérése → megváltozott UI |

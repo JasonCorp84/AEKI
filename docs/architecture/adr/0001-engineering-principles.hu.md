@@ -1,4 +1,4 @@
-# ADR-0001: Engineering alapelvek az IKEA Product Finderhez
+# ADR-0001: Engineering alapelvek az AEKI Product Finderhez
 
 - Státusz: Accepted – az alapelvekre vonatkozó döntés.
 - Dátum: 2026-10-01.
@@ -7,7 +7,7 @@
 
 ## Kontextus
 
-Az app az INSPYRE/IKEA interjúfelkészülés gyakorlóprojektje. A kereséstől a készletfoglalásig összefüggő rendszerben szeretnénk saját kódolást, tesztelést, szerződéstervezést és architekturális gondolkodást gyakorolni. A mappaszerkezet és framework-választás önmagában nem biztosít helyes, fenntartható működést.
+Az app az AEKI interjúfelkészülés gyakorlóprojektje. A kereséstől a készletfoglalásig összefüggő rendszerben szeretnénk saját kódolást, tesztelést, szerződéstervezést és architekturális gondolkodást gyakorolni. A mappaszerkezet és framework-választás önmagában nem biztosít helyes, fenntartható működést.
 
 ## Döntés
 

@@ -32,7 +32,7 @@ Negatív: integrációs környezet, tesztadatok és kontrollált idő/hálózat 
 
 ## Ellenőrzés és review trigger
 
-IKEA-példák: sikeres foglalás után friss készlet jelenik meg; régi keresési válasz nem lesz aktuális; sikertelen tranzakció után nincs sikeres esemény; versengő foglalásokból csak az elérhető mennyiség teljesül.
+AEKI-példák: sikeres foglalás után friss készlet jelenik meg; régi keresési válasz nem lesz aktuális; sikertelen tranzakció után nincs sikeres esemény; versengő foglalásokból csak az elérhető mennyiség teljesül.
 
 Review trigger: új együttműködési határ, cache-/időzítés-/perzisztenciahiba, zöld unit tesztek mellett hibás teljes folyamat, túlzott mocking vagy instabil E2E tesztek.
 

@@ -1,16 +1,16 @@
-# IKEA Product Finder – C4 System Context
+# AEKI Product Finder – C4 System Context
 
 A három szereplő felül, az általuk használt rendszer alattuk helyezkedik el. A nyilak használati kapcsolatokat jelölnek. A demóhoz jelenleg nincs külső rendszerintegráció.
 
 ```mermaid
 C4Context
-    title IKEA Product Finder – System Context
+    title AEKI Product Finder – System Context
 
     Person(visitor, "Látogató", "Bejelentkezés nélkül böngészik.")
     Person(customer, "Vásárló", "Saját foglalásait kezeli.")
     Person(employee, "Áruházi munkatárs", "A készletet kezeli.")
 
-    System(finder, "IKEA Product Finder", "Termékkeresés, készletjelzés és foglalás.")
+    System(finder, "AEKI Product Finder", "Termékkeresés, készletjelzés és foglalás.")
 
     Rel(visitor, finder, "Böngészik")
     Rel(customer, finder, "Keres és foglal")
@@ -19,4 +19,4 @@ C4Context
     UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
 ```
 
-Ez a C4 első szintje: a rendszer belső felépítését a [Container diagram](02-containers.hu.md) mutatja. Követelmények: [appterv](../planning/ikea-product-search-app-requirements.hu.md). Szintaxis: [Mermaid C4](https://mermaid.js.org/syntax/c4.html).
+Ez a C4 első szintje: a rendszer belső felépítését a [Container diagram](02-containers.hu.md) mutatja. Követelmények: [appterv](../planning/AEKI-product-search-app-requirements.hu.md). Szintaxis: [Mermaid C4](https://mermaid.js.org/syntax/c4.html).

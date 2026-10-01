@@ -1,4 +1,4 @@
-# IKEA Product Finder – architektúra és mappaszerkezet
+# AEKI Product Finder – architektúra és mappaszerkezet
 
 Állapot: javaslat, 2026. október 1. Nem scaffold és nem jóváhagyott Linear-állapotváltozás.
 
