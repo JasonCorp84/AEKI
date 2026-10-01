@@ -4,7 +4,7 @@
 
 ## Projektanyagok
 
-- [Követelményspecifikáció](docs/planning/aeki-product-search-app-requirements.hu.md).
+- [Követelményspecifikáció](docs/planning/AEKI-product-search-app-requirements.hu.md).
 - [Architektúra és mappastruktúra-javaslat](docs/architecture/folder-structure-proposal.hu.md).
 - [Engineering alapelvek](docs/architecture/engineering-principles.hu.md).
 - [C4 System Context](docs/architecture/01-system-context.hu.md).
