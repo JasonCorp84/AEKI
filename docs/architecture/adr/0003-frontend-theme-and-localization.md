@@ -4,7 +4,7 @@ Date: 2026-10-01. Status: Proposed. Replaceable themes and interface language ar
 
 ## Context
 
-The production React app will use the selected B search layout. Its design must be reusable, support light/dark and alternative palettes, and allow interface-language changes. The current plain-JavaScript prototype is a visual reference and requires no changes for this decision.
+The production React app will use the selected A search layout, superseding the earlier B selection on 2026-10-01. Its design must be reusable, support light/dark and alternative palettes, and allow interface-language changes. The current plain-JavaScript prototype is a visual reference and requires no changes for this decision.
 
 ## Proposed decision
 

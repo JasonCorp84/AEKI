@@ -10,7 +10,7 @@ Run from the AEKI repository root:
 node apps/web/prototype/server.mjs
 ```
 
-Open the selected direction at `http://127.0.0.1:4320/prototype/search-ui?variant=B`.
+Open the selected direction at `http://127.0.0.1:4320/prototype/search-ui?variant=A`.
 
 | Variant | Structure | Design question |
 | --- | --- | --- |
@@ -24,4 +24,4 @@ The toolbar can preview results, waiting, loading, empty and error layouts. Its 
 
 No persistence or real mutations. Browser inspection verifies that the prototype is usable for comparison; production behaviors still require the agreed contracts, TDD and integration/E2E checks. The development server refuses to run with `NODE_ENV=production`.
 
-Capture on branch `codex/prototype-search-ui`. Verdict: **B selected by Csaba on 2026-10-01**. See the [UI direction decision](../../../docs/design/search-ui-direction.md). Retain the alternatives as exploration evidence; rewrite B as production React when implementing the real search page. Do not promote the throwaway code directly to the main application.
+Capture on branch `codex/prototype-search-ui`. Verdict: **A selected by Csaba on 2026-10-01, superseding the earlier B selection**. See the [UI direction decision](../../../docs/design/search-ui-direction.md). Retain the alternatives as exploration evidence; rewrite A as production React when implementing the real search page. Do not promote the throwaway code directly to the main application.

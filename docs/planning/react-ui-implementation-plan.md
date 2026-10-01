@@ -1,10 +1,10 @@
 # React UI Implementation Plan
 
-Date: 2026-10-01. Status: proposed implementation and ticket breakdown; awaiting review. Linear remains canonical for approved work, dependencies and status. This document is a review artifact, not a second backlog.
+Date: 2026-10-01. Status: implementation tickets published to GitHub following Csaba's explicit instruction. Detailed implementation choices and ADR-0003 remain proposed. GitHub Issues track this AEKI delivery as explicitly requested; cross-project priorities and methodology remain in Linear. This document records design context, not a second backlog.
 
 ## Scope and starting point
 
-Build the production search UI using React, strict TypeScript and Redux Toolkit / RTK Query. Use [B — Practical shortlist](../design/search-ui-direction.md) as the visual reference. Leave the existing throwaway prototype unchanged.
+Build the production search UI using React, strict TypeScript and Redux Toolkit / RTK Query. Use [A — Everyday catalog](../design/search-ui-direction.md) as the visual reference, superseding the earlier B selection on 2026-10-01. Leave the existing throwaway prototype unchanged.
 
 The user requires reusable UI, SOLID boundaries, replaceable themes and replaceable interface language. These requirements are accepted; the implementation choices and ticket granularity below are proposals. Initial language proposal: Hungarian and English. Initial theme proposal: light and dark under the AEKI palette, plus a second palette to demonstrate replacement. This does not promise automatic translation of product catalog content.
 
@@ -12,10 +12,10 @@ Start with one working search journey. Grow the shared design primitives through
 
 ## User experience
 
-- Desktop: compact header and search, filter sidebar, product rows with aligned price and selected-store availability.
+- Desktop: warm introductory section with prominent search, category shortcuts, filter sidebar and an image-led product-card grid. Result count and sorting sit above the grid.
 - Mobile: stacked product information with visible price and stock, an accessible expandable filter panel, and no document-level horizontal scrolling. Filter access remains available when the desktop sidebar disappears.
 - Search states: waiting for input, loading, current results, no results, recoverable request failure. Distinguish an initial request from a subsequent refresh. Never present a previous query's rows as matches for the current query.
-- Each product row exposes image, name, article number, description, price and selected-store availability. Product details use a shareable route and return to the search criteria.
+- Each product card exposes image, name, article number, description, price and selected-store availability. Product details use a shareable route and return to the search criteria. Mobile search remains easy to reach without a tall decorative introduction.
 - Theme and language selectors are available through the application shell. Both settings preserve search, store, filters, sort and current page.
 - Visible labels, keyboard operation, clear focus, status announcements and errors conveyed through text are acceptance requirements. Stock is indicative; a future reservation operation is authoritative.
 
@@ -79,25 +79,25 @@ Advantage: the same feature UI supports another language through resources and f
 
 | Principle | Concrete application | Review check |
 | --- | --- | --- |
-| SRP | Page composes; hook manages search; mapper shapes data; provider owns preferences; row renders | A product row neither fetches nor persists settings |
+| SRP | Page composes; hook manages search; mapper shapes data; provider owns preferences; card renders | A product card neither fetches nor persists settings |
 | OCP | Add a complete palette or language resource through its defined contract | Existing product components remain unchanged |
 | LSP | Theme definitions and shared component variants preserve required behavior | Every supported variant preserves focus, disabled behavior, labels and readable states |
-| ISP | ProductRow takes only the fields and callbacks it uses | No whole Redux store or unrelated reservation service in props |
+| ISP | ProductCard takes only the fields and callbacks it uses | No whole Redux store or unrelated reservation service in props |
 | DIP | Presentational UI consumes view models and callbacks; settings use storage through a narrow seam | Tests can substitute network/storage at boundaries without replacing component behavior |
 
 Use functions, props and composition where sufficient. Introduce ports at actual external boundaries; do not add an interface and class for every component. TypeScript contracts also require runtime parsing for HTTP, URL and storage input.
 
 ## Proposed implementation slices
 
-The order numbers are draft references, not Linear issue IDs. Each slice includes its tests and documentation. A frontend-only preference has no database requirement; do not invent backend persistence just to add layers. The first slice intentionally validates frontend integration against contracted HTTP fixtures; slice 4 establishes the real full-stack path.
+The order numbers below identify the seven original design slices, not GitHub issue numbers. See the [published issue index](github-implementation-issues.md) for actual identifiers and additional foundation blockers. Each slice includes its tests and documentation. A frontend-only preference has no database requirement; do not invent backend persistence just to add layers. The first slice intentionally validates frontend integration against contracted HTTP fixtures; slice 4 establishes the real full-stack path.
 
-### 1. Search in the B layout through contracted HTTP fixtures
+### 1. Search in the A layout through contracted HTTP fixtures
 
 **Blocked by:** None.
 
 **Why now:** Turn the selected layout into the smallest runnable, testable React journey and establish the HTTP boundary before building more features.
 
-**What to build:** A user searches by product name or article number and receives compact product rows through the real RTK Query client and an intercepted HTTP endpoint in development/test. Include the application setup and only the shared controls this journey needs. Render through semantic tokens and translation keys from the start, initially with one mode and locale.
+**What to build:** A user searches by product name or article number and receives an image-led product-card grid through the real RTK Query client and an intercepted HTTP endpoint in development/test. Use A's introductory search section and catalog hierarchy. Include only the shared controls this journey needs; the foundation issue owns initial workspace setup. Render through semantic tokens and translation keys from the start, initially with one mode and locale.
 
 **Acceptance criteria / Definition of Done:**
 
@@ -106,7 +106,7 @@ The order numbers are draft references, not Linear issue IDs. Each slice include
 - [ ] Input is normalized; whitespace clears results and issues no search; the 300 ms debounce is observed.
 - [ ] Waiting, loading, results, empty and error states are visible; retry uses current criteria.
 - [ ] A deliberately delayed old response cannot replace the current query's results.
-- [ ] Desktop and mobile preserve the B information hierarchy and accessible search interaction.
+- [ ] Desktop and mobile preserve the A information hierarchy and accessible search interaction; cards retain readable price and selected-store stock. Decorative prototype controls do not expand scope.
 - [ ] TDD evidence and an integration test exercise the actual providers, Redux store, RTK Query and mocked HTTP. Hook return values are not mocked.
 
 **Review trigger:** If the search page combines transport, formatting and rendering, refactor its responsibilities before expanding it. This slice does not establish real backend behavior.
@@ -191,7 +191,7 @@ The order numbers are draft references, not Linear issue IDs. Each slice include
 
 **Blocked by:** 5.
 
-**Why now:** Keep the compact shortlist usable beyond the first result page.
+**Why now:** Keep the product catalog usable beyond the first result page.
 
 **What to build:** Sort by name/price and page through server results, retaining all current filters and shareable criteria.
 
@@ -231,13 +231,13 @@ For each behavior, agree its public test boundary, observe RED, implement the mi
 
 Unit tests cover meaningful pure logic such as criteria parsing. Integration tests cover components, providers, URL transitions and actual RTK Query behavior together. Real E2E checks establish the cross-system journey. Mocked HTTP tests cannot demonstrate database correctness. Test theme readability in a browser; token-shape tests alone do not demonstrate readable design.
 
-The initial release exit condition is all seven accepted slices, consistent theme/locale behavior across search and details, valid contracts, successful relevant checks, and documented real versus mocked verification. Ticket completion and priority changes are recorded in Linear after approval.
+The initial release exit condition is all seven accepted slices plus the three foundation issues, consistent theme/locale behavior across search and details, valid contracts, successful relevant checks, and documented real versus mocked verification. Execution and dependency status for this delivery are recorded in GitHub Issues under the explicit tracker instruction; cross-project priority changes remain in Linear.
 
 ## Decisions and review
 
 Record the theme/localization boundary in a dedicated ADR before implementation. The proposed ADR is linked below; engineering principles and integration/E2E policy continue to come from ADR-0001 and ADR-0002. C4 retains system/container/component context; this plan documents frontend responsibilities and delivery order.
 
-Publication checkpoint: review slice size, blockers and merge/split choices. No issues have been created by this planning task. A Linear project named AEKI and a `ready-for-agent` label were not found by exact-name searches; resolve the destination and label before publishing approved tickets. Do not treat that search as proof that no suitable project exists under another name.
+Publication checkpoint resolved on 2026-10-01: Csaba explicitly requested GitHub tickets for React and the project foundation. Published ten issues with acceptance criteria, ready-for-agent labels and eleven verified native blocking edges. All remain open planned work, without assignees or active-priority changes. The [issue index](github-implementation-issues.md) links the live records. Earlier Linear destination questions are superseded for this delivery; methodology and cross-project priorities continue to use Linear.
 
 ## References
 

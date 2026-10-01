@@ -60,3 +60,7 @@ S31 completed at `2026-10-01T09:57:55.783Z`, for **1,088.925 seconds (18:08.925)
 The selection-associated turn S32 began at `2026-10-01T10:30:47.832Z`; the choice was recorded at the clock observation `2026-10-01T10:31:26Z`. These do not measure the user's active review time. User evidence: “A B variaciot valasztom”. The reason was not supplied. No additional design correction was requested.
 
 Applied skills: `prototype` (existing guidance reused to capture the selected direction) and `browser:control-in-app-browser` (reused to open and verify B). Outcome: B selected, preview opened to B, English decision document recorded. Production implementation remains a separate task.
+
+## Subsequent direction change — S37
+
+Csaba later selected A on 2026-10-01: “Terjunk at megis az A prototipusra.” This supersedes the earlier B decision for future implementation. The B observations above remain historical evidence. See the [current direction](../../design/search-ui-direction.md) and [direction-change evidence](2026-10-01-ui-direction-a.md).
