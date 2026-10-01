@@ -104,9 +104,9 @@ Egy leváltott döntést nem törlünk: Superseded státuszt kap, és hivatkozik
 
 | Nézet | Kérdés | Dokumentum |
 | --- | --- | --- |
-| System Context | Ki használja a rendszert; mi a határa és a külső kapcsolata? | [01-system-context.hu.md](01-system-context.hu.md) |
-| Container | Milyen alkalmazások és adattárolók futnak; hogyan kapcsolódnak? | [02-containers.hu.md](02-containers.hu.md) |
-| Component, szükség esetén | Hogyan épül fel egy kiválasztott container? | Csak a megértéshez szükséges részről, külön fájlban |
+| System Context | Ki használja a rendszert; mi a határa és a külső kapcsolata? | [01-system-context.md](01-system-context.md) |
+| Container | Milyen alkalmazások és adattárolók futnak; hogyan kapcsolódnak? | [02-containers.md](02-containers.md) |
+| Component | Hogyan épül fel egy kiválasztott container? | [Backend foglalási résznézet](03-components-reservations.md) |
 | Dynamic, szükség esetén | Hogyan működik egy konkrét folyamat? | Például foglalás/idempotencia; külön fájlban |
 
 A C4 kommunikálja a nagyobb kontextust, nem kényszeríti ki a kód architektúráját. Strukturális változáskor a releváns diagramot és ADR-t a kóddal együtt frissítjük. A megtervezett és implementált elemek státuszát jelöljük. Forrás: [C4 model](https://c4model.com/).
