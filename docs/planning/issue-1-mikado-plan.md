@@ -1,6 +1,6 @@
 # Mikado Plan — Issue #1: Runnable React–NestJS Health Journey
 
-Date: 2026-10-01. Status: proposed execution plan; no implementation experiments performed. Parent: [GitHub issue #1](https://github.com/JasonCorp84/AEKI/issues/1), read with its comments during planning. The issue remains the delivery/status source of truth. This plan introduces no additional tickets or active priorities.
+Date: 2026-10-01. Status: M0–M6 implemented and verified locally; G awaits review and publication. Parent: [GitHub issue #1](https://github.com/JasonCorp84/AEKI/issues/1), read with its comments during planning. The issue remains the delivery/status source of truth. This plan introduces no additional tickets or active priorities. The initial hypotheses below are retained as planning history; current evidence is recorded in the implementation section.
 
 ## Goal and boundary
 
@@ -51,7 +51,7 @@ Do not write all tests in advance. At each behavioral node choose one example, o
 - **Frontend:** interaction → visible state with the real store/providers/client and network interception. Avoid mocked RTK Query hook results.
 - **Connected journey:** browser → actual HTTP → Nest. This can establish end-to-end health behavior without a database; PostgreSQL is deliberately absent from #1.
 
-Agree these seams immediately before implementation, as required by the existing TDD policy. This planning task creates no tests or runtime code.
+All four seams were explicitly approved before implementation. See the implementation record for actual test and browser evidence.
 
 ## Proposed behavior examples
 
@@ -87,17 +87,27 @@ For each actual attempt record start/end, skill use (or None), relevant check ou
 
 ## Exit condition for G
 
-- [ ] Fresh checkout and reproducible lockfile install are verified.
-- [ ] React and Nest start and build independently using documented commands and environment examples.
-- [ ] A validated OpenAPI health contract generates transport types; runtime validation rejects malformed responses.
-- [ ] Loading, reachable, unreachable and retry behavior work through the actual RTK Query client.
-- [ ] A real browser request reaches Nest; stopping/restarting the API changes the visible result without mock fallback.
-- [ ] Relevant integration checks pass, with meaningful RED/GREEN/refactor evidence and explicit limits of mocked tests.
-- [ ] Composition, HTTP/validation and presentation responsibilities are separate; styling and text are ready for later theme/locale replacement without implementing those features now.
-- [ ] Existing prototypes are preserved; tooling choices, test boundaries and fresh-checkout evidence are recorded in English.
+- [x] Isolated clean candidate and reproducible lockfile install are verified; a checkout of the published commit remains pending.
+- [x] React and Nest start and build independently using documented commands and environment examples.
+- [x] A validated OpenAPI health contract generates transport types; runtime validation rejects malformed responses.
+- [x] Loading, reachable, unreachable and retry behavior work through the actual RTK Query client.
+- [x] A real browser request reaches Nest; stopping/restarting the API changes the visible result without mock fallback.
+- [x] Relevant integration checks pass, with meaningful RED/GREEN/refactor evidence and explicit limits of mocked tests.
+- [x] Composition, HTTP/validation and presentation responsibilities are separate; styling and text are ready for later theme/locale replacement without implementing those features now.
+- [x] Existing prototypes are preserved; tooling choices, test boundaries and clean candidate evidence are recorded in English.
 
 The ticket is not Done merely because every planned node has a file. Compare the delivered journey against the live issue's acceptance criteria. Any missing mandatory behavior returns G to blocked within this graph; the GitHub ticket stays open until actual completion.
 
-## Source
+## Implementation record — S41
+
+The baseline was recorded and prototype files preserved (M0). Node 24.18.1 and npm 11.16.0 were selected and pinned with exact dependencies and a lockfile (M1). A real setup attempt exposed Nest 12's ESM compatibility prerequisite: CommonJS compilation failed with TS1479; switching the API module configuration restored a runnable test boundary. The incompatible setup was replaced before continuing, without resetting working changes.
+
+OpenAPI 3.0.3 defines GET `/health`, with generated TypeScript types and a schema-derived runtime parser (M2). The actual HTTP test first received 404, then passed with the minimal controller (M3). Incremental UI tests exposed reachable, failure/retry and invalid-response gaps; implementing each behavior restored GREEN before presentation refactoring (M4). The browser used the real Nest service and demonstrated outage/recovery plus loading (M5). A clean candidate snapshot passed `npm ci`, the full checks and documented startup on alternate ports (M6).
+
+Thirteen repository tests pass; the real connected browser journey was observed manually through browser automation. A delayed network integration test verifies loading deterministically. Six meaningful RED/GREEN cycles, tool recoveries, timestamps and applied skills are documented in [S41 evidence](../engineering/sessions/2026-10-01-foundation-health-implementation.md). Runtime choices are recorded in [ADR 0004](../architecture/adr/0004-foundation-toolchain-and-health-contract.md).
+
+The earlier E0 row remains a historical planning observation. Expected TDD REDs were kept while implementing their GREEN behavior; they were not unsuccessful Mikado experiments requiring undo. No additional dependency edges were needed after resolving module compatibility. G remains pending review/publication: this branch is uncommitted and issue #1 remains open. Verification of a remote checkout requires publication first.
+
+### Method source
 
 [Daniel Brolund: Start Paying your Technical Debt — The Mikado Method](https://danielbrolund.wordpress.com/2009/03/28/start-paying-your-technical-debt-the-mikado-method/) describes goal-led experiments, prerequisite recording, undo and implementation from leaves. The particular AEKI graph and examples are our proposed application of that method.

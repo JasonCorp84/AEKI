@@ -77,6 +77,10 @@ The timing CSV is a snapshot extracted from the local Codex event log. It stores
 
 ## Comparing Techniques
 
+Latest clarity evidence: [S42 — Clean Code refactoring](sessions/2026-10-02-clean-code-refactoring.md), including self-explanatory naming, regression checks, skills, observed retries and scope limits.
+
+Latest implementation evidence: [S41 — foundation health journey](sessions/2026-10-01-foundation-health-implementation.md), including four approved test boundaries, observed TDD failures, clean candidate verification, skills and separate retry categories.
+
 Start with comparable tasks of similar scope and difficulty. Record the acceptance criterion before choosing a technique. Compare time **and** quality, user effort and correction count. Skill presence alone does not establish effectiveness.
 
 Useful initial measurements:

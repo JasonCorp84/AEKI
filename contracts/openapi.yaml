@@ -1,0 +1,33 @@
+openapi: 3.0.3
+info:
+  title: AEKI API
+  version: 0.1.0
+  description: API liveness contract. Database readiness is a separate future operation.
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      summary: Report whether the API process is reachable
+      responses:
+        '200':
+          description: The API process is alive. This does not establish database readiness.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              example:
+                status: ok
+                service: aeki-api
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      additionalProperties: false
+      required: [status, service]
+      properties:
+        status:
+          type: string
+          enum: [ok]
+        service:
+          type: string
+          enum: [aeki-api]
