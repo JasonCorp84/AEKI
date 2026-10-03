@@ -9,25 +9,86 @@ paths:
       operationId: getHealth
       summary: Report whether the API process is reachable
       responses:
-        '200':
+        "200":
           description: The API process is alive. This does not establish database readiness.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HealthResponse'
+                $ref: "#/components/schemas/HealthResponse"
               example:
                 status: ok
                 service: aeki-api
+  /readiness:
+    get:
+      operationId: getReadiness
+      summary: Report current database connectivity independently of process liveness
+      responses:
+        "200":
+          description: A real database connectivity query succeeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReadyResponse"
+        "503":
+          description: Database connectivity failed or exceeded its deadline
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotReadyResponse"
 components:
   schemas:
     HealthResponse:
       type: object
       additionalProperties: false
-      required: [status, service]
+      required:
+        - status
+        - service
       properties:
         status:
           type: string
-          enum: [ok]
+          enum:
+            - ok
         service:
           type: string
-          enum: [aeki-api]
+          enum:
+            - aeki-api
+    ReadyResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - database
+      properties:
+        status:
+          type: string
+          enum:
+            - ready
+        database:
+          type: string
+          enum:
+            - reachable
+    NotReadyResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - database
+        - code
+      properties:
+        status:
+          type: string
+          enum:
+            - not_ready
+        database:
+          type: string
+          enum:
+            - unreachable
+        code:
+          type: string
+          enum:
+            - DATABASE_UNAVAILABLE
+            - DATABASE_TIMEOUT
+    ReadinessResponse:
+      oneOf:
+        - $ref: "#/components/schemas/ReadyResponse"
+        - $ref: "#/components/schemas/NotReadyResponse"

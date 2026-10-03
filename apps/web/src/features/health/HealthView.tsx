@@ -1,11 +1,12 @@
 import type { HealthMessages } from './health.messages';
 import styles from './HealthView.module.css';
+import type { ReactNode } from 'react';
 
 export type HealthState = { kind: 'checking' } | { kind: 'reachable' } | { kind: 'unreachable' } | { kind: 'invalid' };
 
-type HealthViewProps = { healthState: HealthState; messages: HealthMessages; onRetry: () => void };
+type HealthViewProps = { healthState: HealthState; messages: HealthMessages; onRetry: () => void; children?: ReactNode };
 
-export function HealthView({ healthState, messages, onRetry }: HealthViewProps) {
+export function HealthView({ healthState, messages, onRetry, children }: HealthViewProps) {
   const isCheckingConnection = healthState.kind === 'checking';
   const isApiReachable = healthState.kind === 'reachable';
   const detailMessagesByState = { checking: messages.checkingDetail, reachable: messages.reachableDetail, unreachable: messages.unreachableDetail, invalid: messages.invalidDetail };
@@ -40,6 +41,7 @@ export function HealthView({ healthState, messages, onRetry }: HealthViewProps) 
           <p>{detailMessagesByState[healthState.kind]}</p>
         </div>
         <button type="button" className={styles.action} onClick={onRetry} disabled={isCheckingConnection}>{isApiReachable ? messages.checkAgain : messages.retry}</button>
+        {children}
         <p className={styles.scope}>{messages.scope}</p>
       </section>
     </main>

@@ -1,19 +1,26 @@
 # AEKI
 
-AEKI is a product discovery and stock-reservation practice application using synthetic data. Its implemented foundation is a React → HTTP → NestJS health journey. Product search and database readiness are later tickets; this health report establishes API liveness only.
+AEKI is a product discovery and stock-reservation practice application using synthetic data. Its implemented foundation is a React → HTTP → NestJS → PostgreSQL journey with separate API liveness and database readiness. Product search remains later scope.
 
 ## Quick start
 
-Use **Node 24.18.1** and **npm 11.16.0**, recorded in `.node-version`, `.nvmrc` and the manifests.
+Use **Node 24.18.1** and **npm 11.16.0**, recorded in `.node-version`, `.nvmrc` and the manifests. Start Docker with Compose support before database commands or API tests.
 
 ```sh
 npm ci
+cp .env.example .env
+npm run db:up
+npm run db:migrate
 npm run dev
 ```
 
-Open **http://127.0.0.1:5173/**. Nest serves **http://127.0.0.1:3000/health**. Vite proxies `/api/health` to Nest; the browser uses the real RTK Query client. No mock server or fallback runs in the application.
+In PowerShell, use `Copy-Item .env.example .env` for the copy step. Preserve an existing `.env` and add missing variables instead of overwriting it.
 
-Defaults work without configuration. Copy `.env.example` to `.env` for overrides. If changing the API port, also update `VITE_API_PROXY_TARGET`. `VITE_*` values become public browser configuration: never put secrets in them.
+Open **http://127.0.0.1:5173/**. Nest serves **http://127.0.0.1:3000/health** and `/readiness`. Vite proxies `/api/` to Nest; the browser uses the real RTK Query client. No mock server or fallback runs in the application.
+
+`DATABASE_URL` is required. Missing or malformed configuration fails API startup with a sanitized, actionable message. A valid URL pointing at an unavailable database allows startup and yields not-ready. If changing the API port, also update `VITE_API_PROXY_TARGET`. `VITE_*` values become public browser configuration: never put secrets in them. Example database credentials are disposable local development values.
+
+Development PostgreSQL listens only on `127.0.0.1:55432`. `npm run db:down` removes its container/network and preserves its named data volume. The migration creates only `aeki_foundation` and migration history; no product model is introduced. Reapplying it does not duplicate work. Tooling permits rollback only against the explicitly provided isolated test URL.
 
 Independent development commands (use separate terminals):
 
@@ -40,11 +47,13 @@ npm run contracts:check
 npm run verify:clean
 ```
 
-`check` validates OpenAPI/generated-file consistency, lints, type-checks, runs contract/API/frontend tests and builds both apps. Generation updates transport types and the runtime health schema from the single OpenAPI source. Generated files are versioned and never edited by hand.
+`check` validates OpenAPI/generated-file consistency, lints, type-checks, runs contract/API/frontend tests and builds both apps. Generation updates transport types and runtime health/readiness schemas from the single OpenAPI source. Generated files are versioned and never edited by hand.
+
+API tests automatically start a uniquely named PostgreSQL Compose project, apply migrations, run against its separate test role/database and remove its container, network and owned volume in cleanup. Its random loopback port remains fixed across stop/start within the run. Tests never use the development `DATABASE_URL`. They require a running Docker engine and the pinned image (downloaded on first use).
 
 `verify:clean` archives a candidate Git tree into a new temporary directory, runs independent `npm ci` / `npm run check`, and prints its retained location. It includes current non-ignored changes without modifying the actual index or creating a commit. Until these changes are committed/pushed, this is a clean candidate snapshot, not a GitHub checkout. A published fresh checkout uses the same install/check commands.
 
-Tests observe parser acceptance/rejection, actual Nest HTTP, and UI/store/RTK Query cooperation with MSW at the network seam. MSW is test-only. The real connected browser/API journey is additionally checked manually; no automated Playwright suite is claimed. See [implementation evidence](docs/engineering/sessions/2026-10-01-foundation-health-implementation.md).
+Tests observe parser acceptance/rejection, actual PostgreSQL and Nest HTTP (including outage, bounded nonresponse, migration rollback/reapply and startup validation), and UI/store/RTK Query cooperation with MSW at the network seam. MSW is test-only. The real connected browser/API/database journey is additionally checked through browser automation; no committed automated E2E suite is claimed. See [issue #2 implementation evidence](docs/engineering/sessions/2026-10-03-postgresql-readiness-implementation.md) and [issue #1 evidence](docs/engineering/sessions/2026-10-01-foundation-health-implementation.md).
 
 ## Failure and recovery
 
@@ -54,7 +63,11 @@ Tests observe parser acceptance/rejection, actual Nest HTTP, and UI/store/RTK Qu
 
 HTTP requests time out after three seconds. A successful HTTP response with invalid JSON or invalid health data shows **Invalid API response**. Rechecking starts a new loading state; failed refreshes do not keep the previous success visible.
 
-The frontend separates composition/store, feature transport and presentation. Text comes from a typed message contract; styling uses semantic tokens. Full theme/locale switching remains later scope. The current visual direction is A; [the standalone prototypes](apps/web/prototype/README.md) remain exploration evidence. No database, AWS resource or production credential is needed for this ticket.
+For database outage/recovery, run `docker compose stop postgres`, click **Check database again**, and independently click **Check again** for API liveness. The API remains reachable while the database shows **Database not ready**. Run `npm run db:up`, then **Retry database check** to restore **Database ready**. This stop preserves development data.
+
+GET `/readiness` returns a schema-valid 200 ready result or 503 not-ready result with `DATABASE_UNAVAILABLE` / `DATABASE_TIMEOUT`. The real connectivity query has a two-second total deadline, below the browser's three-second timeout. A schema-valid 503 is an application result. Invalid JSON, incompatible status/body and request failure have separate UI feedback. Connectivity does not prove schema completeness, write permission or product correctness.
+
+The frontend separates composition/store, feature transport, connected state selection and presentation. Text comes from typed message contracts; styling uses semantic tokens. Full theme/locale switching remains later scope. The current visual direction is A; [the standalone prototypes](apps/web/prototype/README.md) remain exploration evidence. This slice needs local PostgreSQL; AWS and production credentials remain outside scope.
 
 ## Project documentation
 
@@ -72,6 +85,8 @@ The frontend separates composition/store, feature transport and presentation. Te
 - [ADR-0004: foundation toolchain and health contract](docs/architecture/adr/0004-foundation-toolchain-and-health-contract.md).
 - [Published issues](docs/planning/github-implementation-issues.md).
 - [Issue #1 Mikado plan](docs/planning/issue-1-mikado-plan.md).
+- [Issue #2 Mikado plan and implementation evidence](docs/planning/issue-2-mikado-plan.md).
+- [ADR-0005: PostgreSQL readiness and migrations](docs/architecture/adr/0005-postgresql-readiness-and-migrations.md).
 
 Accepted principles: SOLID, TDD, TypeScript contracts with runtime validation, OpenAPI, ADR and C4; meaningful integration and critical end-to-end verification accompany unit tests.
 

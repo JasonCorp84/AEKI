@@ -6,7 +6,10 @@ import { setupServer } from 'msw/node';
 import userEvent from '@testing-library/user-event';
 import { createApplicationStore } from '../../app/store';
 import { HealthPage } from './HealthPage';
-const mockHealthServer = setupServer(http.get('*/api/health', () => HttpResponse.json({ status: 'ok', service: 'aeki-api' })));
+const mockHealthServer = setupServer(
+    http.get('*/api/health', () => HttpResponse.json({ status: 'ok', service: 'aeki-api' })),
+    http.get('*/api/readiness', () => HttpResponse.json({ status: 'ready', database: 'reachable' })),
+);
 beforeAll(() => mockHealthServer.listen({ onUnhandledRequest: 'error' }));
 afterEach(() => mockHealthServer.resetHandlers());
 afterAll(() => mockHealthServer.close());

@@ -21,19 +21,23 @@
     "typecheck": "npm run build -w @aeki/contracts && npm run typecheck --workspaces",
     "lint": "eslint .",
     "check": "npm run contracts:check && npm run lint && npm run typecheck && npm test && npm run build",
-    "verify:clean": "node scripts/verify-clean.mjs"
+    "verify:clean": "node scripts/verify-clean.mjs",
+    "db:up": "docker compose up --detach --wait --wait-timeout 90 postgres",
+    "db:down": "docker compose down",
+    "db:migrate": "node --env-file=.env scripts/migrate-database.mjs"
   },
   "devDependencies": {
-    "@eslint/js": "10.0.1",
-    "eslint": "10.11.0",
-    "typescript-eslint": "8.71.0",
-    "globals": "17.13.0",
-    "typescript": "5.9.3",
-    "vitest": "5.0.3",
-    "concurrently": "10.0.5",
-    "@types/node": "26.6.3",
     "@apidevtools/swagger-parser": "13.1.0",
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.6.3",
+    "concurrently": "10.0.5",
+    "eslint": "10.11.0",
+    "globals": "17.13.0",
+    "node-pg-migrate": "9.0.0",
     "openapi-typescript": "7.13.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.0",
+    "vitest": "5.0.3",
     "yaml": "2.9.1"
   }
 }

@@ -9,7 +9,7 @@ export const englishHealthMessages = {
   unreachableDetail: 'We could not reach the API. Check that it is running, then try again.',
   invalidDetail: 'The API responded, but its health report did not match the agreed contract.',
   retry: 'Retry connection', checkAgain: 'Check again',
-  scope: 'This checks the API connection. Database readiness is a separate check.',
+  scope: 'The API and database checks are independent. Database readiness confirms connectivity, not product data or schema completeness.',
   footer: 'Built one thoughtful step at a time.',
 };
 

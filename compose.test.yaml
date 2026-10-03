@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:17.9-bookworm
+    environment:
+      POSTGRES_DB: aeki_test
+      POSTGRES_USER: aeki_test
+      POSTGRES_PASSWORD: aeki_test_only
+    ports:
+      - "127.0.0.1:${TEST_DATABASE_PORT:?Set by the isolated test runner}:5432"
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aeki_test -d aeki_test"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+volumes:
+  postgres_test_data:
