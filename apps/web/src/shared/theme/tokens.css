@@ -1,0 +1,39 @@
+:root{
+  color-scheme: light;
+  --color-canvas: #f8f5ef;
+  --color-surface: #ffffff;
+  --color-text: #25271f;
+  --color-muted: #616459;
+  --color-border: #deded2;
+  --color-primary: #bd3c2c;
+  --color-on-primary: #ffffff;
+  --color-focus: #155e75;
+  --color-success: #28633b;
+  --color-success-surface: #e8f2e7;
+  --color-error: #9b3026;
+  --color-error-surface: #fae9e5;
+  --color-neutral-surface: #eeeee4;
+  --space-1: .5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --radius-card: 1.5rem;
+  --font-body: 'Segoe UI', Arial, sans-serif;
+}
+*{
+  box-sizing: border-box;
+}
+body{
+  margin: 0;
+  background: var(--color-canvas);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+button, a{
+  -webkit-tap-highlight-color: transparent;
+}
+:focus-visible{
+  outline: 3px solid var(--color-focus);
+  outline-offset: 5px;
+}
