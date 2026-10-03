@@ -145,6 +145,11 @@
 .action:hover:not(:disabled){
   filter: brightness(.92);
 }
+.databaseAction {
+  margin-top: var(--space-3);
+  background: var(--color-neutral-surface);
+  color: var(--color-text);
+}
 .action:disabled{
   background: var(--color-neutral-surface);
   color: var(--color-muted);

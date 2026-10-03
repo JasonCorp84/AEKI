@@ -1,10 +1,12 @@
 import { useGetHealthQuery } from './health.api';
 import { HealthView, type HealthState } from './HealthView';
 import { englishHealthMessages, type HealthMessages } from './health.messages';
+import { ReadinessStatus } from './ReadinessStatus';
+import { englishReadinessMessages, type ReadinessMessages } from './readiness.messages';
 
-type HealthPageProps = { messages?: HealthMessages };
+type HealthPageProps = { messages?: HealthMessages; readinessMessages?: ReadinessMessages };
 
-export function HealthPage({ messages = englishHealthMessages }: HealthPageProps) {
+export function HealthPage({ messages = englishHealthMessages, readinessMessages = englishReadinessMessages }: HealthPageProps) {
   const healthQuery = useGetHealthQuery();
   let healthState: HealthState;
 
@@ -25,5 +27,7 @@ export function HealthPage({ messages = englishHealthMessages }: HealthPageProps
     void healthQuery.refetch();
   }
 
-  return <HealthView healthState={healthState} messages={messages} onRetry={retryHealthRequest} />;
+  return <HealthView healthState={healthState} messages={messages} onRetry={retryHealthRequest}>
+    <ReadinessStatus messages={readinessMessages} />
+  </HealthView>;
 }

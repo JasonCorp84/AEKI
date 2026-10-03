@@ -11,7 +11,7 @@ async function startApiApplication(): Promise<void> {
 
     if (!apiHost.trim())
         throw new Error('API_HOST must not be empty.');
-    const apiApplication = await NestFactory.create(AppModule);
+    const apiApplication = await NestFactory.create(AppModule, { abortOnError: false });
     apiApplication.enableShutdownHooks();
     await apiApplication.listen(Number(configuredApiPort), apiHost);
 }
