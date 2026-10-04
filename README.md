@@ -40,14 +40,27 @@ After the API build, `npm run start -w @aeki/api` runs compiled output. Dev comm
 
 ## Checks and contracts
 
+Prettier is pinned as a local development dependency and uses one root configuration for all workspaces, tooling, prototypes and documentation. Format supported project files with its built-in formatter:
+
+```sh
+npm run format
+npm run format:check
+```
+
+The formatting check runs first in `npm run check`. Editor integrations use `.prettierrc.json` and `.editorconfig`; select Prettier as the formatter in your editor. Generated TypeScript contracts are formatted by the same Prettier API during generation, so regenerated output remains reproducible. Lockfiles, build/dependency output, local environment files and rendered diagram exports are excluded. CSV and SQL have no built-in Prettier parser; their data/migration syntax is preserved. Markdown examples and Mermaid fences retain their embedded contents.
+
 ```sh
 npm run check
 npm run contracts:generate
 npm run contracts:check
 npm run verify:clean
+npm run test:measurements
+npm run measurements:check
 ```
 
 `check` validates OpenAPI/generated-file consistency, lints, type-checks, runs contract/API/frontend tests and builds both apps. Generation updates transport types and runtime health/readiness schemas from the single OpenAPI source. Generated files are versioned and never edited by hand.
+
+It also validates the engineering measurement CSV; `npm test` includes its dedicated tests. See [measurement validation and reconciliation](docs/engineering/measurement-validation.md) for mandatory new-record fields, historical warnings and how to recover actual turn timing without guessing.
 
 API tests automatically start a uniquely named PostgreSQL Compose project, apply migrations, run against its separate test role/database and remove its container, network and owned volume in cleanup. Its random loopback port remains fixed across stop/start within the run. Tests never use the development `DATABASE_URL`. They require a running Docker engine and the pinned image (downloaded on first use).
 
@@ -77,6 +90,7 @@ The frontend separates composition/store, feature transport, connected state sel
 - [C4 System Context](docs/architecture/01-system-context.md).
 - [C4 Container](docs/architecture/02-containers.md).
 - [C4 Component – backend data flow](docs/architecture/03-components.md).
+- [C4 Component – implemented foundation](docs/architecture/03-foundation-components.md).
 - [AI-assisted engineering measurement log](docs/engineering/ai-assisted-engineering-log.md).
 - [React UI implementation plan](docs/planning/react-ui-implementation-plan.md).
 - [ADR-0003: frontend theme and localization boundaries (proposed)](docs/architecture/adr/0003-frontend-theme-and-localization.md).

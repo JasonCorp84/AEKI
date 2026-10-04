@@ -3,273 +3,1499 @@
 Question: Which hierarchy makes product discovery, store availability and comparison easiest to understand?
 All data and interactions are in-memory visual stubs. No API, authentication or reservations. -->
 <html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AEKI · Find your everyday</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
-:root{--ink:#242a24;--muted:#747a70;--paper:#f7f7f1;--green:#293d2e;--line:#dddeda;--accent:#eced97;font-family:'DM Sans',Arial,sans-serif;color:var(--ink)}
-*{box-sizing:border-box}body{margin:0;background:var(--paper)}button,input,select{font:inherit}button,a,select{cursor:pointer}button{color:inherit}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #bd7b28;outline-offset:4px}button{border:0;background:none}a{color:inherit;text-decoration:none}svg{display:block}h1,h2,h3,p{margin:0}h1,h2,h3{font-family:Manrope,Arial,sans-serif}input,select{min-width:0}header{height:94px;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;border-bottom:1px solid var(--line)}.wordmark{font:800 33px Manrope,Arial;letter-spacing:-2px;display:flex;align-items:center;gap:11px}.brand-dot{width:10px;height:10px;background:#c9ce71;border-radius:50%;align-self:flex-end;margin-bottom:9px}.nav{display:flex;gap:32px;font-size:14px}.nav .active{font-weight:700;text-decoration:underline;text-underline-offset:9px}.header-actions{display:flex;align-items:center;gap:22px;font-size:13px}.icon{width:19px;height:19px;display:inline-block;vertical-align:middle}.caps{font-size:11px;text-transform:uppercase;letter-spacing:2px;font-weight:700}.muted{color:var(--muted)}.pill{border:1px solid var(--line);padding:9px 15px;border-radius:22px;font-size:12px;white-space:nowrap}.filled{background:var(--green);color:white;border-color:var(--green)}.searchbox{display:flex;align-items:center;background:white;border:1px solid var(--line);gap:14px;padding:14px 18px;border-radius:8px}.searchbox input{border:0;outline:none;background:none;flex:1;font-size:15px;width:100%}.searchbox button{font-size:12px}.select{border:1px solid var(--line);border-radius:6px;padding:11px;background:transparent;font-size:12px;max-width:100%}.filterline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.product-art{width:100%;height:100%;min-height:100px}.art-wrap{position:relative;background:#eceee6;overflow:hidden}.heart{position:absolute;right:13px;top:13px;background:#fff9;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;z-index:1}.heart.saved{background:var(--green);color:white}.stock{display:inline-flex;align-items:center;gap:6px;font-size:11px}.stock:before{content:'';width:6px;height:6px;background:#57825b;border-radius:50%}.stock.low:before{background:#b58030}.stock.none{color:#8b8b85}.stock.none:before{background:#a1a19a}.price{font:700 20px Manrope,Arial;letter-spacing:-.8px}.small-price{font-size:10px;letter-spacing:0;font-weight:500;margin-left:3px}.product-name{font-size:13px;font-weight:700;letter-spacing:.6px}.product-desc{font-size:12px;color:var(--muted);margin-top:4px}.tag{position:absolute;left:14px;top:14px;font-size:9px;text-transform:uppercase;letter-spacing:1px;background:#fff8;padding:6px 8px;border-radius:3px}.meta-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}.count{font-size:12px;color:var(--muted)}.text-link{font-size:12px;border-bottom:1px solid;padding-bottom:4px}.empty{padding:80px 20px;text-align:center;border:1px dashed var(--line);border-radius:10px}.empty h2{font-size:24px;margin-bottom:12px}.empty p{font-size:14px;color:var(--muted)}.empty button{margin-top:18px}.skeleton{height:300px;background:linear-gradient(100deg,#e8e9e2 20%,#f6f7f0 45%,#e8e9e2 70%);background-size:250% 100%;animation:shimmer 1.4s infinite;border-radius:5px}@keyframes shimmer{to{background-position:-150% 0}}.toast{position:fixed;top:110px;right:30px;background:var(--green);color:white;border-radius:7px;padding:14px 20px;font-size:13px;z-index:10}.section-footer{display:flex;justify-content:space-between;padding:30px 0 0;border-top:1px solid var(--line);font-size:12px;color:var(--muted);margin-top:42px}.prototype-bar{position:fixed;bottom:17px;left:50%;transform:translateX(-50%);z-index:30;background:#202620;color:white;border-radius:15px;padding:8px;display:flex;align-items:center;gap:8px;box-shadow:0 8px 35px #0003;font-size:12px;max-width:calc(100% - 20px)}.prototype-bar .switch-arrow{color:white;width:34px;height:35px;border-radius:8px;background:#ffffff10;font-size:20px}.variant-name{white-space:nowrap;width:158px;text-align:center}.prototype-bar .caps{font-size:8px;color:#b4bfad;letter-spacing:1.5px}.prototype-bar select{background:#353d34;color:white;border:1px solid #566150;border-radius:6px;padding:8px;font-size:11px;max-width:100px}.state-button{color:#d5dfcc;font-size:10px;border-left:1px solid #566150;padding-left:12px}.state-panel{position:fixed;bottom:82px;right:20px;background:#fff;color:#222;border:1px solid #ddd;border-radius:10px;padding:18px;z-index:31;max-width:350px;width:calc(100% - 40px);box-shadow:0 5px 20px #0002}.state-panel pre{white-space:pre-wrap;font-size:11px;line-height:1.5}.state-panel h3{font-size:13px}.state-panel[hidden]{display:none}footer{margin-bottom:110px}.modal-backdrop{position:fixed;inset:0;background:#14251977;backdrop-filter:blur(5px);z-index:40;display:grid;place-items:center;padding:20px}.modal{background:var(--paper);border-radius:12px;max-width:800px;width:100%;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;position:relative}.modal .art-wrap{min-height:370px}.modal-copy{padding:40px 30px}.modal-copy h2{font-size:30px;margin:10px 0}.modal-copy p{font-size:14px;line-height:1.7;color:var(--muted);margin:16px 0}.close-modal{position:absolute;right:12px;top:12px;background:white;border-radius:50%;width:32px;height:32px;z-index:2}.modal-copy .price{margin:20px 0}.modal-copy .pill{margin-top:22px;display:block}.modal-copy .caps{color:#73796b}
-/* A: warm shopping catalog, sidebar filters and an image-led product grid. */
-.variant-a .hero{padding:46px 5vw 34px;display:grid;grid-template-columns:1.2fr 1fr;gap:70px;align-items:end}.variant-a .hero h1{font-size:clamp(34px,4vw,53px);font-weight:600;line-height:1.15;letter-spacing:-2.5px;max-width:570px;margin:12px 0 18px}.variant-a .hero p{font-size:14px;color:var(--muted);line-height:1.6}.variant-a .hero-tools{padding-bottom:7px}.variant-a .hero-tools>p{font-size:11px;margin-top:12px}.variant-a .category-strip{margin:0 5vw 36px;display:flex;gap:10px;padding-top:20px;border-top:1px solid var(--line)}.variant-a .catalog{display:grid;grid-template-columns:176px 1fr;gap:34px;padding:0 5vw}.variant-a aside .caps{margin-bottom:18px}.variant-a aside h3{font-size:12px;margin:26px 0 14px}.check{display:flex;gap:9px;align-items:center;font-size:12px;margin:12px 0;color:#5c6357}.check input{accent-color:var(--green)}.variant-a aside .select{width:100%}.variant-a .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:27px 20px}.product-card .art-wrap{aspect-ratio:1.07;cursor:pointer}.product-card .info{padding-top:15px}.product-card .price-row{display:flex;justify-content:space-between;align-items:end;margin-top:16px}.variant-a .editorial-strip{padding:22px 24px;background:#e8eddf;border-radius:6px;display:flex;align-items:center;justify-content:space-between;margin-top:32px;font-size:12px}.variant-a .editorial-strip strong{display:block;font:600 18px Manrope;margin-bottom:4px}
-/* B: inventory-first workspace with a quiet utility sidebar and dense table. */
-.variant-b{background:#fcfcfa;min-height:100vh}.variant-b header{background:#232d28;color:#f4f5ec;border:none;height:76px}.variant-b .brand-dot{background:#d3de87}.variant-b .workspace{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 76px)}.variant-b aside{border-right:1px solid #deded5;background:#f1f3eb;padding:35px 25px}.variant-b aside h2{font-size:14px;letter-spacing:-.4px;margin-bottom:25px}.variant-b aside .sidebar-tab{display:flex;width:100%;justify-content:space-between;padding:12px 13px;font-size:12px;border-radius:5px;margin-bottom:5px;text-align:left}.variant-b aside .sidebar-tab.chosen{background:#dfe6d4;font-weight:700}.variant-b aside .select{width:100%;margin-bottom:10px}.variant-b aside .caps{margin:32px 0 12px;color:#6d7567}.variant-b .workspace-main{padding:38px 38px 110px}.variant-b .titleline{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:29px}.variant-b h1{font-size:34px;letter-spacing:-1.5px}.variant-b .titleline p{font-size:12px;color:var(--muted);margin-top:9px}.variant-b .searchbox{max-width:540px;margin-bottom:24px;background:white}.variant-b .summary{display:flex;gap:35px;font-size:12px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:18px}.variant-b .summary strong{font:700 19px Manrope;margin-right:6px}.variant-b .tablehead,.variant-b .table-row{display:grid;grid-template-columns:80px minmax(190px,1fr) 120px 110px 50px;align-items:center;gap:12px}.variant-b .tablehead{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;padding:12px 0}.variant-b .table-row{padding:16px 0;border-top:1px solid #e6e7df}.variant-b .row-art{height:75px;background:#eceee6;border-radius:5px;cursor:pointer}.variant-b .table-row .product-name{font-size:12px}.variant-b .table-row .price{font-size:16px}.variant-b .article{font-size:10px;color:#8a8e85;margin-top:8px}.variant-b .row-actions{font-size:18px;background:#f0f3e8;border-radius:50%;height:30px;width:30px}.variant-b .count{margin:8px 0}.mobile-stock,.mobile-tools{display:none}
-/* C: editorial room-first exploration, featured item and horizontal shortlist. */
-.variant-c{background:#f6efe5;min-height:100vh}.variant-c header{border-color:#dcd2c4}.variant-c .room-layout{display:grid;grid-template-columns:1.08fr 1fr;min-height:calc(100vh - 94px);padding-bottom:100px}.variant-c .room-scene{position:sticky;top:0;background:#d8e0d0;height:calc(100vh - 94px);min-height:650px;overflow:hidden}.variant-c .scene-copy{position:absolute;top:42px;left:45px;z-index:1}.variant-c .scene-copy h1{font:500 clamp(38px,4vw,58px)/1.05 Manrope;letter-spacing:-2.5px;max-width:350px;margin-top:16px}.variant-c .scene-copy p{font-size:13px;margin-top:18px;max-width:250px;line-height:1.6;color:#5e6857}.variant-c .scene-caption{position:absolute;bottom:26px;left:35px;right:35px;display:flex;justify-content:space-between;align-items:center;font-size:11px;border-top:1px solid #68795466;padding-top:16px}.variant-c .room-svg{position:absolute;bottom:50px;width:100%;height:440px}.variant-c .room-content{padding:42px 38px}.variant-c .room-content h2{font-size:28px;font-weight:500;letter-spacing:-1px;margin:8px 0 22px}.variant-c .searchbox{background:#fff7;border-color:#d6cabc}.variant-c .filterline{margin:15px 0 25px}.variant-c .featured-item{display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:1px solid #dcd2c4;padding:24px 0}.variant-c .featured-item .art-wrap{min-height:190px;background:#e9dfd1;border-radius:70% 70% 0 0}.variant-c .featured-copy{padding-top:18px}.variant-c .featured-copy h3{font-size:19px;margin:10px 0}.variant-c .featured-copy p{font-size:12px;line-height:1.6;color:#807666;margin-bottom:18px}.variant-c .featured-copy .stock{margin-top:14px}.variant-c .shortlist{border-top:1px solid #dcd2c4;padding-top:20px}.variant-c .shortlist h3{font-size:13px;margin-bottom:15px}.variant-c .mini-item{display:grid;grid-template-columns:60px 1fr auto;gap:16px;align-items:center;border-bottom:1px solid #e0d5c7;padding:12px 0}.variant-c .mini-item .art-wrap{height:62px;background:#e9e0d5}.variant-c .mini-item .price{font-size:14px}.variant-c .mini-item .product-name{font-size:11px}.variant-c .scene-dot{fill:#f6efe5;stroke:#737c63;stroke-width:1.5}.variant-c .room-picker{position:absolute;top:300px;left:45px;display:flex;gap:8px;z-index:1}.variant-c .room-picker button{background:#f6efe5aa;border-radius:20px;padding:9px 15px;font-size:11px}.variant-c .room-picker .chosen{background:#293d2e;color:white}
-@media(min-width:1550px){.variant-a .grid{grid-template-columns:repeat(4,minmax(0,1fr))}.variant-a .hero,.variant-a .catalog{max-width:1550px;margin:auto}.variant-a .category-strip{max-width:1395px;margin-left:auto;margin-right:auto}}
-@media(max-width:1050px){.nav{gap:17px}.variant-a .grid{grid-template-columns:repeat(2,minmax(0,1fr))}.variant-b .workspace{grid-template-columns:170px 1fr}.variant-b aside{padding:25px 15px}.variant-b .workspace-main{padding:30px 24px 110px}.variant-b .tablehead,.variant-b .table-row{grid-template-columns:65px minmax(125px,1fr) 85px 95px 32px;gap:8px}.variant-c .room-content{padding:32px 24px}.variant-c .scene-copy{left:28px}.variant-c .featured-item{gap:12px}.variant-c .featured-item .art-wrap{min-height:150px}}
-@media(max-width:700px){header{height:75px;padding:0 20px}.wordmark{font-size:28px}.nav{display:none}.header-actions{font-size:11px;gap:10px}.variant-a .hero{display:block;padding:30px 20px 20px}.variant-a .hero h1{font-size:38px}.variant-a .hero-tools{margin-top:24px}.variant-a .category-strip{margin:0 20px 24px;overflow:auto;flex-wrap:nowrap}.variant-a .catalog{display:block;padding:0 20px}.variant-a aside{display:flex;gap:12px;align-items:center;margin-bottom:22px}.variant-a aside>*{display:none}.variant-a aside .select,.variant-a aside .stock-check{display:flex;max-width:180px}.variant-a .grid{gap:22px 12px}.price{font-size:16px}.product-card .price-row{display:block}.product-card .stock{margin-top:8px}.product-card .tag{font-size:8px;left:7px;top:7px}.variant-a .editorial-strip{gap:15px}.variant-b .workspace{display:block}.variant-b aside{display:none}.variant-b .workspace-main{padding:28px 20px 110px}.variant-b .titleline{display:block}.variant-b .titleline .pill{margin-top:14px}.variant-b h1{font-size:30px}.variant-b .summary{gap:20px}.variant-b .tablehead,.variant-b .table-row{grid-template-columns:55px minmax(90px,1fr) 70px 29px}.variant-b .tablehead>:nth-child(4),.variant-b .table-row>.stock{display:none}.variant-b .table-row .price{font-size:13px}.variant-b .product-desc{font-size:10px}.variant-b .mobile-stock{display:block;margin-top:7px}.variant-b .mobile-stock .stock{font-size:10px}.variant-b .mobile-tools{display:flex;gap:10px;margin-bottom:18px}.variant-c .room-layout{display:block}.variant-c .room-scene{position:relative;height:470px;min-height:470px}.variant-c .scene-copy{top:25px;left:25px}.variant-c .scene-copy h1{font-size:37px;max-width:300px}.variant-c .scene-copy p{max-width:230px;margin-top:10px}.variant-c .room-svg{height:260px;bottom:28px;left:20%}.variant-c .room-picker{top:208px;left:25px}.variant-c .scene-caption{bottom:18px;left:25px;right:25px}.variant-c .room-content{padding:28px 22px}.prototype-bar{gap:4px;padding:6px}.variant-name{width:137px;font-size:11px}.prototype-bar select{max-width:79px;font-size:10px;padding:7px 3px}.state-button{font-size:9px;padding-left:6px}.modal{grid-template-columns:1fr;max-height:90vh;overflow:auto}.modal .art-wrap{min-height:220px;height:220px}.modal-copy{padding:24px}.modal-copy h2{font-size:24px}}
-</style>
-</head>
-<body>
-<main id="app"></main><div id="switcher"></div><aside id="state-panel" class="state-panel" hidden></aside><div id="modal-root"></div><div id="toast-root" aria-live="polite"></div>
-<script>
-const isDevelopmentPreview = '__PROTOTYPE_DEV__' === 'true';
-const renderIcon = (iconName) => {
-    const iconPathsByName = { search: '<circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/>', heart: '<path d="M20 5c-3-3-6 0-8 2-2-2-5-5-8-2-5 5 2 10 8 15 6-5 13-10 8-15Z"/>', pin: '<path d="M18 9c0 5-6 11-6 11S6 14 6 9a6 6 0 1 1 12 0Z"/><circle cx="12" cy="9" r="2"/>', arrow: '<path d="M4 12h15m-5-5 5 5-5 5"/>', user: '<circle cx="12" cy="8" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/>' };
-    return `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPathsByName[iconName] || iconPathsByName.arrow}</svg>`;
-};
-const products = [
-    { id: 1, name: 'LINDÖ', type: 'Dining chair', category: 'Chairs', room: 'Dining', price: 24990, stock: 24, color: 'Natural oak', kind: 'chair', tone: '#b99970', tag: 'Everyday favourite' },
-    { id: 2, name: 'FJÄLL', type: 'Lounge chair', category: 'Chairs', room: 'Living', price: 54990, stock: 7, color: 'Forest green', kind: 'lounge', tone: '#7b8b69', tag: 'New arrival' },
-    { id: 3, name: 'VIKA', type: 'Upholstered chair', category: 'Chairs', room: 'Dining', price: 34990, stock: 3, color: 'Warm sand', kind: 'chair', tone: '#d0bf9b', tag: '' },
-    { id: 4, name: 'NORR', type: 'Desk chair', category: 'Chairs', room: 'Workspace', price: 44990, stock: 12, color: 'Soft charcoal', kind: 'desk', tone: '#58635e', tag: '' },
-    { id: 5, name: 'ASK', type: 'Dining chair', category: 'Chairs', room: 'Dining', price: 19990, stock: 0, color: 'Light ash', kind: 'chair', tone: '#dbbf91', tag: 'A lighter footprint' },
-    { id: 6, name: 'RO', type: 'Accent chair', category: 'Chairs', room: 'Living', price: 64990, stock: 6, color: 'Terracotta', kind: 'lounge', tone: '#be8269', tag: '' },
-    { id: 7, name: 'DAL', type: 'Side table', category: 'Tables', room: 'Living', price: 22990, stock: 18, color: 'Natural oak', kind: 'table', tone: '#bc9b70', tag: 'Small-space favourite' },
-    { id: 8, name: 'LINJE', type: 'Dining table', category: 'Tables', room: 'Dining', price: 89990, stock: 4, color: 'Natural oak', kind: 'table', tone: '#bb9264', tag: '' }
-];
-const prototypeVariants = ['A', 'B', 'C'];
-const variantNames = { A: 'Everyday catalog', B: 'Practical shortlist', C: 'Room-first discovery' };
-const prototypeState = { variant: prototypeVariants.includes(new URLSearchParams(location.search).get('variant')) ? new URLSearchParams(location.search).get('variant') : 'A', query: 'chair', category: 'All', store: 'Budapest · Budaörs', available: false, sort: 'recommended', screen: 'results', room: 'Living', saved: [], detail: null };
-const renderPrice = (priceInForints) => `${new Intl.NumberFormat('en-GB').format(priceInForints)} <span class="small-price">Ft</span>`;
-const renderStockAvailability = (product) => `<span class="stock ${product.stock === 0 ? 'none' : product.stock < 5 ? 'low' : ''}">${product.stock === 0 ? 'Unavailable' : product.stock < 5 ? `Only ${product.stock} left` : 'Available in store'}</span>`;
-function renderProductIllustration(product) {
-    const illustrationColor = product.tone;
-    let illustrationSvgMarkup = '';
-    if (product.kind === 'chair')
-        illustrationSvgMarkup = `<path d="M108 90Q150 69 192 90L186 162H114Z" fill="${illustrationColor}"/><path d="M110 92L116 160M135 84V158M164 83V158M188 92L183 160" stroke="#76654c" stroke-opacity=".45" stroke-width="3"/><path d="M104 163Q153 151 195 163L187 180H113Z" fill="${illustrationColor}"/><path d="m116 178-12 71m80-71 14 70m-70-70 4 59m37-59-2 59" stroke="${illustrationColor}" stroke-width="10"/><path d="M108 163H192" stroke="#806647" stroke-opacity=".4" stroke-width="4"/>`;
-    else if (product.kind === 'lounge')
-        illustrationSvgMarkup = `<path d="M105 76Q155 60 192 91L195 169H104Z" fill="${illustrationColor}"/><path d="M93 139Q150 126 209 139L205 187Q151 201 98 182Z" fill="${illustrationColor}"/><path d="M91 127Q91 113 107 118L113 171M196 119Q211 113 215 131L208 173" fill="none" stroke="${illustrationColor}" stroke-width="15"/><path d="m112 185-8 62m87-62 13 62" stroke="#9d805e" stroke-width="10"/><path d="M107 143Q157 134 197 145" stroke="#ffffff35" stroke-width="3"/>`;
-    else if (product.kind === 'desk')
-        illustrationSvgMarkup = `<rect x="110" y="78" width="79" height="93" rx="20" fill="${illustrationColor}"/><path d="M101 169Q150 153 200 169L194 189H109Z" fill="${illustrationColor}"/><path d="M152 190V227m-48 18 49-20 49 20M151 225v27" stroke="#4f514d" stroke-width="7"/><circle cx="103" cy="247" r="7" fill="#474b47"/><circle cx="202" cy="247" r="7" fill="#474b47"/><circle cx="151" cy="254" r="7" fill="#474b47"/>`;
-    else
-        illustrationSvgMarkup = `<ellipse cx="150" cy="127" rx="85" ry="27" fill="${illustrationColor}"/><path d="M69 128v10q80 43 162 0v-10" fill="${illustrationColor}"/><path d="m86 143-13 101m135-101 17 101m-104-93 5 82m49-82-3 81" stroke="${illustrationColor}" stroke-width="13"/>`;
-    return `<svg class="product-art" viewBox="0 0 300 300" aria-label="Illustration of ${product.type.toLowerCase()}" role="img"><ellipse cx="150" cy="254" rx="84" ry="12" fill="#373b2820"/>${illustrationSvgMarkup}</svg>`;
-}
-function renderHeader() {
-    return `<header><a href="#" class="wordmark" data-action="home">AEKI<span class="brand-dot"></span></a><nav class="nav" aria-label="Main navigation"><button class="active" data-action="all">Discover</button><button data-action="room">Rooms</button><button data-action="saved">Your favourites <span aria-label="saved count">${prototypeState.saved.length || ''}</span></button></nav><div class="header-actions"><span>${renderIcon('pin')} Budapest</span><button aria-label="Demo account" data-action="account">${renderIcon('user')}</button></div></header>`;
-}
-function renderSearchInput() {
-    return `<label class="searchbox">${renderIcon('search')}<input id="search" aria-label="Search products" placeholder="Search products or article number" value="${escapeHtml(prototypeState.query)}"><button data-action="clear" aria-label="Clear search">×</button></label>`;
-}
-const escapeHtml = (untrustedText) => String(untrustedText).replace(/[&<>"']/g, escapedCharacter => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[escapedCharacter]));
-function renderStoreSelector() {
-    return `<select class="select" aria-label="Choose store" data-control="store">${['Budapest · Budaörs', 'Budapest · Örs vezér tere', 'Budapest · Soroksár'].map(storeName => `<option ${storeName === prototypeState.store ? 'selected' : ''}>${storeName}</option>`).join('')}</select>`;
-}
-function renderSortSelector() {
-    return `<select class="select" aria-label="Sort products" data-control="sort"><option value="recommended" ${prototypeState.sort === 'recommended' ? 'selected' : ''}>Recommended</option><option value="price-asc" ${prototypeState.sort === 'price-asc' ? 'selected' : ''}>Price: low to high</option><option value="price-desc" ${prototypeState.sort === 'price-desc' ? 'selected' : ''}>Price: high to low</option></select>`;
-}
-function getVisibleProducts() {
-    let visibleProducts = products.filter(product => (product.type + ' ' + product.name + ' ' + `100.20${product.id}`).toLowerCase().includes(prototypeState.query.trim().toLowerCase()));
-    if (prototypeState.category !== 'All')
-        visibleProducts = visibleProducts.filter(product => product.category === prototypeState.category);
-    if (prototypeState.available)
-        visibleProducts = visibleProducts.filter(product => product.stock > 0);
-    if (prototypeState.sort === 'price-asc')
-        visibleProducts.sort((firstProduct, secondProduct) => firstProduct.price - secondProduct.price);
-    if (prototypeState.sort === 'price-desc')
-        visibleProducts.sort((firstProduct, secondProduct) => secondProduct.price - firstProduct.price);
-    return visibleProducts;
-}
-function renderProductCard(product) {
-    return `<article class="product-card"><div class="art-wrap" data-detail="${product.id}" tabindex="0" role="button" aria-label="View ${product.name}">${renderProductIllustration(product)}${product.tag ? `<span class="tag">${product.tag}</span>` : ''}<button class="heart ${prototypeState.saved.includes(product.id) ? 'saved' : ''}" data-save="${product.id}" aria-label="${prototypeState.saved.includes(product.id) ? 'Unsave' : 'Save'} ${product.name}" aria-pressed="${prototypeState.saved.includes(product.id)}">${renderIcon('heart')}</button></div><div class="info"><button class="product-name" data-detail="${product.id}">${product.name}</button><p class="product-desc">${product.type} · ${product.color}</p><div class="price-row"><span class="price">${renderPrice(product.price)}</span>${renderStockAvailability(product)}</div></div></article>`;
-}
-function renderResultFeedback(visibleProducts) {
-    if (prototypeState.screen === 'loading')
-        return `<div class="grid" aria-label="Loading products">${Array.from({ length: 3 }, () => '<div class="skeleton"></div>').join('')}</div>`;
-    if (prototypeState.screen === 'waiting' || !prototypeState.query.trim())
-        return `<div class="empty"><h2>What are you looking for?</h2><p>Start with a product, a name or an article number.</p></div>`;
-    if (prototypeState.screen === 'error')
-        return `<div class="empty" role="alert"><h2>A small pause.</h2><p>We couldn't load the products. Your search is still here.</p><button class="pill filled" data-action="retry">Try again</button></div>`;
-    if (prototypeState.screen === 'empty' || !visibleProducts.length)
-        return `<div class="empty"><h2>A little too specific?</h2><p>Try a broader search or clear a filter.</p><button class="pill" data-action="reset">Reset search</button></div>`;
-    return '';
-}
-function renderEverydayCatalog() {
-    const visibleProducts = getVisibleProducts();
-    return `<div class="variant-a">${renderHeader()}<section class="hero"><div><span class="caps muted">Made for everyday living</span><h1>A little change.<br/>A better everyday.</h1><p>Thoughtful furniture. Familiar prices. Find what feels like home.</p></div><div class="hero-tools">${renderSearchInput()}<p>Try “chair”, “table” or an article number.</p></div></section><div class="category-strip">${['All', 'Chairs', 'Tables'].map(categoryName => `<button class="pill ${prototypeState.category === categoryName ? 'filled' : ''}" data-category="${categoryName}">${categoryName === 'All' ? 'All products' : categoryName}</button>`).join('')}<button class="pill" data-action="room">Shop by room ${renderIcon('arrow')}</button></div><section class="catalog"><aside><p class="caps">Make it yours</p><h3>Your store</h3>${renderStoreSelector()}<label class="check stock-check"><input type="checkbox" data-control="available" ${prototypeState.available ? 'checked' : ''}> Available in store</label><h3>Material</h3><p class="muted" style="font-size:12px;line-height:1.8">Natural wood<br/>Soft upholstery<br/>Mixed materials</p><h3>Good to know</h3><p class="muted" style="font-size:11px;line-height:1.8">Store availability helps you plan your visit.</p></aside><div><div class="meta-top"><span class="count">${visibleProducts.length} products · ${prototypeState.query ? `“${escapeHtml(prototypeState.query)}”` : 'Start a search'}</span>${renderSortSelector()}</div>${renderResultFeedback(visibleProducts) || `<div class="grid">${visibleProducts.map(renderProductCard).join('')}</div>`}<div class="editorial-strip"><div><strong>Good design, less guesswork.</strong><span>Check your local store before you head out.</span></div>${renderIcon('pin')}</div><footer class="section-footer"><span>Designed for real life.</span><span>AEKI · Everyday, considered.</span></footer></div></section></div>`;
-}
-function renderPracticalShortlist() {
-    const visibleProducts = getVisibleProducts();
-    return `<div class="variant-b">${renderHeader()}<div class="workspace"><aside><h2>Your product shortlist</h2>${['All', 'Chairs', 'Tables'].map(categoryName => `<button class="sidebar-tab ${prototypeState.category === categoryName ? 'chosen' : ''}" data-category="${categoryName}"><span>${categoryName === 'All' ? 'All products' : categoryName}</span><span>${categoryName === 'All' ? 8 : categoryName === 'Chairs' ? 6 : 2}</span></button>`).join('')}<p class="caps">Check a store</p>${renderStoreSelector()}<label class="check"><input type="checkbox" data-control="available" ${prototypeState.available ? 'checked' : ''}> Available only</label><p class="caps">Your favourites</p><button class="sidebar-tab" data-action="saved">Saved products <span>${prototypeState.saved.length}</span></button><p style="font-size:11px;color:#798170;line-height:1.8;margin-top:50px">Less scrolling.<br/>More useful detail.</p></aside><section class="workspace-main"><div class="titleline"><div><span class="caps muted">Find. Compare. Decide.</span><h1 style="margin-top:8px">Furniture, without the fuss.</h1><p>Compare prices and local availability in one place.</p></div>${renderSortSelector()}</div>${renderSearchInput()}<div class="mobile-tools">${renderStoreSelector()}<label class="check"><input type="checkbox" data-control="available" ${prototypeState.available ? "checked" : ""}> Available only</label></div><div class="summary"><span><strong>${visibleProducts.length}</strong> results</span><span><strong>${visibleProducts.filter(product => product.stock > 0).length}</strong> available</span><span><strong>${prototypeState.saved.length}</strong> saved</span></div>${renderResultFeedback(visibleProducts) || `<div class="tablehead"><span>Product</span><span>Details</span><span>Price</span><span>Availability</span><span></span></div>${visibleProducts.map(product => `<article class="table-row"><div class="row-art" role="button" tabindex="0" data-detail="${product.id}" aria-label="View ${product.name}">${renderProductIllustration(product)}</div><div><button class="product-name" data-detail="${product.id}">${product.name}</button><p class="product-desc">${product.type} · ${product.color}</p><p class="article">Article no. 100.20${product.id}</p><div class="mobile-stock">${renderStockAvailability(product)}</div></div><span class="price">${renderPrice(product.price)}</span>${renderStockAvailability(product)}<button class="row-actions" data-save="${product.id}" aria-label="Save ${product.name}" aria-pressed="${prototypeState.saved.includes(product.id)}">${prototypeState.saved.includes(product.id) ? '✓' : '+'}</button></article>`).join('')}`}<footer class="section-footer"><span>${prototypeState.store}</span><span>Stock is indicative.</span></footer></section></div></div>`;
-}
-function renderRoomIllustration() {
-    return `<svg class="room-svg" viewBox="0 0 700 500" aria-label="Illustrated living room with chair, lamp and table" role="img"><path d="M0 340h700v160H0" fill="#c3cbb6"/><path d="M610 0v340" stroke="#9ca891"/><rect x="478" y="60" width="120" height="154" fill="#dce4d0" stroke="#b5beab" stroke-width="8"/><path d="M538 60v154M478 137h120" stroke="#b5beab" stroke-width="5"/><ellipse cx="375" cy="402" rx="252" ry="47" fill="#e7e6d0"/><path d="M140 201q50-20 105 0l-6 102H145Z" fill="#7b8b69"/><path d="M125 284q65-18 128 0l-7 43H135Z" fill="#748562"/><path d="m146 325-8 77m94-77 13 77" stroke="#a28b66" stroke-width="11"/><path d="M110 266v50m150-50v50" stroke="#7b8b69" stroke-width="19" stroke-linecap="round"/><ellipse cx="390" cy="309" rx="89" ry="24" fill="#b99970"/><path d="m324 322-12 77m143-77 13 77m-76-67v62" stroke="#b99970" stroke-width="10"/><path d="M320 172v230m-26 0h52" stroke="#766d57" stroke-width="5"/><path d="m282 172 20-43h39l21 43Z" fill="#f1ebd7"/><path d="M485 369h42l-4 40h-35Z" fill="#b88164"/><path d="M506 369v-77m0 40q-60-10-42-36 37 0 42 36m0-13q-12-59 11-57 23 24-11 57m0 29q56-49 63-16-22 29-63 16" fill="#6d8060" stroke="#6d8060" stroke-width="3"/><circle cx="193" cy="270" r="17" class="scene-dot"/><path d="M187 270h12m-6-6v12" stroke="#53634b" stroke-width="1.5"/><circle cx="390" cy="309" r="17" class="scene-dot"/><path d="M384 309h12m-6-6v12" stroke="#53634b" stroke-width="1.5"/></svg>`;
-}
-function renderRoomDiscovery() {
-    const visibleProducts = getVisibleProducts();
-    const featuredProduct = visibleProducts.find(product => product.room === prototypeState.room) || visibleProducts[0];
-    return `<div class="variant-c">${renderHeader()}<div class="room-layout"><section class="room-scene"><div class="scene-copy"><span class="caps">Spaces with a little soul</span><h1>Make room<br/>for slow Sundays.</h1><p>A favourite corner. A good book.<br/>The pieces that bring it together.</p></div><div class="room-picker">${['Living', 'Dining', 'Workspace'].map(roomName => `<button class="${prototypeState.room === roomName ? 'chosen' : ''}" data-room="${roomName}">${roomName}</button>`).join('')}</div>${renderRoomIllustration()}<div class="scene-caption"><span>01 / A quieter corner</span><span>Find your kind of home ${renderIcon('arrow')}</span></div></section><section class="room-content"><span class="caps muted">Start with one good piece</span><h2>Your room, your rhythm.</h2>${renderSearchInput()}<div class="filterline">${renderStoreSelector()}<button class="pill ${prototypeState.available ? 'filled' : ''}" data-action="availability">Available only</button></div>${renderResultFeedback(visibleProducts) || (featuredProduct ? `<article class="featured-item"><div class="art-wrap" data-detail="${featuredProduct.id}" tabindex="0" role="button" aria-label="View ${featuredProduct.name}">${renderProductIllustration(featuredProduct)}</div><div class="featured-copy"><span class="caps muted">For your ${prototypeState.room.toLowerCase()} space</span><h3>${featuredProduct.name}</h3><p>${featuredProduct.type} in ${featuredProduct.color.toLowerCase()}. An easy addition to your everyday.</p><div class="price">${renderPrice(featuredProduct.price)}</div>${renderStockAvailability(featuredProduct)}<div style="margin-top:22px"><button class="text-link" data-detail="${featuredProduct.id}">Take a closer look ${renderIcon('arrow')}</button></div></div></article><div class="shortlist"><h3>Other pieces to consider <span class="muted">(${visibleProducts.length})</span></h3>${visibleProducts.filter(product => product.id !== featuredProduct.id).map(product => `<article class="mini-item"><div class="art-wrap" data-detail="${product.id}" role="button" tabindex="0" aria-label="View ${product.name}">${renderProductIllustration(product)}</div><div><button class="product-name" data-detail="${product.id}">${product.name}</button><p class="product-desc">${product.type}</p></div><div style="text-align:right"><span class="price">${renderPrice(product.price)}</span><div style="margin-top:7px">${renderStockAvailability(product)}</div></div></article>`).join('')}</div>` : '')}<footer class="section-footer"><span>One piece at a time.</span><span>AEKI.</span></footer></section></div></div>`;
-}
-function renderStatePanel() {
-    document.getElementById('state-panel').innerHTML = `<h3>UI prototype · relevant state</h3><pre>${escapeHtml(JSON.stringify({ ...prototypeState, visibleProductIds: getVisibleProducts().map(product => product.id), dataSource: 'in-memory visual stub' }, null, 2))}</pre>`;
-}
-function renderPrototype() {
-    document.getElementById('app').innerHTML = ({ A: renderEverydayCatalog, B: renderPracticalShortlist, C: renderRoomDiscovery })[prototypeState.variant]();
-    if (isDevelopmentPreview)
-        document.getElementById('switcher').innerHTML = `<nav class="prototype-bar" aria-label="Prototype variations"><button class="switch-arrow" data-cycle="-1" aria-label="Previous variant">←</button><div class="variant-name"><div class="caps">UI prototype · ${prototypeState.variant} / 3</div><span>${variantNames[prototypeState.variant]}</span></div><button class="switch-arrow" data-cycle="1" aria-label="Next variant">→</button><select aria-label="Preview UI state" id="preview-screen">${['results', 'waiting', 'loading', 'empty', 'error'].map(screenName => `<option ${prototypeState.screen === screenName ? 'selected' : ''}>${screenName}</option>`).join('')}</select><button class="state-button" data-action="state" aria-expanded="${!document.getElementById('state-panel').hidden}">State</button></nav>`;
-    renderStatePanel();
-    if (isDevelopmentPreview)
-        console.info("AEKI UI prototype state", JSON.stringify({ ...prototypeState, visibleProductIds: getVisibleProducts().map(product => product.id) }));
-}
-function changePrototypeVariant(variantStep) {
-    prototypeState.variant = prototypeVariants[(prototypeVariants.indexOf(prototypeState.variant) + variantStep + 3) % 3];
-    const variantUrl = new URL(location);
-    variantUrl.searchParams.set('variant', prototypeState.variant);
-    history.replaceState({}, '', variantUrl);
-    renderPrototype();
-}
-let searchDebounceTimer;
-document.addEventListener('input', function handleSearchInput(event) {
-    if (event.target.id === 'search') {
-        prototypeState.query = event.target.value;
-        prototypeState.screen = prototypeState.query.trim() ? 'results' : 'waiting';
-        clearTimeout(searchDebounceTimer);
-        searchDebounceTimer = setTimeout(() => {
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AEKI · Find your everyday</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+      :root {
+        --ink: #242a24;
+        --muted: #747a70;
+        --paper: #f7f7f1;
+        --green: #293d2e;
+        --line: #dddeda;
+        --accent: #eced97;
+        font-family: 'DM Sans', Arial, sans-serif;
+        color: var(--ink);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      button,
+      a,
+      select {
+        cursor: pointer;
+      }
+      button {
+        color: inherit;
+      }
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      summary:focus-visible {
+        outline: 3px solid #bd7b28;
+        outline-offset: 4px;
+      }
+      button {
+        border: 0;
+        background: none;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      svg {
+        display: block;
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: Manrope, Arial, sans-serif;
+      }
+      input,
+      select {
+        min-width: 0;
+      }
+      header {
+        height: 94px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 5vw;
+        border-bottom: 1px solid var(--line);
+      }
+      .wordmark {
+        font:
+          800 33px Manrope,
+          Arial;
+        letter-spacing: -2px;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+      .brand-dot {
+        width: 10px;
+        height: 10px;
+        background: #c9ce71;
+        border-radius: 50%;
+        align-self: flex-end;
+        margin-bottom: 9px;
+      }
+      .nav {
+        display: flex;
+        gap: 32px;
+        font-size: 14px;
+      }
+      .nav .active {
+        font-weight: 700;
+        text-decoration: underline;
+        text-underline-offset: 9px;
+      }
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        font-size: 13px;
+      }
+      .icon {
+        width: 19px;
+        height: 19px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .caps {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .pill {
+        border: 1px solid var(--line);
+        padding: 9px 15px;
+        border-radius: 22px;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      .filled {
+        background: var(--green);
+        color: white;
+        border-color: var(--green);
+      }
+      .searchbox {
+        display: flex;
+        align-items: center;
+        background: white;
+        border: 1px solid var(--line);
+        gap: 14px;
+        padding: 14px 18px;
+        border-radius: 8px;
+      }
+      .searchbox input {
+        border: 0;
+        outline: none;
+        background: none;
+        flex: 1;
+        font-size: 15px;
+        width: 100%;
+      }
+      .searchbox button {
+        font-size: 12px;
+      }
+      .select {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 11px;
+        background: transparent;
+        font-size: 12px;
+        max-width: 100%;
+      }
+      .filterline {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .product-art {
+        width: 100%;
+        height: 100%;
+        min-height: 100px;
+      }
+      .art-wrap {
+        position: relative;
+        background: #eceee6;
+        overflow: hidden;
+      }
+      .heart {
+        position: absolute;
+        right: 13px;
+        top: 13px;
+        background: #fff9;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        z-index: 1;
+      }
+      .heart.saved {
+        background: var(--green);
+        color: white;
+      }
+      .stock {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+      }
+      .stock:before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        background: #57825b;
+        border-radius: 50%;
+      }
+      .stock.low:before {
+        background: #b58030;
+      }
+      .stock.none {
+        color: #8b8b85;
+      }
+      .stock.none:before {
+        background: #a1a19a;
+      }
+      .price {
+        font:
+          700 20px Manrope,
+          Arial;
+        letter-spacing: -0.8px;
+      }
+      .small-price {
+        font-size: 10px;
+        letter-spacing: 0;
+        font-weight: 500;
+        margin-left: 3px;
+      }
+      .product-name {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.6px;
+      }
+      .product-desc {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+      .tag {
+        position: absolute;
+        left: 14px;
+        top: 14px;
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background: #fff8;
+        padding: 6px 8px;
+        border-radius: 3px;
+      }
+      .meta-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 26px;
+      }
+      .count {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .text-link {
+        font-size: 12px;
+        border-bottom: 1px solid;
+        padding-bottom: 4px;
+      }
+      .empty {
+        padding: 80px 20px;
+        text-align: center;
+        border: 1px dashed var(--line);
+        border-radius: 10px;
+      }
+      .empty h2 {
+        font-size: 24px;
+        margin-bottom: 12px;
+      }
+      .empty p {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .empty button {
+        margin-top: 18px;
+      }
+      .skeleton {
+        height: 300px;
+        background: linear-gradient(100deg, #e8e9e2 20%, #f6f7f0 45%, #e8e9e2 70%);
+        background-size: 250% 100%;
+        animation: shimmer 1.4s infinite;
+        border-radius: 5px;
+      }
+      @keyframes shimmer {
+        to {
+          background-position: -150% 0;
+        }
+      }
+      .toast {
+        position: fixed;
+        top: 110px;
+        right: 30px;
+        background: var(--green);
+        color: white;
+        border-radius: 7px;
+        padding: 14px 20px;
+        font-size: 13px;
+        z-index: 10;
+      }
+      .section-footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 30px 0 0;
+        border-top: 1px solid var(--line);
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 42px;
+      }
+      .prototype-bar {
+        position: fixed;
+        bottom: 17px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 30;
+        background: #202620;
+        color: white;
+        border-radius: 15px;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 8px 35px #0003;
+        font-size: 12px;
+        max-width: calc(100% - 20px);
+      }
+      .prototype-bar .switch-arrow {
+        color: white;
+        width: 34px;
+        height: 35px;
+        border-radius: 8px;
+        background: #ffffff10;
+        font-size: 20px;
+      }
+      .variant-name {
+        white-space: nowrap;
+        width: 158px;
+        text-align: center;
+      }
+      .prototype-bar .caps {
+        font-size: 8px;
+        color: #b4bfad;
+        letter-spacing: 1.5px;
+      }
+      .prototype-bar select {
+        background: #353d34;
+        color: white;
+        border: 1px solid #566150;
+        border-radius: 6px;
+        padding: 8px;
+        font-size: 11px;
+        max-width: 100px;
+      }
+      .state-button {
+        color: #d5dfcc;
+        font-size: 10px;
+        border-left: 1px solid #566150;
+        padding-left: 12px;
+      }
+      .state-panel {
+        position: fixed;
+        bottom: 82px;
+        right: 20px;
+        background: #fff;
+        color: #222;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 18px;
+        z-index: 31;
+        max-width: 350px;
+        width: calc(100% - 40px);
+        box-shadow: 0 5px 20px #0002;
+      }
+      .state-panel pre {
+        white-space: pre-wrap;
+        font-size: 11px;
+        line-height: 1.5;
+      }
+      .state-panel h3 {
+        font-size: 13px;
+      }
+      .state-panel[hidden] {
+        display: none;
+      }
+      footer {
+        margin-bottom: 110px;
+      }
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: #14251977;
+        backdrop-filter: blur(5px);
+        z-index: 40;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+      }
+      .modal {
+        background: var(--paper);
+        border-radius: 12px;
+        max-width: 800px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        overflow: hidden;
+        position: relative;
+      }
+      .modal .art-wrap {
+        min-height: 370px;
+      }
+      .modal-copy {
+        padding: 40px 30px;
+      }
+      .modal-copy h2 {
+        font-size: 30px;
+        margin: 10px 0;
+      }
+      .modal-copy p {
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--muted);
+        margin: 16px 0;
+      }
+      .close-modal {
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        background: white;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        z-index: 2;
+      }
+      .modal-copy .price {
+        margin: 20px 0;
+      }
+      .modal-copy .pill {
+        margin-top: 22px;
+        display: block;
+      }
+      .modal-copy .caps {
+        color: #73796b;
+      }
+      /* A: warm shopping catalog, sidebar filters and an image-led product grid. */
+      .variant-a .hero {
+        padding: 46px 5vw 34px;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 70px;
+        align-items: end;
+      }
+      .variant-a .hero h1 {
+        font-size: clamp(34px, 4vw, 53px);
+        font-weight: 600;
+        line-height: 1.15;
+        letter-spacing: -2.5px;
+        max-width: 570px;
+        margin: 12px 0 18px;
+      }
+      .variant-a .hero p {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .variant-a .hero-tools {
+        padding-bottom: 7px;
+      }
+      .variant-a .hero-tools > p {
+        font-size: 11px;
+        margin-top: 12px;
+      }
+      .variant-a .category-strip {
+        margin: 0 5vw 36px;
+        display: flex;
+        gap: 10px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+      }
+      .variant-a .catalog {
+        display: grid;
+        grid-template-columns: 176px 1fr;
+        gap: 34px;
+        padding: 0 5vw;
+      }
+      .variant-a aside .caps {
+        margin-bottom: 18px;
+      }
+      .variant-a aside h3 {
+        font-size: 12px;
+        margin: 26px 0 14px;
+      }
+      .check {
+        display: flex;
+        gap: 9px;
+        align-items: center;
+        font-size: 12px;
+        margin: 12px 0;
+        color: #5c6357;
+      }
+      .check input {
+        accent-color: var(--green);
+      }
+      .variant-a aside .select {
+        width: 100%;
+      }
+      .variant-a .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 27px 20px;
+      }
+      .product-card .art-wrap {
+        aspect-ratio: 1.07;
+        cursor: pointer;
+      }
+      .product-card .info {
+        padding-top: 15px;
+      }
+      .product-card .price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        margin-top: 16px;
+      }
+      .variant-a .editorial-strip {
+        padding: 22px 24px;
+        background: #e8eddf;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 32px;
+        font-size: 12px;
+      }
+      .variant-a .editorial-strip strong {
+        display: block;
+        font: 600 18px Manrope;
+        margin-bottom: 4px;
+      }
+      /* B: inventory-first workspace with a quiet utility sidebar and dense table. */
+      .variant-b {
+        background: #fcfcfa;
+        min-height: 100vh;
+      }
+      .variant-b header {
+        background: #232d28;
+        color: #f4f5ec;
+        border: none;
+        height: 76px;
+      }
+      .variant-b .brand-dot {
+        background: #d3de87;
+      }
+      .variant-b .workspace {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        min-height: calc(100vh - 76px);
+      }
+      .variant-b aside {
+        border-right: 1px solid #deded5;
+        background: #f1f3eb;
+        padding: 35px 25px;
+      }
+      .variant-b aside h2 {
+        font-size: 14px;
+        letter-spacing: -0.4px;
+        margin-bottom: 25px;
+      }
+      .variant-b aside .sidebar-tab {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        padding: 12px 13px;
+        font-size: 12px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        text-align: left;
+      }
+      .variant-b aside .sidebar-tab.chosen {
+        background: #dfe6d4;
+        font-weight: 700;
+      }
+      .variant-b aside .select {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .variant-b aside .caps {
+        margin: 32px 0 12px;
+        color: #6d7567;
+      }
+      .variant-b .workspace-main {
+        padding: 38px 38px 110px;
+      }
+      .variant-b .titleline {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 29px;
+      }
+      .variant-b h1 {
+        font-size: 34px;
+        letter-spacing: -1.5px;
+      }
+      .variant-b .titleline p {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 9px;
+      }
+      .variant-b .searchbox {
+        max-width: 540px;
+        margin-bottom: 24px;
+        background: white;
+      }
+      .variant-b .summary {
+        display: flex;
+        gap: 35px;
+        font-size: 12px;
+        padding: 18px 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 18px;
+      }
+      .variant-b .summary strong {
+        font: 700 19px Manrope;
+        margin-right: 6px;
+      }
+      .variant-b .tablehead,
+      .variant-b .table-row {
+        display: grid;
+        grid-template-columns: 80px minmax(190px, 1fr) 120px 110px 50px;
+        align-items: center;
+        gap: 12px;
+      }
+      .variant-b .tablehead {
+        font-size: 9px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        padding: 12px 0;
+      }
+      .variant-b .table-row {
+        padding: 16px 0;
+        border-top: 1px solid #e6e7df;
+      }
+      .variant-b .row-art {
+        height: 75px;
+        background: #eceee6;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .variant-b .table-row .product-name {
+        font-size: 12px;
+      }
+      .variant-b .table-row .price {
+        font-size: 16px;
+      }
+      .variant-b .article {
+        font-size: 10px;
+        color: #8a8e85;
+        margin-top: 8px;
+      }
+      .variant-b .row-actions {
+        font-size: 18px;
+        background: #f0f3e8;
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+      }
+      .variant-b .count {
+        margin: 8px 0;
+      }
+      .mobile-stock,
+      .mobile-tools {
+        display: none;
+      }
+      /* C: editorial room-first exploration, featured item and horizontal shortlist. */
+      .variant-c {
+        background: #f6efe5;
+        min-height: 100vh;
+      }
+      .variant-c header {
+        border-color: #dcd2c4;
+      }
+      .variant-c .room-layout {
+        display: grid;
+        grid-template-columns: 1.08fr 1fr;
+        min-height: calc(100vh - 94px);
+        padding-bottom: 100px;
+      }
+      .variant-c .room-scene {
+        position: sticky;
+        top: 0;
+        background: #d8e0d0;
+        height: calc(100vh - 94px);
+        min-height: 650px;
+        overflow: hidden;
+      }
+      .variant-c .scene-copy {
+        position: absolute;
+        top: 42px;
+        left: 45px;
+        z-index: 1;
+      }
+      .variant-c .scene-copy h1 {
+        font: 500 clamp(38px, 4vw, 58px)/1.05 Manrope;
+        letter-spacing: -2.5px;
+        max-width: 350px;
+        margin-top: 16px;
+      }
+      .variant-c .scene-copy p {
+        font-size: 13px;
+        margin-top: 18px;
+        max-width: 250px;
+        line-height: 1.6;
+        color: #5e6857;
+      }
+      .variant-c .scene-caption {
+        position: absolute;
+        bottom: 26px;
+        left: 35px;
+        right: 35px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 11px;
+        border-top: 1px solid #68795466;
+        padding-top: 16px;
+      }
+      .variant-c .room-svg {
+        position: absolute;
+        bottom: 50px;
+        width: 100%;
+        height: 440px;
+      }
+      .variant-c .room-content {
+        padding: 42px 38px;
+      }
+      .variant-c .room-content h2 {
+        font-size: 28px;
+        font-weight: 500;
+        letter-spacing: -1px;
+        margin: 8px 0 22px;
+      }
+      .variant-c .searchbox {
+        background: #fff7;
+        border-color: #d6cabc;
+      }
+      .variant-c .filterline {
+        margin: 15px 0 25px;
+      }
+      .variant-c .featured-item {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        border-top: 1px solid #dcd2c4;
+        padding: 24px 0;
+      }
+      .variant-c .featured-item .art-wrap {
+        min-height: 190px;
+        background: #e9dfd1;
+        border-radius: 70% 70% 0 0;
+      }
+      .variant-c .featured-copy {
+        padding-top: 18px;
+      }
+      .variant-c .featured-copy h3 {
+        font-size: 19px;
+        margin: 10px 0;
+      }
+      .variant-c .featured-copy p {
+        font-size: 12px;
+        line-height: 1.6;
+        color: #807666;
+        margin-bottom: 18px;
+      }
+      .variant-c .featured-copy .stock {
+        margin-top: 14px;
+      }
+      .variant-c .shortlist {
+        border-top: 1px solid #dcd2c4;
+        padding-top: 20px;
+      }
+      .variant-c .shortlist h3 {
+        font-size: 13px;
+        margin-bottom: 15px;
+      }
+      .variant-c .mini-item {
+        display: grid;
+        grid-template-columns: 60px 1fr auto;
+        gap: 16px;
+        align-items: center;
+        border-bottom: 1px solid #e0d5c7;
+        padding: 12px 0;
+      }
+      .variant-c .mini-item .art-wrap {
+        height: 62px;
+        background: #e9e0d5;
+      }
+      .variant-c .mini-item .price {
+        font-size: 14px;
+      }
+      .variant-c .mini-item .product-name {
+        font-size: 11px;
+      }
+      .variant-c .scene-dot {
+        fill: #f6efe5;
+        stroke: #737c63;
+        stroke-width: 1.5;
+      }
+      .variant-c .room-picker {
+        position: absolute;
+        top: 300px;
+        left: 45px;
+        display: flex;
+        gap: 8px;
+        z-index: 1;
+      }
+      .variant-c .room-picker button {
+        background: #f6efe5aa;
+        border-radius: 20px;
+        padding: 9px 15px;
+        font-size: 11px;
+      }
+      .variant-c .room-picker .chosen {
+        background: #293d2e;
+        color: white;
+      }
+      @media (min-width: 1550px) {
+        .variant-a .grid {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        .variant-a .hero,
+        .variant-a .catalog {
+          max-width: 1550px;
+          margin: auto;
+        }
+        .variant-a .category-strip {
+          max-width: 1395px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+      @media (max-width: 1050px) {
+        .nav {
+          gap: 17px;
+        }
+        .variant-a .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .variant-b .workspace {
+          grid-template-columns: 170px 1fr;
+        }
+        .variant-b aside {
+          padding: 25px 15px;
+        }
+        .variant-b .workspace-main {
+          padding: 30px 24px 110px;
+        }
+        .variant-b .tablehead,
+        .variant-b .table-row {
+          grid-template-columns: 65px minmax(125px, 1fr) 85px 95px 32px;
+          gap: 8px;
+        }
+        .variant-c .room-content {
+          padding: 32px 24px;
+        }
+        .variant-c .scene-copy {
+          left: 28px;
+        }
+        .variant-c .featured-item {
+          gap: 12px;
+        }
+        .variant-c .featured-item .art-wrap {
+          min-height: 150px;
+        }
+      }
+      @media (max-width: 700px) {
+        header {
+          height: 75px;
+          padding: 0 20px;
+        }
+        .wordmark {
+          font-size: 28px;
+        }
+        .nav {
+          display: none;
+        }
+        .header-actions {
+          font-size: 11px;
+          gap: 10px;
+        }
+        .variant-a .hero {
+          display: block;
+          padding: 30px 20px 20px;
+        }
+        .variant-a .hero h1 {
+          font-size: 38px;
+        }
+        .variant-a .hero-tools {
+          margin-top: 24px;
+        }
+        .variant-a .category-strip {
+          margin: 0 20px 24px;
+          overflow: auto;
+          flex-wrap: nowrap;
+        }
+        .variant-a .catalog {
+          display: block;
+          padding: 0 20px;
+        }
+        .variant-a aside {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          margin-bottom: 22px;
+        }
+        .variant-a aside > * {
+          display: none;
+        }
+        .variant-a aside .select,
+        .variant-a aside .stock-check {
+          display: flex;
+          max-width: 180px;
+        }
+        .variant-a .grid {
+          gap: 22px 12px;
+        }
+        .price {
+          font-size: 16px;
+        }
+        .product-card .price-row {
+          display: block;
+        }
+        .product-card .stock {
+          margin-top: 8px;
+        }
+        .product-card .tag {
+          font-size: 8px;
+          left: 7px;
+          top: 7px;
+        }
+        .variant-a .editorial-strip {
+          gap: 15px;
+        }
+        .variant-b .workspace {
+          display: block;
+        }
+        .variant-b aside {
+          display: none;
+        }
+        .variant-b .workspace-main {
+          padding: 28px 20px 110px;
+        }
+        .variant-b .titleline {
+          display: block;
+        }
+        .variant-b .titleline .pill {
+          margin-top: 14px;
+        }
+        .variant-b h1 {
+          font-size: 30px;
+        }
+        .variant-b .summary {
+          gap: 20px;
+        }
+        .variant-b .tablehead,
+        .variant-b .table-row {
+          grid-template-columns: 55px minmax(90px, 1fr) 70px 29px;
+        }
+        .variant-b .tablehead > :nth-child(4),
+        .variant-b .table-row > .stock {
+          display: none;
+        }
+        .variant-b .table-row .price {
+          font-size: 13px;
+        }
+        .variant-b .product-desc {
+          font-size: 10px;
+        }
+        .variant-b .mobile-stock {
+          display: block;
+          margin-top: 7px;
+        }
+        .variant-b .mobile-stock .stock {
+          font-size: 10px;
+        }
+        .variant-b .mobile-tools {
+          display: flex;
+          gap: 10px;
+          margin-bottom: 18px;
+        }
+        .variant-c .room-layout {
+          display: block;
+        }
+        .variant-c .room-scene {
+          position: relative;
+          height: 470px;
+          min-height: 470px;
+        }
+        .variant-c .scene-copy {
+          top: 25px;
+          left: 25px;
+        }
+        .variant-c .scene-copy h1 {
+          font-size: 37px;
+          max-width: 300px;
+        }
+        .variant-c .scene-copy p {
+          max-width: 230px;
+          margin-top: 10px;
+        }
+        .variant-c .room-svg {
+          height: 260px;
+          bottom: 28px;
+          left: 20%;
+        }
+        .variant-c .room-picker {
+          top: 208px;
+          left: 25px;
+        }
+        .variant-c .scene-caption {
+          bottom: 18px;
+          left: 25px;
+          right: 25px;
+        }
+        .variant-c .room-content {
+          padding: 28px 22px;
+        }
+        .prototype-bar {
+          gap: 4px;
+          padding: 6px;
+        }
+        .variant-name {
+          width: 137px;
+          font-size: 11px;
+        }
+        .prototype-bar select {
+          max-width: 79px;
+          font-size: 10px;
+          padding: 7px 3px;
+        }
+        .state-button {
+          font-size: 9px;
+          padding-left: 6px;
+        }
+        .modal {
+          grid-template-columns: 1fr;
+          max-height: 90vh;
+          overflow: auto;
+        }
+        .modal .art-wrap {
+          min-height: 220px;
+          height: 220px;
+        }
+        .modal-copy {
+          padding: 24px;
+        }
+        .modal-copy h2 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="app"></main>
+    <div id="switcher"></div>
+    <aside id="state-panel" class="state-panel" hidden></aside>
+    <div id="modal-root"></div>
+    <div id="toast-root" aria-live="polite"></div>
+    <script>
+      const isDevelopmentPreview = '__PROTOTYPE_DEV__' === 'true';
+      const renderIcon = (iconName) => {
+        const iconPathsByName = {
+          search: '<circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/>',
+          heart: '<path d="M20 5c-3-3-6 0-8 2-2-2-5-5-8-2-5 5 2 10 8 15 6-5 13-10 8-15Z"/>',
+          pin: '<path d="M18 9c0 5-6 11-6 11S6 14 6 9a6 6 0 1 1 12 0Z"/><circle cx="12" cy="9" r="2"/>',
+          arrow: '<path d="M4 12h15m-5-5 5 5-5 5"/>',
+          user: '<circle cx="12" cy="8" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/>',
+        };
+        return `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPathsByName[iconName] || iconPathsByName.arrow}</svg>`;
+      };
+      const products = [
+        {
+          id: 1,
+          name: 'LINDÖ',
+          type: 'Dining chair',
+          category: 'Chairs',
+          room: 'Dining',
+          price: 24990,
+          stock: 24,
+          color: 'Natural oak',
+          kind: 'chair',
+          tone: '#b99970',
+          tag: 'Everyday favourite',
+        },
+        {
+          id: 2,
+          name: 'FJÄLL',
+          type: 'Lounge chair',
+          category: 'Chairs',
+          room: 'Living',
+          price: 54990,
+          stock: 7,
+          color: 'Forest green',
+          kind: 'lounge',
+          tone: '#7b8b69',
+          tag: 'New arrival',
+        },
+        {
+          id: 3,
+          name: 'VIKA',
+          type: 'Upholstered chair',
+          category: 'Chairs',
+          room: 'Dining',
+          price: 34990,
+          stock: 3,
+          color: 'Warm sand',
+          kind: 'chair',
+          tone: '#d0bf9b',
+          tag: '',
+        },
+        {
+          id: 4,
+          name: 'NORR',
+          type: 'Desk chair',
+          category: 'Chairs',
+          room: 'Workspace',
+          price: 44990,
+          stock: 12,
+          color: 'Soft charcoal',
+          kind: 'desk',
+          tone: '#58635e',
+          tag: '',
+        },
+        {
+          id: 5,
+          name: 'ASK',
+          type: 'Dining chair',
+          category: 'Chairs',
+          room: 'Dining',
+          price: 19990,
+          stock: 0,
+          color: 'Light ash',
+          kind: 'chair',
+          tone: '#dbbf91',
+          tag: 'A lighter footprint',
+        },
+        {
+          id: 6,
+          name: 'RO',
+          type: 'Accent chair',
+          category: 'Chairs',
+          room: 'Living',
+          price: 64990,
+          stock: 6,
+          color: 'Terracotta',
+          kind: 'lounge',
+          tone: '#be8269',
+          tag: '',
+        },
+        {
+          id: 7,
+          name: 'DAL',
+          type: 'Side table',
+          category: 'Tables',
+          room: 'Living',
+          price: 22990,
+          stock: 18,
+          color: 'Natural oak',
+          kind: 'table',
+          tone: '#bc9b70',
+          tag: 'Small-space favourite',
+        },
+        {
+          id: 8,
+          name: 'LINJE',
+          type: 'Dining table',
+          category: 'Tables',
+          room: 'Dining',
+          price: 89990,
+          stock: 4,
+          color: 'Natural oak',
+          kind: 'table',
+          tone: '#bb9264',
+          tag: '',
+        },
+      ];
+      const prototypeVariants = ['A', 'B', 'C'];
+      const variantNames = {
+        A: 'Everyday catalog',
+        B: 'Practical shortlist',
+        C: 'Room-first discovery',
+      };
+      const prototypeState = {
+        variant: prototypeVariants.includes(new URLSearchParams(location.search).get('variant'))
+          ? new URLSearchParams(location.search).get('variant')
+          : 'A',
+        query: 'chair',
+        category: 'All',
+        store: 'Budapest · Budaörs',
+        available: false,
+        sort: 'recommended',
+        screen: 'results',
+        room: 'Living',
+        saved: [],
+        detail: null,
+      };
+      const renderPrice = (priceInForints) =>
+        `${new Intl.NumberFormat('en-GB').format(priceInForints)} <span class="small-price">Ft</span>`;
+      const renderStockAvailability = (product) =>
+        `<span class="stock ${product.stock === 0 ? 'none' : product.stock < 5 ? 'low' : ''}">${product.stock === 0 ? 'Unavailable' : product.stock < 5 ? `Only ${product.stock} left` : 'Available in store'}</span>`;
+      function renderProductIllustration(product) {
+        const illustrationColor = product.tone;
+        let illustrationSvgMarkup = '';
+        if (product.kind === 'chair')
+          illustrationSvgMarkup = `<path d="M108 90Q150 69 192 90L186 162H114Z" fill="${illustrationColor}"/><path d="M110 92L116 160M135 84V158M164 83V158M188 92L183 160" stroke="#76654c" stroke-opacity=".45" stroke-width="3"/><path d="M104 163Q153 151 195 163L187 180H113Z" fill="${illustrationColor}"/><path d="m116 178-12 71m80-71 14 70m-70-70 4 59m37-59-2 59" stroke="${illustrationColor}" stroke-width="10"/><path d="M108 163H192" stroke="#806647" stroke-opacity=".4" stroke-width="4"/>`;
+        else if (product.kind === 'lounge')
+          illustrationSvgMarkup = `<path d="M105 76Q155 60 192 91L195 169H104Z" fill="${illustrationColor}"/><path d="M93 139Q150 126 209 139L205 187Q151 201 98 182Z" fill="${illustrationColor}"/><path d="M91 127Q91 113 107 118L113 171M196 119Q211 113 215 131L208 173" fill="none" stroke="${illustrationColor}" stroke-width="15"/><path d="m112 185-8 62m87-62 13 62" stroke="#9d805e" stroke-width="10"/><path d="M107 143Q157 134 197 145" stroke="#ffffff35" stroke-width="3"/>`;
+        else if (product.kind === 'desk')
+          illustrationSvgMarkup = `<rect x="110" y="78" width="79" height="93" rx="20" fill="${illustrationColor}"/><path d="M101 169Q150 153 200 169L194 189H109Z" fill="${illustrationColor}"/><path d="M152 190V227m-48 18 49-20 49 20M151 225v27" stroke="#4f514d" stroke-width="7"/><circle cx="103" cy="247" r="7" fill="#474b47"/><circle cx="202" cy="247" r="7" fill="#474b47"/><circle cx="151" cy="254" r="7" fill="#474b47"/>`;
+        else
+          illustrationSvgMarkup = `<ellipse cx="150" cy="127" rx="85" ry="27" fill="${illustrationColor}"/><path d="M69 128v10q80 43 162 0v-10" fill="${illustrationColor}"/><path d="m86 143-13 101m135-101 17 101m-104-93 5 82m49-82-3 81" stroke="${illustrationColor}" stroke-width="13"/>`;
+        return `<svg class="product-art" viewBox="0 0 300 300" aria-label="Illustration of ${product.type.toLowerCase()}" role="img"><ellipse cx="150" cy="254" rx="84" ry="12" fill="#373b2820"/>${illustrationSvgMarkup}</svg>`;
+      }
+      function renderHeader() {
+        return `<header><a href="#" class="wordmark" data-action="home">AEKI<span class="brand-dot"></span></a><nav class="nav" aria-label="Main navigation"><button class="active" data-action="all">Discover</button><button data-action="room">Rooms</button><button data-action="saved">Your favourites <span aria-label="saved count">${prototypeState.saved.length || ''}</span></button></nav><div class="header-actions"><span>${renderIcon('pin')} Budapest</span><button aria-label="Demo account" data-action="account">${renderIcon('user')}</button></div></header>`;
+      }
+      function renderSearchInput() {
+        return `<label class="searchbox">${renderIcon('search')}<input id="search" aria-label="Search products" placeholder="Search products or article number" value="${escapeHtml(prototypeState.query)}"><button data-action="clear" aria-label="Clear search">×</button></label>`;
+      }
+      const escapeHtml = (untrustedText) =>
+        String(untrustedText).replace(
+          /[&<>"']/g,
+          (escapedCharacter) =>
+            ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[
+              escapedCharacter
+            ],
+        );
+      function renderStoreSelector() {
+        return `<select class="select" aria-label="Choose store" data-control="store">${['Budapest · Budaörs', 'Budapest · Örs vezér tere', 'Budapest · Soroksár'].map((storeName) => `<option ${storeName === prototypeState.store ? 'selected' : ''}>${storeName}</option>`).join('')}</select>`;
+      }
+      function renderSortSelector() {
+        return `<select class="select" aria-label="Sort products" data-control="sort"><option value="recommended" ${prototypeState.sort === 'recommended' ? 'selected' : ''}>Recommended</option><option value="price-asc" ${prototypeState.sort === 'price-asc' ? 'selected' : ''}>Price: low to high</option><option value="price-desc" ${prototypeState.sort === 'price-desc' ? 'selected' : ''}>Price: high to low</option></select>`;
+      }
+      function getVisibleProducts() {
+        let visibleProducts = products.filter((product) =>
+          (product.type + ' ' + product.name + ' ' + `100.20${product.id}`)
+            .toLowerCase()
+            .includes(prototypeState.query.trim().toLowerCase()),
+        );
+        if (prototypeState.category !== 'All')
+          visibleProducts = visibleProducts.filter(
+            (product) => product.category === prototypeState.category,
+          );
+        if (prototypeState.available)
+          visibleProducts = visibleProducts.filter((product) => product.stock > 0);
+        if (prototypeState.sort === 'price-asc')
+          visibleProducts.sort(
+            (firstProduct, secondProduct) => firstProduct.price - secondProduct.price,
+          );
+        if (prototypeState.sort === 'price-desc')
+          visibleProducts.sort(
+            (firstProduct, secondProduct) => secondProduct.price - firstProduct.price,
+          );
+        return visibleProducts;
+      }
+      function renderProductCard(product) {
+        return `<article class="product-card"><div class="art-wrap" data-detail="${product.id}" tabindex="0" role="button" aria-label="View ${product.name}">${renderProductIllustration(product)}${product.tag ? `<span class="tag">${product.tag}</span>` : ''}<button class="heart ${prototypeState.saved.includes(product.id) ? 'saved' : ''}" data-save="${product.id}" aria-label="${prototypeState.saved.includes(product.id) ? 'Unsave' : 'Save'} ${product.name}" aria-pressed="${prototypeState.saved.includes(product.id)}">${renderIcon('heart')}</button></div><div class="info"><button class="product-name" data-detail="${product.id}">${product.name}</button><p class="product-desc">${product.type} · ${product.color}</p><div class="price-row"><span class="price">${renderPrice(product.price)}</span>${renderStockAvailability(product)}</div></div></article>`;
+      }
+      function renderResultFeedback(visibleProducts) {
+        if (prototypeState.screen === 'loading')
+          return `<div class="grid" aria-label="Loading products">${Array.from({ length: 3 }, () => '<div class="skeleton"></div>').join('')}</div>`;
+        if (prototypeState.screen === 'waiting' || !prototypeState.query.trim())
+          return `<div class="empty"><h2>What are you looking for?</h2><p>Start with a product, a name or an article number.</p></div>`;
+        if (prototypeState.screen === 'error')
+          return `<div class="empty" role="alert"><h2>A small pause.</h2><p>We couldn't load the products. Your search is still here.</p><button class="pill filled" data-action="retry">Try again</button></div>`;
+        if (prototypeState.screen === 'empty' || !visibleProducts.length)
+          return `<div class="empty"><h2>A little too specific?</h2><p>Try a broader search or clear a filter.</p><button class="pill" data-action="reset">Reset search</button></div>`;
+        return '';
+      }
+      function renderEverydayCatalog() {
+        const visibleProducts = getVisibleProducts();
+        return `<div class="variant-a">${renderHeader()}<section class="hero"><div><span class="caps muted">Made for everyday living</span><h1>A little change.<br/>A better everyday.</h1><p>Thoughtful furniture. Familiar prices. Find what feels like home.</p></div><div class="hero-tools">${renderSearchInput()}<p>Try “chair”, “table” or an article number.</p></div></section><div class="category-strip">${['All', 'Chairs', 'Tables'].map((categoryName) => `<button class="pill ${prototypeState.category === categoryName ? 'filled' : ''}" data-category="${categoryName}">${categoryName === 'All' ? 'All products' : categoryName}</button>`).join('')}<button class="pill" data-action="room">Shop by room ${renderIcon('arrow')}</button></div><section class="catalog"><aside><p class="caps">Make it yours</p><h3>Your store</h3>${renderStoreSelector()}<label class="check stock-check"><input type="checkbox" data-control="available" ${prototypeState.available ? 'checked' : ''}> Available in store</label><h3>Material</h3><p class="muted" style="font-size:12px;line-height:1.8">Natural wood<br/>Soft upholstery<br/>Mixed materials</p><h3>Good to know</h3><p class="muted" style="font-size:11px;line-height:1.8">Store availability helps you plan your visit.</p></aside><div><div class="meta-top"><span class="count">${visibleProducts.length} products · ${prototypeState.query ? `“${escapeHtml(prototypeState.query)}”` : 'Start a search'}</span>${renderSortSelector()}</div>${renderResultFeedback(visibleProducts) || `<div class="grid">${visibleProducts.map(renderProductCard).join('')}</div>`}<div class="editorial-strip"><div><strong>Good design, less guesswork.</strong><span>Check your local store before you head out.</span></div>${renderIcon('pin')}</div><footer class="section-footer"><span>Designed for real life.</span><span>AEKI · Everyday, considered.</span></footer></div></section></div>`;
+      }
+      function renderPracticalShortlist() {
+        const visibleProducts = getVisibleProducts();
+        return `<div class="variant-b">${renderHeader()}<div class="workspace"><aside><h2>Your product shortlist</h2>${['All', 'Chairs', 'Tables'].map((categoryName) => `<button class="sidebar-tab ${prototypeState.category === categoryName ? 'chosen' : ''}" data-category="${categoryName}"><span>${categoryName === 'All' ? 'All products' : categoryName}</span><span>${categoryName === 'All' ? 8 : categoryName === 'Chairs' ? 6 : 2}</span></button>`).join('')}<p class="caps">Check a store</p>${renderStoreSelector()}<label class="check"><input type="checkbox" data-control="available" ${prototypeState.available ? 'checked' : ''}> Available only</label><p class="caps">Your favourites</p><button class="sidebar-tab" data-action="saved">Saved products <span>${prototypeState.saved.length}</span></button><p style="font-size:11px;color:#798170;line-height:1.8;margin-top:50px">Less scrolling.<br/>More useful detail.</p></aside><section class="workspace-main"><div class="titleline"><div><span class="caps muted">Find. Compare. Decide.</span><h1 style="margin-top:8px">Furniture, without the fuss.</h1><p>Compare prices and local availability in one place.</p></div>${renderSortSelector()}</div>${renderSearchInput()}<div class="mobile-tools">${renderStoreSelector()}<label class="check"><input type="checkbox" data-control="available" ${prototypeState.available ? 'checked' : ''}> Available only</label></div><div class="summary"><span><strong>${visibleProducts.length}</strong> results</span><span><strong>${visibleProducts.filter((product) => product.stock > 0).length}</strong> available</span><span><strong>${prototypeState.saved.length}</strong> saved</span></div>${renderResultFeedback(visibleProducts) || `<div class="tablehead"><span>Product</span><span>Details</span><span>Price</span><span>Availability</span><span></span></div>${visibleProducts.map((product) => `<article class="table-row"><div class="row-art" role="button" tabindex="0" data-detail="${product.id}" aria-label="View ${product.name}">${renderProductIllustration(product)}</div><div><button class="product-name" data-detail="${product.id}">${product.name}</button><p class="product-desc">${product.type} · ${product.color}</p><p class="article">Article no. 100.20${product.id}</p><div class="mobile-stock">${renderStockAvailability(product)}</div></div><span class="price">${renderPrice(product.price)}</span>${renderStockAvailability(product)}<button class="row-actions" data-save="${product.id}" aria-label="Save ${product.name}" aria-pressed="${prototypeState.saved.includes(product.id)}">${prototypeState.saved.includes(product.id) ? '✓' : '+'}</button></article>`).join('')}`}<footer class="section-footer"><span>${prototypeState.store}</span><span>Stock is indicative.</span></footer></section></div></div>`;
+      }
+      function renderRoomIllustration() {
+        return `<svg class="room-svg" viewBox="0 0 700 500" aria-label="Illustrated living room with chair, lamp and table" role="img"><path d="M0 340h700v160H0" fill="#c3cbb6"/><path d="M610 0v340" stroke="#9ca891"/><rect x="478" y="60" width="120" height="154" fill="#dce4d0" stroke="#b5beab" stroke-width="8"/><path d="M538 60v154M478 137h120" stroke="#b5beab" stroke-width="5"/><ellipse cx="375" cy="402" rx="252" ry="47" fill="#e7e6d0"/><path d="M140 201q50-20 105 0l-6 102H145Z" fill="#7b8b69"/><path d="M125 284q65-18 128 0l-7 43H135Z" fill="#748562"/><path d="m146 325-8 77m94-77 13 77" stroke="#a28b66" stroke-width="11"/><path d="M110 266v50m150-50v50" stroke="#7b8b69" stroke-width="19" stroke-linecap="round"/><ellipse cx="390" cy="309" rx="89" ry="24" fill="#b99970"/><path d="m324 322-12 77m143-77 13 77m-76-67v62" stroke="#b99970" stroke-width="10"/><path d="M320 172v230m-26 0h52" stroke="#766d57" stroke-width="5"/><path d="m282 172 20-43h39l21 43Z" fill="#f1ebd7"/><path d="M485 369h42l-4 40h-35Z" fill="#b88164"/><path d="M506 369v-77m0 40q-60-10-42-36 37 0 42 36m0-13q-12-59 11-57 23 24-11 57m0 29q56-49 63-16-22 29-63 16" fill="#6d8060" stroke="#6d8060" stroke-width="3"/><circle cx="193" cy="270" r="17" class="scene-dot"/><path d="M187 270h12m-6-6v12" stroke="#53634b" stroke-width="1.5"/><circle cx="390" cy="309" r="17" class="scene-dot"/><path d="M384 309h12m-6-6v12" stroke="#53634b" stroke-width="1.5"/></svg>`;
+      }
+      function renderRoomDiscovery() {
+        const visibleProducts = getVisibleProducts();
+        const featuredProduct =
+          visibleProducts.find((product) => product.room === prototypeState.room) ||
+          visibleProducts[0];
+        return `<div class="variant-c">${renderHeader()}<div class="room-layout"><section class="room-scene"><div class="scene-copy"><span class="caps">Spaces with a little soul</span><h1>Make room<br/>for slow Sundays.</h1><p>A favourite corner. A good book.<br/>The pieces that bring it together.</p></div><div class="room-picker">${['Living', 'Dining', 'Workspace'].map((roomName) => `<button class="${prototypeState.room === roomName ? 'chosen' : ''}" data-room="${roomName}">${roomName}</button>`).join('')}</div>${renderRoomIllustration()}<div class="scene-caption"><span>01 / A quieter corner</span><span>Find your kind of home ${renderIcon('arrow')}</span></div></section><section class="room-content"><span class="caps muted">Start with one good piece</span><h2>Your room, your rhythm.</h2>${renderSearchInput()}<div class="filterline">${renderStoreSelector()}<button class="pill ${prototypeState.available ? 'filled' : ''}" data-action="availability">Available only</button></div>${
+          renderResultFeedback(visibleProducts) ||
+          (featuredProduct
+            ? `<article class="featured-item"><div class="art-wrap" data-detail="${featuredProduct.id}" tabindex="0" role="button" aria-label="View ${featuredProduct.name}">${renderProductIllustration(featuredProduct)}</div><div class="featured-copy"><span class="caps muted">For your ${prototypeState.room.toLowerCase()} space</span><h3>${featuredProduct.name}</h3><p>${featuredProduct.type} in ${featuredProduct.color.toLowerCase()}. An easy addition to your everyday.</p><div class="price">${renderPrice(featuredProduct.price)}</div>${renderStockAvailability(featuredProduct)}<div style="margin-top:22px"><button class="text-link" data-detail="${featuredProduct.id}">Take a closer look ${renderIcon('arrow')}</button></div></div></article><div class="shortlist"><h3>Other pieces to consider <span class="muted">(${visibleProducts.length})</span></h3>${visibleProducts
+                .filter((product) => product.id !== featuredProduct.id)
+                .map(
+                  (product) =>
+                    `<article class="mini-item"><div class="art-wrap" data-detail="${product.id}" role="button" tabindex="0" aria-label="View ${product.name}">${renderProductIllustration(product)}</div><div><button class="product-name" data-detail="${product.id}">${product.name}</button><p class="product-desc">${product.type}</p></div><div style="text-align:right"><span class="price">${renderPrice(product.price)}</span><div style="margin-top:7px">${renderStockAvailability(product)}</div></div></article>`,
+                )
+                .join('')}</div>`
+            : '')
+        }<footer class="section-footer"><span>One piece at a time.</span><span>AEKI.</span></footer></section></div></div>`;
+      }
+      function renderStatePanel() {
+        document.getElementById('state-panel').innerHTML =
+          `<h3>UI prototype · relevant state</h3><pre>${escapeHtml(JSON.stringify({ ...prototypeState, visibleProductIds: getVisibleProducts().map((product) => product.id), dataSource: 'in-memory visual stub' }, null, 2))}</pre>`;
+      }
+      function renderPrototype() {
+        document.getElementById('app').innerHTML = {
+          A: renderEverydayCatalog,
+          B: renderPracticalShortlist,
+          C: renderRoomDiscovery,
+        }[prototypeState.variant]();
+        if (isDevelopmentPreview)
+          document.getElementById('switcher').innerHTML =
+            `<nav class="prototype-bar" aria-label="Prototype variations"><button class="switch-arrow" data-cycle="-1" aria-label="Previous variant">←</button><div class="variant-name"><div class="caps">UI prototype · ${prototypeState.variant} / 3</div><span>${variantNames[prototypeState.variant]}</span></div><button class="switch-arrow" data-cycle="1" aria-label="Next variant">→</button><select aria-label="Preview UI state" id="preview-screen">${['results', 'waiting', 'loading', 'empty', 'error'].map((screenName) => `<option ${prototypeState.screen === screenName ? 'selected' : ''}>${screenName}</option>`).join('')}</select><button class="state-button" data-action="state" aria-expanded="${!document.getElementById('state-panel').hidden}">State</button></nav>`;
+        renderStatePanel();
+        if (isDevelopmentPreview)
+          console.info(
+            'AEKI UI prototype state',
+            JSON.stringify({
+              ...prototypeState,
+              visibleProductIds: getVisibleProducts().map((product) => product.id),
+            }),
+          );
+      }
+      function changePrototypeVariant(variantStep) {
+        prototypeState.variant =
+          prototypeVariants[
+            (prototypeVariants.indexOf(prototypeState.variant) + variantStep + 3) % 3
+          ];
+        const variantUrl = new URL(location);
+        variantUrl.searchParams.set('variant', prototypeState.variant);
+        history.replaceState({}, '', variantUrl);
+        renderPrototype();
+      }
+      let searchDebounceTimer;
+      document.addEventListener('input', function handleSearchInput(event) {
+        if (event.target.id === 'search') {
+          prototypeState.query = event.target.value;
+          prototypeState.screen = prototypeState.query.trim() ? 'results' : 'waiting';
+          clearTimeout(searchDebounceTimer);
+          searchDebounceTimer = setTimeout(() => {
             const hasSearchFocus = document.activeElement?.id === 'search';
             const cursorPosition = event.target.selectionStart;
             renderPrototype();
             if (hasSearchFocus) {
-                const searchInputElement = document.getElementById('search');
-                searchInputElement.focus();
-                searchInputElement.setSelectionRange(cursorPosition, cursorPosition);
+              const searchInputElement = document.getElementById('search');
+              searchInputElement.focus();
+              searchInputElement.setSelectionRange(cursorPosition, cursorPosition);
             }
-        }, 300);
+          }, 300);
+          renderStatePanel();
+        }
+      });
+      document.addEventListener('change', function handleFilterChange(event) {
+        if (event.target.id === 'preview-screen') prototypeState.screen = event.target.value;
+        if (event.target.dataset.control) {
+          const controlProperty = event.target.dataset.control;
+          prototypeState[controlProperty] =
+            controlProperty === 'available' ? event.target.checked : event.target.value;
+        }
+        renderPrototype();
+      });
+      function showToast(text) {
+        document.getElementById('toast-root').innerHTML = `<div class="toast">${text}</div>`;
+        setTimeout(() => (document.getElementById('toast-root').innerHTML = ''), 2200);
+      }
+      function showProductDetails(productId) {
+        const product = products.find((product) => product.id === productId);
+        prototypeState.detail = productId;
+        document.getElementById('modal-root').innerHTML =
+          `<div class="modal-backdrop"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="detail-title"><button class="close-modal" data-action="close" aria-label="Close product details">×</button><div class="art-wrap">${renderProductIllustration(product)}</div><div class="modal-copy"><span class="caps">Article no. 100.20${product.id}</span><h2 id="detail-title">${product.name}</h2><span class="product-desc">${product.type} · ${product.color}</span><p>A thoughtful piece for everyday living. Simple lines, a welcoming feel and room to make it yours.</p><div class="price">${renderPrice(product.price)}</div>${renderStockAvailability(product)}<p style="font-size:11px">${prototypeState.store}<br/>${product.stock} available · Indicative demo stock</p><button class="pill filled" data-save="${product.id}">${prototypeState.saved.includes(product.id) ? 'Remove from favourites' : 'Save to favourites'}</button></div></section></div>`;
+        document.querySelector('.close-modal').focus();
         renderStatePanel();
-    }
-});
-document.addEventListener('change', function handleFilterChange(event) {
-    if (event.target.id === 'preview-screen')
-        prototypeState.screen = event.target.value;
-    if (event.target.dataset.control) {
-        const controlProperty = event.target.dataset.control;
-        prototypeState[controlProperty] = controlProperty === 'available' ? event.target.checked : event.target.value;
-    }
-    renderPrototype();
-});
-function showToast(text) {
-    document.getElementById('toast-root').innerHTML = `<div class="toast">${text}</div>`;
-    setTimeout(() => document.getElementById('toast-root').innerHTML = '', 2200);
-}
-function showProductDetails(productId) {
-    const product = products.find(product => product.id === productId);
-    prototypeState.detail = productId;
-    document.getElementById('modal-root').innerHTML = `<div class="modal-backdrop"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="detail-title"><button class="close-modal" data-action="close" aria-label="Close product details">×</button><div class="art-wrap">${renderProductIllustration(product)}</div><div class="modal-copy"><span class="caps">Article no. 100.20${product.id}</span><h2 id="detail-title">${product.name}</h2><span class="product-desc">${product.type} · ${product.color}</span><p>A thoughtful piece for everyday living. Simple lines, a welcoming feel and room to make it yours.</p><div class="price">${renderPrice(product.price)}</div>${renderStockAvailability(product)}<p style="font-size:11px">${prototypeState.store}<br/>${product.stock} available · Indicative demo stock</p><button class="pill filled" data-save="${product.id}">${prototypeState.saved.includes(product.id) ? 'Remove from favourites' : 'Save to favourites'}</button></div></section></div>`;
-    document.querySelector('.close-modal').focus();
-    renderStatePanel();
-}
-document.addEventListener('click', function handlePrototypeAction(event) {
-    const clickedActionElement = event.target.closest('button,[data-detail],a');
-    if (!clickedActionElement)
-        return;
-    if (clickedActionElement.tagName === 'A')
-        event.preventDefault();
-    if (clickedActionElement.dataset.cycle) {
-        changePrototypeVariant(Number(clickedActionElement.dataset.cycle));
-        return;
-    }
-    if (clickedActionElement.dataset.save) {
-        const productId = Number(clickedActionElement.dataset.save);
-        prototypeState.saved = prototypeState.saved.includes(productId) ? prototypeState.saved.filter(savedProductId => savedProductId !== productId) : [...prototypeState.saved, productId];
-        renderPrototype();
-        if (prototypeState.detail)
-            showProductDetails(prototypeState.detail);
-        return;
-    }
-    if (clickedActionElement.dataset.detail) {
-        showProductDetails(Number(clickedActionElement.dataset.detail));
-        return;
-    }
-    if (clickedActionElement.dataset.category) {
-        prototypeState.category = clickedActionElement.dataset.category;
-        renderPrototype();
-        return;
-    }
-    if (clickedActionElement.dataset.room) {
-        prototypeState.room = clickedActionElement.dataset.room;
-        renderPrototype();
-        return;
-    }
-    switch (clickedActionElement.dataset.action) {
-        case 'clear':
+      }
+      document.addEventListener('click', function handlePrototypeAction(event) {
+        const clickedActionElement = event.target.closest('button,[data-detail],a');
+        if (!clickedActionElement) return;
+        if (clickedActionElement.tagName === 'A') event.preventDefault();
+        if (clickedActionElement.dataset.cycle) {
+          changePrototypeVariant(Number(clickedActionElement.dataset.cycle));
+          return;
+        }
+        if (clickedActionElement.dataset.save) {
+          const productId = Number(clickedActionElement.dataset.save);
+          prototypeState.saved = prototypeState.saved.includes(productId)
+            ? prototypeState.saved.filter((savedProductId) => savedProductId !== productId)
+            : [...prototypeState.saved, productId];
+          renderPrototype();
+          if (prototypeState.detail) showProductDetails(prototypeState.detail);
+          return;
+        }
+        if (clickedActionElement.dataset.detail) {
+          showProductDetails(Number(clickedActionElement.dataset.detail));
+          return;
+        }
+        if (clickedActionElement.dataset.category) {
+          prototypeState.category = clickedActionElement.dataset.category;
+          renderPrototype();
+          return;
+        }
+        if (clickedActionElement.dataset.room) {
+          prototypeState.room = clickedActionElement.dataset.room;
+          renderPrototype();
+          return;
+        }
+        switch (clickedActionElement.dataset.action) {
+          case 'clear':
             prototypeState.query = '';
             prototypeState.screen = 'waiting';
             renderPrototype();
             document.getElementById('search').focus();
             break;
-        case 'retry':
+          case 'retry':
             prototypeState.screen = 'results';
             renderPrototype();
             break;
-        case 'reset':
-        case 'home':
-        case 'all':
+          case 'reset':
+          case 'home':
+          case 'all':
             prototypeState.query = 'chair';
             prototypeState.category = 'All';
             prototypeState.available = false;
             prototypeState.screen = 'results';
             renderPrototype();
             break;
-        case 'availability':
+          case 'availability':
             prototypeState.available = !prototypeState.available;
             renderPrototype();
             break;
-        case 'state':
-            document.getElementById('state-panel').hidden = !document.getElementById('state-panel').hidden;
+          case 'state':
+            document.getElementById('state-panel').hidden =
+              !document.getElementById('state-panel').hidden;
             renderPrototype();
             break;
-        case 'close':
+          case 'close':
             prototypeState.detail = null;
             document.getElementById('modal-root').innerHTML = '';
             renderStatePanel();
             break;
-        case 'room':
+          case 'room':
             prototypeState.variant = 'B';
             changePrototypeVariant(1);
             break;
-        case 'saved':
-            showToast(`${prototypeState.saved.length} saved ${prototypeState.saved.length === 1 ? 'product' : 'products'} in this preview.`);
+          case 'saved':
+            showToast(
+              `${prototypeState.saved.length} saved ${prototypeState.saved.length === 1 ? 'product' : 'products'} in this preview.`,
+            );
             break;
-        case 'account':
+          case 'account':
             showToast('Account styling preview · no sign-in required.');
             break;
-    }
-});
-document.addEventListener('keydown', function handleKeyboardNavigation(event) {
-    if (event.key === 'Escape' && prototypeState.detail) {
-        prototypeState.detail = null;
-        document.getElementById('modal-root').innerHTML = '';
-        renderStatePanel();
-        return;
-    }
-    if (event.target.matches('input,textarea,select,[contenteditable="true"]'))
-        return;
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-        event.preventDefault();
-        changePrototypeVariant(event.key === 'ArrowLeft' ? -1 : 1);
-    }
-    if ((event.key === 'Enter' || event.key === ' ') && event.target.dataset.detail) {
-        event.preventDefault();
-        showProductDetails(Number(event.target.dataset.detail));
-    }
-});
-window.addEventListener('popstate', function restoreVariantFromLocation() {
-    const requestedVariant = new URLSearchParams(location.search).get('variant');
-    prototypeState.variant = prototypeVariants.includes(requestedVariant) ? requestedVariant : 'A';
-    renderPrototype();
-});
-renderPrototype();
-</script>
-</body>
+        }
+      });
+      document.addEventListener('keydown', function handleKeyboardNavigation(event) {
+        if (event.key === 'Escape' && prototypeState.detail) {
+          prototypeState.detail = null;
+          document.getElementById('modal-root').innerHTML = '';
+          renderStatePanel();
+          return;
+        }
+        if (event.target.matches('input,textarea,select,[contenteditable="true"]')) return;
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault();
+          changePrototypeVariant(event.key === 'ArrowLeft' ? -1 : 1);
+        }
+        if ((event.key === 'Enter' || event.key === ' ') && event.target.dataset.detail) {
+          event.preventDefault();
+          showProductDetails(Number(event.target.dataset.detail));
+        }
+      });
+      window.addEventListener('popstate', function restoreVariantFromLocation() {
+        const requestedVariant = new URLSearchParams(location.search).get('variant');
+        prototypeState.variant = prototypeVariants.includes(requestedVariant)
+          ? requestedVariant
+          : 'A';
+        renderPrototype();
+      });
+      renderPrototype();
+    </script>
+  </body>
 </html>

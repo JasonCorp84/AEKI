@@ -7,19 +7,20 @@ export type { components, operations } from './generated/openapi.js';
 export type HealthResponse = components['schemas']['HealthResponse'];
 export type ReadinessResponse = components['schemas']['ReadinessResponse'];
 
-const isValidReadinessResponse = new Ajv({ allErrors: true }).compile<ReadinessResponse>(readinessSchema);
+const isValidReadinessResponse = new Ajv({ allErrors: true }).compile<ReadinessResponse>(
+  readinessSchema,
+);
 
 export function parseReadinessResponse(untrustedReadinessResponse: unknown): ReadinessResponse {
-    if (!isValidReadinessResponse(untrustedReadinessResponse)) {
-        throw new Error('Invalid readiness response.');
-    }
-    return untrustedReadinessResponse;
+  if (!isValidReadinessResponse(untrustedReadinessResponse)) {
+    throw new Error('Invalid readiness response.');
+  }
+  return untrustedReadinessResponse;
 }
 
 const isValidHealthResponse = new Ajv({ allErrors: true }).compile<HealthResponse>(healthSchema);
 
 export function parseHealthResponse(untrustedHealthResponse: unknown): HealthResponse {
-    if (!isValidHealthResponse(untrustedHealthResponse))
-        throw new Error('Invalid health response.');
-    return untrustedHealthResponse;
+  if (!isValidHealthResponse(untrustedHealthResponse)) throw new Error('Invalid health response.');
+  return untrustedHealthResponse;
 }

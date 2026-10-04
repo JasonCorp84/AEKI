@@ -10,21 +10,21 @@ Started on 2026-10-01 at the user's request. Historical entries are retrospectiv
 
 ## Measurement Rules
 
-| Field | Definition |
-| --- | --- |
-| Task ID and order | Stable ID plus chronological position; link an AI turn to its parent engineering task |
-| Intended outcome | User-visible result and validation expected before work begins |
-| Technique | What was done: contract-first design, reference-image guidance, TDD, rendered visual inspection, etc. Multiple techniques can be recorded |
-| Skills applied | Exact skill names, purpose, fresh load versus reused guidance, and evidence of application. Use `None` for confirmed absence and `None observed` for retrospective audit limits |
-| Skill loaded only | A skill read without observed application; do not count it as an applied technique |
-| Assistant-turn wall time | Assistant task-start timestamp to task-complete timestamp. Includes tool execution, waiting, recovery and context compaction inside the turn; excludes time between turns |
-| Task lead time | First task start to accepted completion; includes human review and idle gaps. Unknown if acceptance is not timestamped |
-| Human active time | User's actual reading, prompting, coding and reviewing time; manually measured, never inferred from gaps between messages |
-| Technical retry | Re-execution to recover from a failed operation. Initial execution is attempt 1; retries = subsequent executions. Failed commands, render retries and network recovery are separate categories |
-| Output revision | A new artifact version following review or self-check. It can occur without a failed tool call |
-| Scope refinement | A changed or clarified target; keep separate from corrections to an unchanged requirement |
-| Validation evidence | Rendered inspection, contract check, test run or verified remote state. A delivered artifact is not automatically accepted or validated |
-| Outcome | In progress, delivered awaiting review, accepted, rejected, superseded or blocked; record acceptance evidence separately |
+| Field                    | Definition                                                                                                                                                                                     |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Task ID and order        | Stable ID plus chronological position; link an AI turn to its parent engineering task                                                                                                          |
+| Intended outcome         | User-visible result and validation expected before work begins                                                                                                                                 |
+| Technique                | What was done: contract-first design, reference-image guidance, TDD, rendered visual inspection, etc. Multiple techniques can be recorded                                                      |
+| Skills applied           | Exact skill names, purpose, fresh load versus reused guidance, and evidence of application. Use `None` for confirmed absence and `None observed` for retrospective audit limits                |
+| Skill loaded only        | A skill read without observed application; do not count it as an applied technique                                                                                                             |
+| Assistant-turn wall time | Assistant task-start timestamp to task-complete timestamp. Includes tool execution, waiting, recovery and context compaction inside the turn; excludes time between turns                      |
+| Task lead time           | First task start to accepted completion; includes human review and idle gaps. Unknown if acceptance is not timestamped                                                                         |
+| Human active time        | User's actual reading, prompting, coding and reviewing time; manually measured, never inferred from gaps between messages                                                                      |
+| Technical retry          | Re-execution to recover from a failed operation. Initial execution is attempt 1; retries = subsequent executions. Failed commands, render retries and network recovery are separate categories |
+| Output revision          | A new artifact version following review or self-check. It can occur without a failed tool call                                                                                                 |
+| Scope refinement         | A changed or clarified target; keep separate from corrections to an unchanged requirement                                                                                                      |
+| Validation evidence      | Rendered inspection, contract check, test run or verified remote state. A delivered artifact is not automatically accepted or validated                                                        |
+| Outcome                  | In progress, delivered awaiting review, accepted, rejected, superseded or blocked; record acceptance evidence separately                                                                       |
 
 **Do not collapse revisions, scope refinements and tool retries into one retry number.** A diagnostic read is not a retry; a second render after changing the diagram is a validation pass, unless it is recovering from the same rendering failure. `Unknown` and `not audited` do not mean zero.
 
@@ -33,6 +33,8 @@ Readability improvements count as self-revisions when found during validation, a
 Store timestamps in UTC using ISO 8601. Display local time as Europe/Budapest when useful. Round durations only for presentation. Do not use Git commit times as task starts or calculate human work from assistant latency.
 
 ## Recording Procedure
+
+Automated enforcement and lifecycle limits are documented in [measurement validation](measurement-validation.md). `npm run measurements:check` runs as part of the root check; `npm run test:measurements` separately tests the measurement behavior. At the start of the next turn, reconcile the preceding completion from the actual Codex event log before adding a new active row. S48 onward requires audited numeric retry counts; the fixed legacy exemptions remain explicit warnings.
 
 1. At task start, record the request, outcome, technique, planned validation and UTC start time.
 2. During execution, record skill application, meaningful strategy changes, failed attempts and recoveries. Record the reason, not only a count.
@@ -77,9 +79,15 @@ The timing CSV is a snapshot extracted from the local Codex event log. It stores
 
 ## Comparing Techniques
 
+Latest tooling setup: [S53 — project-wide Prettier](sessions/2026-10-04-prettier-setup.md), including native formatting, reproducible contract generation, formatter/check integration and verified regression checks.
+
+Latest review fixes: [S52 — measurement validation and C4](sessions/2026-10-04-code-review-fixes.md), including two RED/GREEN regressions, frozen historical identities, strict calendar validation and the Docker interruption that prevented a fresh database test run.
+
+Latest measurement improvement: [S50 — automated validation](sessions/2026-10-03-measurement-validation.md), including approved seams, eight tests and recovery of S43–S47 timing from actual events.
+
 Publication checkpoint: [S47 — issue #2 commit and push](sessions/2026-10-03-issue-2-publication.md), authorized by Csaba after implementation delivery; remote verification is reported at delivery.
 
-Latest database implementation evidence: [S45–S46 — PostgreSQL readiness](sessions/2026-10-03-postgresql-readiness-implementation.md), including approved seams, observed RED/GREEN, Docker/approval interruption, prerequisite discoveries, 40 passing tests and actual browser outage/recovery. The overnight interruption and unknown exact turn durations are explicitly separated from measured checkpoints.
+Latest database implementation evidence: [S45–S46 — PostgreSQL readiness](sessions/2026-10-03-postgresql-readiness-implementation.md), including approved seams, observed RED/GREEN, Docker/approval interruption, prerequisite discoveries, 40 passing tests and actual browser outage/recovery. Reconciled assistant-turn durations are 989.148 and 1489.125 seconds; the overnight gap is excluded and original checkpoints are preserved.
 
 Latest clarity evidence: [S42 — Clean Code refactoring](sessions/2026-10-02-clean-code-refactoring.md), including self-explanatory naming, regression checks, skills, observed retries and scope limits.
 

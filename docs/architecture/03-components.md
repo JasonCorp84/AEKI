@@ -1,6 +1,6 @@
 # AEKI Product Finder – Backend Components and Data Flow
 
-**Status:** proposed architecture; application code has not been implemented.
+**Status:** proposed product architecture. API liveness and PostgreSQL readiness are implemented; see the separate [implemented foundation component view](03-foundation-components.md). The product controllers/services, authentication, reservations and stock events shown below remain planned.
 
 This C4 level 3 view expands the [Backend API container](02-containers.md). Read it by column: the web application sends a request to a controller, the controller delegates to an application service, and the service accesses PostgreSQL through a data adapter. Results return through the same chain.
 
@@ -108,15 +108,15 @@ OpenAPI-backed validation checks input at the HTTP boundary. Responses use the d
 
 ## Contracts and Transaction Boundaries
 
-| Boundary | Data and guarantee |
-| --- | --- |
-| UI ↔ HTTP controllers | OpenAPI request/response contracts; runtime validation; session cookie where required; reservation creation includes an Idempotency-Key |
-| Controllers ↔ services | Validated transport input becomes application input; user context is passed explicitly |
-| Products ↔ data adapter | Search, pagination, product details and store stock; parameterized queries |
-| Auth ↔ data adapter | Expiring, revocable sessions; no request-specific state in singleton providers |
-| Reservations ↔ data adapter | StockReservationPort: atomically reserve stock, store the reservation and record idempotency; cancellation/expiration releases stock at most once |
-| Inventory ↔ data adapter | Apply an authorized stock delta and persist its audit record in one transaction; coordinate with concurrent reservations |
-| Application operations → gateway | Emit only after a successful commit; payload and delivery behavior are separate from HTTP responses |
+| Boundary                         | Data and guarantee                                                                                                                                |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| UI ↔ HTTP controllers            | OpenAPI request/response contracts; runtime validation; session cookie where required; reservation creation includes an Idempotency-Key           |
+| Controllers ↔ services           | Validated transport input becomes application input; user context is passed explicitly                                                            |
+| Products ↔ data adapter          | Search, pagination, product details and store stock; parameterized queries                                                                        |
+| Auth ↔ data adapter              | Expiring, revocable sessions; no request-specific state in singleton providers                                                                    |
+| Reservations ↔ data adapter      | StockReservationPort: atomically reserve stock, store the reservation and record idempotency; cancellation/expiration releases stock at most once |
+| Inventory ↔ data adapter         | Apply an authorized stock delta and persist its audit record in one transaction; coordinate with concurrent reservations                          |
+| Application operations → gateway | Emit only after a successful commit; payload and delivery behavior are separate from HTTP responses                                               |
 
 Services depend on business-owned ports where a real persistence boundary requires them. Concrete PostgreSQL adapters implement those ports and are bound through NestJS runtime injection tokens. The diagram's data-flow arrows do not reverse the SOLID dependency rule: services do not need to import concrete adapters.
 
