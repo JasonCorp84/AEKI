@@ -38,6 +38,9 @@ export function checkCoverage(repositoryDirectory, reportPaths) {
       continue;
     }
     const summary = coverage.fileCoverageFor(absolutePath).toSummary();
+    if (summary.statements.total === 0) {
+      errors.push(`Missing statement instrumentation: ${sourceFile}`);
+    }
     for (const metric of ['lines', 'statements', 'functions', 'branches']) {
       if (summary[metric].covered !== summary[metric].total) {
         errors.push(

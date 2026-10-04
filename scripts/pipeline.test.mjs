@@ -80,6 +80,51 @@ function writeCoverageReport(fixture, executionCount) {
   );
 }
 
+test('coverage command rejects empty instrumentation for executable source', () => {
+  const fixture = createCoverageFixture();
+  writeFileSync(
+    fixture.reportPath,
+    JSON.stringify({
+      [fixture.sourcePath]: {
+        path: fixture.sourcePath,
+        statementMap: {},
+        s: {},
+        fnMap: {},
+        f: {},
+        branchMap: {},
+        b: {},
+      },
+    }),
+  );
+  const result = spawnSync(
+    process.execPath,
+    [coverageCommand, '--root', fixture.directory, '--report', fixture.reportPath],
+    { encoding: 'utf8' },
+  );
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /Missing statement instrumentation.*example\.ts/);
+});
+
+test('coverage command accepts measured statements without functions or branches', () => {
+  const fixture = createCoverageFixture();
+  writeFileSync(fixture.sourcePath, 'export const answer = 42;\n');
+  writeCoverageReport(fixture, 1);
+  const report = JSON.parse(readFileSync(fixture.reportPath, 'utf8'));
+  const fileCoverage = report[fixture.sourcePath];
+  fileCoverage.fnMap = {};
+  fileCoverage.f = {};
+  fileCoverage.branchMap = {};
+  fileCoverage.b = {};
+  writeFileSync(fixture.reportPath, JSON.stringify(report));
+  const result = spawnSync(
+    process.execPath,
+    [coverageCommand, '--root', fixture.directory, '--report', fixture.reportPath],
+    { encoding: 'utf8' },
+  );
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /All four coverage metrics are 100%/);
+});
+
 test('coverage gate rejects every uncovered metric and accepts complete execution', () => {
   const fixture = createCoverageFixture();
   writeCoverageReport(fixture, 0);

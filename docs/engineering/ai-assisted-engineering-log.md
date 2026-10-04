@@ -81,6 +81,8 @@ The timing CSV is a snapshot extracted from the local Codex event log. It stores
 
 Latest quality-gate work: [S54 — CI, Git hooks and complete coverage](sessions/2026-10-04-ci-quality-gates.md), including approved coverage scope, actual Git-hook behavior, PostgreSQL verification and per-file coverage enforcement.
 
+Latest coverage correction: [S55 — reject empty instrumentation](sessions/2026-10-04-empty-coverage-instrumentation.md), with a real CLI RED/GREEN regression and compatibility verification for files without functions or branches.
+
 Latest tooling setup: [S53 — project-wide Prettier](sessions/2026-10-04-prettier-setup.md), including native formatting, reproducible contract generation, formatter/check integration and verified regression checks.
 
 Latest review fixes: [S52 — measurement validation and C4](sessions/2026-10-04-code-review-fixes.md), including two RED/GREEN regressions, frozen historical identities, strict calendar validation and the Docker interruption that prevented a fresh database test run.
