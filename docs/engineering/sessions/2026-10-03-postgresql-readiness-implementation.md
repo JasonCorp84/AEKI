@@ -6,18 +6,27 @@ Baseline: `6c0c3751f386e2c6aa22dcb16d906fe41b7d5069`. Working branch: `codex/pos
 
 ## Timing and measurement limits
 
-S45 first observed clock: `2026-10-02T10:14:37Z`. It ended with an approval-review usage-limit rejection; its exact completion event and duration are not reconciled. S46 first observed clock: `2026-10-03T18:50:07Z`. Delivery-preparation checkpoint: `2026-10-03T19:13:01Z` (recorded checkpoint, not an exact task-completion event); observed continuation interval is 1,374 seconds. Exact request/turn-completion timestamps, turn IDs, tokens and human active time are unknown. Do not count the overnight interruption as active engineering time or infer total technique efficiency from these observations. User acceptance of this delivery is pending.
+Original delivery checkpoints: S45 first clock `2026-10-02T10:14:37Z`; S46 first clock `2026-10-03T18:50:07Z` and delivery-preparation clock `2026-10-03T19:13:01Z`. The observed S46 checkpoint interval was 1,374 seconds, not the full turn duration. S45 ended after an approval-review usage-limit rejection.
+
+**Reconciliation, 2026-10-04:** actual task events have now supplied the exact assistant-turn timing below. These supersede the original unknown timing fields and preserve the earlier observations as checkpoints.
+
+| Sequence | Turn ID                                | Start UTC                  | Completion UTC             | Wall seconds |
+| -------- | -------------------------------------- | -------------------------- | -------------------------- | ------------ |
+| S45      | `01a0fc1b-8de9-7aa2-b7ef-38eb71a155f4` | `2026-10-02T10:14:19.604Z` | `2026-10-02T10:30:48.752Z` | 989.148      |
+| S46      | `01a10319-80ab-74a0-9858-c1e240cc10be` | `2026-10-03T18:49:25.528Z` | `2026-10-03T19:14:14.653Z` | 1489.125     |
+
+These are assistant-turn wall times, not active human/engineering time or a claim of accepted task completion. The overnight gap is excluded. Token counts and human active time remain unmeasured. The implementation was subsequently committed/pushed as `3d8f029`; the delivery-time uncommitted statement above records the original snapshot.
 
 ## Applied techniques and skills
 
 TDD followed the agreed public seams: unknown JSON parsing; actual PostgreSQL and Nest HTTP; React interactions with actual Redux/RTK Query and MSW at the network boundary; real browser → running Nest → PostgreSQL. Mikado prerequisite discoveries changed test infrastructure before keeping dependent behavior. Clean Code and SOLID shaped a narrow database probe interface, Nest composition/provider, separate transport/state selection/presentation, typed message replacement and semantic styling.
 
-| Skill | Application and load status | Observed contribution |
-| --- | --- | --- |
-| `tdd` | Applied on S45 and reloaded on S46; approved seams retained | Behavioral RED → minimum GREEN, followed by refactoring and regression checks |
-| `codebase-design` | Reused earlier guidance during S45 | Keep database-driver details behind the probe; separate frontend transport and presentation |
-| `browser:control-in-app-browser` | Fresh current-bundle load on S46 | Actual connected outage/recovery, independent candidate startup and narrow-screen inspection |
-| `vercel:react-best-practices` | Fresh load on S46 | Derived query state without effects, event-based retry, no unnecessary memoization |
+| Skill                            | Application and load status                                 | Observed contribution                                                                        |
+| -------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `tdd`                            | Applied on S45 and reloaded on S46; approved seams retained | Behavioral RED → minimum GREEN, followed by refactoring and regression checks                |
+| `codebase-design`                | Reused earlier guidance during S45                          | Keep database-driver details behind the probe; separate frontend transport and presentation  |
+| `browser:control-in-app-browser` | Fresh current-bundle load on S46                            | Actual connected outage/recovery, independent candidate startup and narrow-screen inspection |
+| `vercel:react-best-practices`    | Fresh load on S46                                           | Derived query state without effects, event-based retry, no unnecessary memoization           |
 
 No subagents or formal independent code-review run were used. No relevant AEKI memory result was used. Skill application is an observation, not proof that a skill caused a speed/quality improvement.
 
@@ -38,16 +47,16 @@ Additional malformed fixtures, migration and configuration checks are regression
 
 Expected TDD REDs above are separate from technical retries. The following recovery episodes were observed; exact aggregate repeat-operation count across both turns is unaudited.
 
-| Episode | Reason and recovery |
-| --- | --- |
-| Vitest runner resolution | Package subpath was not exported; resolve its package manifest and adjacent executable instead |
-| Docker restart port | Docker-selected publishing port changed on stop/start; reserve a per-run loopback port |
-| Test app teardown | Re-closing an earlier Nest app ended its pool twice; clear the app reference after close |
-| Migration ordering | tmpfs did not retain history across the outage restart; use an owned per-run named volume, deleted at final cleanup |
-| Docker availability | Engine was unavailable during initial attempts; supported Desktop startup and the user's Docker action restored it; two failed API attempts were observed during S46 |
+| Episode                       | Reason and recovery                                                                                                                                                           |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Vitest runner resolution      | Package subpath was not exported; resolve its package manifest and adjacent executable instead                                                                                |
+| Docker restart port           | Docker-selected publishing port changed on stop/start; reserve a per-run loopback port                                                                                        |
+| Test app teardown             | Re-closing an earlier Nest app ended its pool twice; clear the app reference after close                                                                                      |
+| Migration ordering            | tmpfs did not retain history across the outage restart; use an owned per-run named volume, deleted at final cleanup                                                           |
+| Docker availability           | Engine was unavailable during initial attempts; supported Desktop startup and the user's Docker action restored it; two failed API attempts were observed during S46          |
 | Approval service interruption | S45 escalated verification was rejected because approval-review usage was exhausted, rather than because the operation was unsafe; work resumed after the user's continuation |
-| Frontend loading observation | A timed mocked response raced with the assertion; use an explicitly released response and await visible checking feedback; one failing loading-test iteration was observed |
-| Documentation lookup | Two guessed documentation/metrics paths did not exist; actual files were located; application behavior was unaffected |
+| Frontend loading observation  | A timed mocked response raced with the assertion; use an explicitly released response and await visible checking feedback; one failing loading-test iteration was observed    |
+| Documentation lookup          | Two guessed documentation/metrics paths did not exist; actual files were located; application behavior was unaffected                                                         |
 
 Self-revisions include the total deadline, stable test port, persistent-within-run test storage, presentation extraction and deterministic loading fixture. User-requested quality corrections in this implementation: none observed. The Docker message is environment support, not a quality correction. Earlier UI-design corrections belong to their own tasks.
 

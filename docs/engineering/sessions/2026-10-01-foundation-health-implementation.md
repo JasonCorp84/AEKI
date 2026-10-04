@@ -14,14 +14,14 @@ Skills applied: **tdd**, freshly loaded with its testing/mocking references, gui
 
 ## Observed TDD cycles
 
-| Behavior | Meaningful RED | GREEN |
-| --- | --- | --- |
-| Reject unsupported health status | Parser stub did not throw | Schema-derived Ajv validation rejects invalid input |
-| Serve actual health HTTP | Nest returned 404 instead of 200 | Typed controller fulfills the contract |
-| Render reachable response | Reachable state absent | Real RTK Query endpoint and provider wiring |
-| Recover after transport failure | Checking remained visible; unreachable feedback absent | Failure feedback and user retry |
-| Reject malformed success shape | UI displayed unreachable instead of invalid response | Contract-validation failure mapping |
-| Reject non-JSON success | UI displayed unreachable instead of invalid response | RTK Query parsing-error mapping |
+| Behavior                         | Meaningful RED                                         | GREEN                                               |
+| -------------------------------- | ------------------------------------------------------ | --------------------------------------------------- |
+| Reject unsupported health status | Parser stub did not throw                              | Schema-derived Ajv validation rejects invalid input |
+| Serve actual health HTTP         | Nest returned 404 instead of 200                       | Typed controller fulfills the contract              |
+| Render reachable response        | Reachable state absent                                 | Real RTK Query endpoint and provider wiring         |
+| Recover after transport failure  | Checking remained visible; unreachable feedback absent | Failure feedback and user retry                     |
+| Reject malformed success shape   | UI displayed unreachable instead of invalid response   | Contract-validation failure mapping                 |
+| Reject non-JSON success          | UI displayed unreachable instead of invalid response   | RTK Query parsing-error mapping                     |
 
 Supplementary parser fixtures and delayed-loading checks verified existing behavior; separate RED cycles are not claimed for them. Refactoring extracted the presentational view, typed text dictionary and semantic styling after GREEN, retaining passing integration checks.
 

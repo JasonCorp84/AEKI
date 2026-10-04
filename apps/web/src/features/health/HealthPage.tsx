@@ -6,28 +6,31 @@ import { englishReadinessMessages, type ReadinessMessages } from './readiness.me
 
 type HealthPageProps = { messages?: HealthMessages; readinessMessages?: ReadinessMessages };
 
-export function HealthPage({ messages = englishHealthMessages, readinessMessages = englishReadinessMessages }: HealthPageProps) {
+export function HealthPage({
+  messages = englishHealthMessages,
+  readinessMessages = englishReadinessMessages,
+}: HealthPageProps) {
   const healthQuery = useGetHealthQuery();
-  let healthState: HealthState;
+  let healthState: HealthState = healthQuery.data ? { kind: 'reachable' } : { kind: 'checking' };
 
   if (healthQuery.isFetching) {
     healthState = { kind: 'checking' };
   } else if (healthQuery.isError) {
     const queryError = healthQuery.error;
-    const hasInvalidResponse = queryError && 'status' in queryError &&
+    const hasInvalidResponse =
+      queryError &&
+      'status' in queryError &&
       (queryError.status === 'CUSTOM_ERROR' || queryError.status === 'PARSING_ERROR');
     healthState = { kind: hasInvalidResponse ? 'invalid' : 'unreachable' };
-  } else if (healthQuery.data) {
-    healthState = { kind: 'reachable' };
-  } else {
-    healthState = { kind: 'checking' };
   }
 
   function retryHealthRequest() {
     void healthQuery.refetch();
   }
 
-  return <HealthView healthState={healthState} messages={messages} onRetry={retryHealthRequest}>
-    <ReadinessStatus messages={readinessMessages} />
-  </HealthView>;
+  return (
+    <HealthView healthState={healthState} messages={messages} onRetry={retryHealthRequest}>
+      <ReadinessStatus messages={readinessMessages} />
+    </HealthView>
+  );
 }

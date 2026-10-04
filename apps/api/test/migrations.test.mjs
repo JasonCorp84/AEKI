@@ -7,7 +7,9 @@ it('initializes a disposable foundation schema, applies idempotently and rolls b
   const migrationConnection = new Pool({ connectionString: testDatabaseUrl });
   try {
     expect(await migrateDatabase(testDatabaseUrl)).toHaveLength(0);
-    const schemaExists = await migrationConnection.query("SELECT schema_name FROM information_schema.schemata WHERE schema_name = 'aeki_foundation'");
+    const schemaExists = await migrationConnection.query(
+      "SELECT schema_name FROM information_schema.schemata WHERE schema_name = 'aeki_foundation'",
+    );
     expect(schemaExists.rows).toEqual([{ schema_name: 'aeki_foundation' }]);
     expect(await migrateDatabase(testDatabaseUrl, 'down')).toHaveLength(1);
     expect(await migrateDatabase(testDatabaseUrl)).toHaveLength(1);

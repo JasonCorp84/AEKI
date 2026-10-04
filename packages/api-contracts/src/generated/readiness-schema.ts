@@ -1,57 +1,39 @@
 // Generated from OpenAPI. Do not edit.
 export const readinessSchema = {
-  "oneOf": [
+  oneOf: [
     {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "status",
-        "database"
-      ],
-      "properties": {
-        "status": {
-          "type": "string",
-          "enum": [
-            "ready"
-          ]
+      type: 'object',
+      additionalProperties: false,
+      required: ['status', 'database'],
+      properties: {
+        status: {
+          type: 'string',
+          enum: ['ready'],
         },
-        "database": {
-          "type": "string",
-          "enum": [
-            "reachable"
-          ]
-        }
-      }
+        database: {
+          type: 'string',
+          enum: ['reachable'],
+        },
+      },
     },
     {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "status",
-        "database",
-        "code"
-      ],
-      "properties": {
-        "status": {
-          "type": "string",
-          "enum": [
-            "not_ready"
-          ]
+      type: 'object',
+      additionalProperties: false,
+      required: ['status', 'database', 'code'],
+      properties: {
+        status: {
+          type: 'string',
+          enum: ['not_ready'],
         },
-        "database": {
-          "type": "string",
-          "enum": [
-            "unreachable"
-          ]
+        database: {
+          type: 'string',
+          enum: ['unreachable'],
         },
-        "code": {
-          "type": "string",
-          "enum": [
-            "DATABASE_UNAVAILABLE",
-            "DATABASE_TIMEOUT"
-          ]
-        }
-      }
-    }
-  ]
+        code: {
+          type: 'string',
+          enum: ['DATABASE_UNAVAILABLE', 'DATABASE_TIMEOUT'],
+        },
+      },
+    },
+  ],
 };

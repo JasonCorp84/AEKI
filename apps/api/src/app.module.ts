@@ -8,9 +8,12 @@ import { databaseReadinessToken } from './database/readiness-probe.js';
 
 @Module({
   controllers: [HealthController, ReadinessController],
-  providers: [{
-    provide: databaseReadinessToken,
-    useFactory: () => new PostgresReadinessAdapter(requireDatabaseUrl(process.env['DATABASE_URL'])),
-  }],
+  providers: [
+    {
+      provide: databaseReadinessToken,
+      useFactory: () =>
+        new PostgresReadinessAdapter(requireDatabaseUrl(process.env['DATABASE_URL'])),
+    },
+  ],
 })
 export class AppModule {}

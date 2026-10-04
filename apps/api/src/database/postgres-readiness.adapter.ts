@@ -10,7 +10,8 @@ export class PostgresReadinessAdapter implements DatabaseReadinessProbe {
 
   constructor(databaseUrl: string) {
     this.connectionPool = new Pool({
-      connectionString: databaseUrl, max: 2,
+      connectionString: databaseUrl,
+      max: 2,
       connectionTimeoutMillis: databaseProbeBudgetMillis,
       query_timeout: databaseProbeBudgetMillis,
       statement_timeout: databaseProbeBudgetMillis,
@@ -50,14 +51,22 @@ export class PostgresReadinessAdapter implements DatabaseReadinessProbe {
       return { status: 'ready', database: 'reachable' };
     } catch (error: unknown) {
       shouldDestroyClient = true;
-      const hasTimedOut = hasDeadlineExpired || error instanceof DatabaseProbeTimeout ||
+      const hasTimedOut =
+        hasDeadlineExpired ||
+        error instanceof DatabaseProbeTimeout ||
         (error instanceof Error && /timeout/i.test(error.message));
-      return { status: 'not_ready', database: 'unreachable', code: hasTimedOut ? 'DATABASE_TIMEOUT' : 'DATABASE_UNAVAILABLE' };
+      return {
+        status: 'not_ready',
+        database: 'unreachable',
+        code: hasTimedOut ? 'DATABASE_TIMEOUT' : 'DATABASE_UNAVAILABLE',
+      };
     } finally {
       clearTimeout(deadlineTimer);
       checkedOutClient?.release(shouldDestroyClient);
     }
   }
 
-  async onModuleDestroy(): Promise<void> { await this.connectionPool.end(); }
+  async onModuleDestroy(): Promise<void> {
+    await this.connectionPool.end();
+  }
 }

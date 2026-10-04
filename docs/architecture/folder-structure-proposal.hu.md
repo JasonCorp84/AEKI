@@ -105,14 +105,14 @@ A runtime schema-validáció bekötését és a generátorokat az első endpoint
 
 ## Előnyök és hátrányok
 
-| Döntés | Előny | Hátrány / kezelendő kockázat |
-| --- | --- | --- |
-| Monorepo | Egy commitban együtt változhat API és UI; közös tooling | Workspaces és több build konfigurációja; kerülni kell az alkalmazások belső kódjának keresztimportját |
-| Moduláris monolit | Egyszerű helyi indítás, hiba követése és DB-tranzakció | Backendmodulok együtt települnek; külön skálázás és folyamatonkénti hibaszigetelés korlátozott |
-| Feature alapú mappák | Egy funkció módosítása könnyebben követhető | Határokat kell választani; rossz importokkal körkörös függőség alakulhat ki |
-| Controller/service/repository | Elkülönített HTTP-, üzleti és DB-felelősség | Egyszerű műveletnél is több fájl; túlzott absztrakció elrejtheti a lényeget |
-| RTK Query | Egységes adatlekérés, cache és invalidálás | Query-argumentumokat, tag-eket és sessionváltást tudatosan kell kezelni |
-| Unit teszt a kód mellett | A viselkedés dokumentációja közel van a funkcióhoz | Build/test fájlkizárást kell konfigurálni; DB-garanciát külön integrációs teszt bizonyít |
+| Döntés                        | Előny                                                   | Hátrány / kezelendő kockázat                                                                          |
+| ----------------------------- | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Monorepo                      | Egy commitban együtt változhat API és UI; közös tooling | Workspaces és több build konfigurációja; kerülni kell az alkalmazások belső kódjának keresztimportját |
+| Moduláris monolit             | Egyszerű helyi indítás, hiba követése és DB-tranzakció  | Backendmodulok együtt települnek; külön skálázás és folyamatonkénti hibaszigetelés korlátozott        |
+| Feature alapú mappák          | Egy funkció módosítása könnyebben követhető             | Határokat kell választani; rossz importokkal körkörös függőség alakulhat ki                           |
+| Controller/service/repository | Elkülönített HTTP-, üzleti és DB-felelősség             | Egyszerű műveletnél is több fájl; túlzott absztrakció elrejtheti a lényeget                           |
+| RTK Query                     | Egységes adatlekérés, cache és invalidálás              | Query-argumentumokat, tag-eket és sessionváltást tudatosan kell kezelni                               |
+| Unit teszt a kód mellett      | A viselkedés dokumentációja közel van a funkcióhoz      | Build/test fájlkizárást kell konfigurálni; DB-garanciát külön integrációs teszt bizonyít              |
 
 Kezdéshez npm workspaces elegendő a két app kezelésére. Nx/Turborepo akkor érdemes, ha a buildfolyamat és a csomagok száma már indokolja. Az npm workspaces több helyi package-et fog össze egy gyökérprojektben. [npm Workspaces](https://docs.npmjs.com/cli/using-npm/workspaces/).
 

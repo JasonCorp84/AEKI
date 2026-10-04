@@ -1,0 +1,8 @@
+{
+  "all": true,
+  "include": ["scripts/**/*.mjs"],
+  "exclude": ["**/*.test.mjs"],
+  "exclude-after-remap": true,
+  "reporter": ["json", "text", "html"],
+  "reports-dir": "coverage/processes"
+}

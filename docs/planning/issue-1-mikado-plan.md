@@ -32,15 +32,15 @@ Record exact evidence and the smallest prerequisite. If a throwaway experiment a
 
 ## Nodes and completion evidence
 
-| Node | Attempt / minimal change | What could block it (hypothesis) | Evidence required to keep the change |
-| --- | --- | --- | --- |
-| M0 — Preserve a known baseline | Record HEAD and user-owned changes; verify the existing prototype remains independently runnable; define the goal's public test boundaries | An experiment cannot be safely separated from pre-existing edits | Baseline and protected files recorded; recovery is limited to experiment-owned edits; agreed test boundaries before test writing |
-| M1 — Reproducible runnable workspace | Establish minimal npm workspaces for React and NestJS with independent startup/build commands, strict TypeScript and a compatible pinned runtime | Dependency compatibility, module resolution, workspace import/export or unavailable browser/test tooling | Install from a committed lockfile; both minimal apps start and build; frontend and API behavior tests can run; tooling rationale recorded in English |
-| M2 — One shared health contract | Define a proposed GET /health operation and a minimal success payload; validate OpenAPI, generate transport types and demonstrate a schema-derived runtime parser | Code generator and validator disagree, generation is not reproducible, shared package cannot be consumed | A valid health fixture is accepted; malformed data is rejected; types regenerate without drift; both consumers type-check without unsafe assertions |
-| M3 — Nest fulfills the contract | Through the public HTTP boundary, write one health success test, observe RED, add the minimum endpoint, observe GREEN and review responsibilities | HTTP test setup, response validation or contract mapping does not work with the chosen toolchain | Actual Nest HTTP response has the agreed status/payload and passes runtime schema validation; endpoint test passes; no database dependency |
-| M4 — React handles the contract | Exercise the page with the actual Redux provider, RTK Query client and intercepted HTTP; add loading → reachable, unreachable/retry and malformed-response cases one behavior at a time | Provider wiring, validation integration, timing or accessible state feedback | Real UI/store/client cooperation passes; the malformed response never becomes a healthy state; retry reflects the new response; generated types are used |
-| M5 — Connect the actual applications | Replace development interception for this path with the actual Nest service; verify reachable, loading and request-failure behavior | Base URL, environment parsing, CORS/proxy setup, response content or timeout behavior | Browser request demonstrably reaches Nest; stopping the API yields an unreachable state; restarting and retrying recovers; slow transport permits observing loading; no production mock fallback |
-| M6 — Reproduce from a fresh checkout | Re-run documented install/start/build/check commands in an isolated clean checkout, supplying environment values from the example | Hidden local files, untracked generated artifacts, secrets, port conflicts or undocumented setup | Independent web/API builds, contract generation/validation and relevant tests pass; fresh-checkout browser journey works; instructions require no committed secrets |
+| Node                                 | Attempt / minimal change                                                                                                                                                                | What could block it (hypothesis)                                                                         | Evidence required to keep the change                                                                                                                                                             |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| M0 — Preserve a known baseline       | Record HEAD and user-owned changes; verify the existing prototype remains independently runnable; define the goal's public test boundaries                                              | An experiment cannot be safely separated from pre-existing edits                                         | Baseline and protected files recorded; recovery is limited to experiment-owned edits; agreed test boundaries before test writing                                                                 |
+| M1 — Reproducible runnable workspace | Establish minimal npm workspaces for React and NestJS with independent startup/build commands, strict TypeScript and a compatible pinned runtime                                        | Dependency compatibility, module resolution, workspace import/export or unavailable browser/test tooling | Install from a committed lockfile; both minimal apps start and build; frontend and API behavior tests can run; tooling rationale recorded in English                                             |
+| M2 — One shared health contract      | Define a proposed GET /health operation and a minimal success payload; validate OpenAPI, generate transport types and demonstrate a schema-derived runtime parser                       | Code generator and validator disagree, generation is not reproducible, shared package cannot be consumed | A valid health fixture is accepted; malformed data is rejected; types regenerate without drift; both consumers type-check without unsafe assertions                                              |
+| M3 — Nest fulfills the contract      | Through the public HTTP boundary, write one health success test, observe RED, add the minimum endpoint, observe GREEN and review responsibilities                                       | HTTP test setup, response validation or contract mapping does not work with the chosen toolchain         | Actual Nest HTTP response has the agreed status/payload and passes runtime schema validation; endpoint test passes; no database dependency                                                       |
+| M4 — React handles the contract      | Exercise the page with the actual Redux provider, RTK Query client and intercepted HTTP; add loading → reachable, unreachable/retry and malformed-response cases one behavior at a time | Provider wiring, validation integration, timing or accessible state feedback                             | Real UI/store/client cooperation passes; the malformed response never becomes a healthy state; retry reflects the new response; generated types are used                                         |
+| M5 — Connect the actual applications | Replace development interception for this path with the actual Nest service; verify reachable, loading and request-failure behavior                                                     | Base URL, environment parsing, CORS/proxy setup, response content or timeout behavior                    | Browser request demonstrably reaches Nest; stopping the API yields an unreachable state; restarting and retrying recovers; slow transport permits observing loading; no production mock fallback |
+| M6 — Reproduce from a fresh checkout | Re-run documented install/start/build/check commands in an isolated clean checkout, supplying environment values from the example                                                       | Hidden local files, untracked generated artifacts, secrets, port conflicts or undocumented setup         | Independent web/API builds, contract generation/validation and relevant tests pass; fresh-checkout browser journey works; instructions require no committed secrets                              |
 
 Do not write all tests in advance. At each behavioral node choose one example, observe its meaningful RED, implement the smallest GREEN and refactor before choosing the next. Installation/scaffold commands need direct verification, not tests that merely mirror configuration files. Scaffold-generated tests do not count as our health-behavior TDD evidence.
 
@@ -55,15 +55,15 @@ All four seams were explicitly approved before implementation. See the implement
 
 ## Proposed behavior examples
 
-| Boundary | Example | Expected result |
-| --- | --- | --- |
-| HTTP | GET /health succeeds | 200 plus the contract-defined liveness payload |
-| Parser | Response contains the wrong health status or shape | Validation failure; never render a false success |
-| UI | Health response is pending | Accessible loading feedback |
-| UI | Valid health response arrives | Reachable API state |
-| UI | Transport fails / request times out | Unreachable feedback and an available retry action |
-| UI | Retry succeeds after an outage | Reachable feedback replaces the failure |
-| Real journey | API is stopped and subsequently restarted | Actual browser state follows the service availability |
+| Boundary     | Example                                            | Expected result                                       |
+| ------------ | -------------------------------------------------- | ----------------------------------------------------- |
+| HTTP         | GET /health succeeds                               | 200 plus the contract-defined liveness payload        |
+| Parser       | Response contains the wrong health status or shape | Validation failure; never render a false success      |
+| UI           | Health response is pending                         | Accessible loading feedback                           |
+| UI           | Valid health response arrives                      | Reachable API state                                   |
+| UI           | Transport fails / request times out                | Unreachable feedback and an available retry action    |
+| UI           | Retry succeeds after an outage                     | Reachable feedback replaces the failure               |
+| Real journey | API is stopped and subsequently restarted          | Actual browser state follows the service availability |
 
 The precise payload, error mapping and timeout policy are decisions for M2/M4. Examples above are acceptance proposals, not an already implemented API contract.
 
@@ -79,9 +79,9 @@ A planned RED is expected TDD evidence, not a technical retry. A failed tool ope
 
 ## Experiment record
 
-| Attempt | Target node | Hypothesis | Observed result | New prerequisite | Undo scope / baseline | Outcome |
-| --- | --- | --- | --- | --- | --- | --- |
-| E0 | G | Missing runnable application foundations block the health journey | Not run; repository absence observed during planning | M0/M1 proposed | No implementation edits to undo | Planned |
+| Attempt | Target node | Hypothesis                                                        | Observed result                                      | New prerequisite | Undo scope / baseline           | Outcome |
+| ------- | ----------- | ----------------------------------------------------------------- | ---------------------------------------------------- | ---------------- | ------------------------------- | ------- |
+| E0      | G           | Missing runnable application foundations block the health journey | Not run; repository absence observed during planning | M0/M1 proposed   | No implementation edits to undo | Planned |
 
 For each actual attempt record start/end, skill use (or None), relevant check output, retries and whether the change was kept or undone. The engineering log holds raw evidence; Linear retains cross-project methodology interpretation.
 

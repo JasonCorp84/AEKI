@@ -6,12 +6,12 @@ Az alapelvek elfogadottak; a lent leírt konkrét OpenAPI-tooling és munkamenet
 
 ## 1. SOLID a modulokban
 
-| Elv | Követelmény az appban | Review-példa |
-| --- | --- | --- |
-| SRP | HTTP-adapter, üzleti művelet és adatbázis-hozzáférés felelőssége különül el | Controller nem tartalmaz SQL-t; foglalási service nem küld közvetlen emailt |
-| OCP | A valódi változási pontok bővíthetők szűk szerződés mentén | Új értesítési adapter nem módosítja a foglalási szabályokat |
-| LSP | Minden implementáció teljesíti a szerződés eredmény-, hiba- és mellékhatásgaranciáit | Atomi foglalást ígérő portot nem valósítunk meg védelem nélküli read-then-write-tal |
-| ISP | A fogyasztó csak a szükséges műveletektől függ | Termékkeresési port nem ír készletet és nem kezel sessiont |
+| Elv | Követelmény az appban                                                                            | Review-példa                                                                             |
+| --- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| SRP | HTTP-adapter, üzleti művelet és adatbázis-hozzáférés felelőssége különül el                      | Controller nem tartalmaz SQL-t; foglalási service nem küld közvetlen emailt              |
+| OCP | A valódi változási pontok bővíthetők szűk szerződés mentén                                       | Új értesítési adapter nem módosítja a foglalási szabályokat                              |
+| LSP | Minden implementáció teljesíti a szerződés eredmény-, hiba- és mellékhatásgaranciáit             | Atomi foglalást ígérő portot nem valósítunk meg védelem nélküli read-then-write-tal      |
+| ISP | A fogyasztó csak a szükséges műveletektől függ                                                   | Termékkeresési port nem ír készletet és nem kezel sessiont                               |
 | DIP | Üzleti művelet indokolt határon üzleti szerződésre támaszkodik; infrastruktúra azt implementálja | StockReservationPort + PostgresStockReservation adapter, Nest runtime injekciós tokennel |
 
 Nem cél minden osztályhoz interfészt vagy általános CRUD-base osztályt létrehozni. A szerződésnek a fogyasztó igényét kell leírnia; az extra réteg előnyét konkrét példával kell megindokolni. Az adapterek helyettesíthetőségét közös viselkedési szerződés ellenőrizheti. A fake nem bizonyít DB-konkurenciagaranciát.
@@ -40,11 +40,11 @@ Csaba kifejezett utasítása alapján, 2026. október 1. Döntésrekord: [ADR-00
 
 **A tesztelésnek az egységek helyessége mellett az összekapcsolt részek együttműködését és a kritikus felhasználói folyamatokat is igazolnia kell.** Zöld unit tesztek vagy magas kódlefedettség önmagukban nem elegendők a rendszerhelyesség bizonyításához.
 
-| Szint | Mit igazol? | AEKI-app példa |
-| --- | --- | --- |
-| Unit | Egy elkülönített egység viselkedése | A bemenet pozitív egész mennyiséget követel |
-| Integráció | Összekapcsolt részek működése, szükséges üzleti sorrendje és időzítése | RTK Query mutation → invalidálás → készlet újralekérése → megváltozott UI |
-| E2E | Kritikus felhasználói folyamat működő böngésző, backend és valódi tesztadatbázis együttműködésével | Belépés → keresés → foglalás → saját foglalás megjelenése → csökkent készlet |
+| Szint      | Mit igazol?                                                                                        | AEKI-app példa                                                               |
+| ---------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Unit       | Egy elkülönített egység viselkedése                                                                | A bemenet pozitív egész mennyiséget követel                                  |
+| Integráció | Összekapcsolt részek működése, szükséges üzleti sorrendje és időzítése                             | RTK Query mutation → invalidálás → készlet újralekérése → megváltozott UI    |
+| E2E        | Kritikus felhasználói folyamat működő böngésző, backend és valódi tesztadatbázis együttműködésével | Belépés → keresés → foglalás → saját foglalás megjelenése → csökkent készlet |
 
 Kötelezően ellenőrizendő, ahol az adott funkció érintett:
 
@@ -102,12 +102,12 @@ Egy leváltott döntést nem törlünk: Superseded státuszt kap, és hivatkozik
 
 ## 6. C4 a különböző kontextusokhoz
 
-| Nézet | Kérdés | Dokumentum |
-| --- | --- | --- |
-| System Context | Ki használja a rendszert; mi a határa és a külső kapcsolata? | [01-system-context.md](01-system-context.md) |
-| Container | Milyen alkalmazások és adattárolók futnak; hogyan kapcsolódnak? | [02-containers.md](02-containers.md) |
-| Component | Hogyan épül fel egy kiválasztott container? | [Backend component and data-flow view](03-components.md) |
-| Dynamic, szükség esetén | Hogyan működik egy konkrét folyamat? | Például foglalás/idempotencia; külön fájlban |
+| Nézet                   | Kérdés                                                          | Dokumentum                                               |
+| ----------------------- | --------------------------------------------------------------- | -------------------------------------------------------- |
+| System Context          | Ki használja a rendszert; mi a határa és a külső kapcsolata?    | [01-system-context.md](01-system-context.md)             |
+| Container               | Milyen alkalmazások és adattárolók futnak; hogyan kapcsolódnak? | [02-containers.md](02-containers.md)                     |
+| Component               | Hogyan épül fel egy kiválasztott container?                     | [Backend component and data-flow view](03-components.md) |
+| Dynamic, szükség esetén | Hogyan működik egy konkrét folyamat?                            | Például foglalás/idempotencia; külön fájlban             |
 
 A C4 kommunikálja a nagyobb kontextust, nem kényszeríti ki a kód architektúráját. Strukturális változáskor a releváns diagramot és ADR-t a kóddal együtt frissítjük. A megtervezett és implementált elemek státuszát jelöljük. Forrás: [C4 model](https://c4model.com/).
 

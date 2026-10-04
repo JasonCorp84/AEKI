@@ -23,15 +23,15 @@ Start with one working search journey. Grow the shared design primitives through
 
 Use a feature-oriented frontend with a small reusable UI layer. The composition root assembles application providers; features own their product-specific behavior.
 
-| Concern | Owner | Boundary |
-| --- | --- | --- |
-| Server products, stores, categories, stock | RTK Query cache | OpenAPI transport contract and validated HTTP responses |
-| Applied search criteria | URL | Parsed, validated criteria; browser Back/Forward is supported |
-| Input being edited, open filter panel | Local React state | User input becomes applied criteria after validation/debounce |
-| Theme mode and palette | Theme provider | Semantic token contract and preference storage adapter |
-| Interface language | Localization provider | Typed translation keys and locale-aware formatters |
-| Visible product representation | Feature mapper | Validated DTO becomes a small view model |
-| Rendering and interaction | Presentational components | Narrow props, labels and callbacks; no direct HTTP access |
+| Concern                                    | Owner                     | Boundary                                                      |
+| ------------------------------------------ | ------------------------- | ------------------------------------------------------------- |
+| Server products, stores, categories, stock | RTK Query cache           | OpenAPI transport contract and validated HTTP responses       |
+| Applied search criteria                    | URL                       | Parsed, validated criteria; browser Back/Forward is supported |
+| Input being edited, open filter panel      | Local React state         | User input becomes applied criteria after validation/debounce |
+| Theme mode and palette                     | Theme provider            | Semantic token contract and preference storage adapter        |
+| Interface language                         | Localization provider     | Typed translation keys and locale-aware formatters            |
+| Visible product representation             | Feature mapper            | Validated DTO becomes a small view model                      |
+| Rendering and interaction                  | Presentational components | Narrow props, labels and callbacks; no direct HTTP access     |
 
 Do not duplicate RTK Query results in an ordinary Redux slice. Do not put theme or locale into the product query key when they only change interface presentation. A future translated catalog API would need a separate explicit locale contract and cache policy.
 
@@ -77,13 +77,13 @@ Advantage: the same feature UI supports another language through resources and f
 
 ### SOLID in the frontend
 
-| Principle | Concrete application | Review check |
-| --- | --- | --- |
-| SRP | Page composes; hook manages search; mapper shapes data; provider owns preferences; card renders | A product card neither fetches nor persists settings |
-| OCP | Add a complete palette or language resource through its defined contract | Existing product components remain unchanged |
-| LSP | Theme definitions and shared component variants preserve required behavior | Every supported variant preserves focus, disabled behavior, labels and readable states |
-| ISP | ProductCard takes only the fields and callbacks it uses | No whole Redux store or unrelated reservation service in props |
-| DIP | Presentational UI consumes view models and callbacks; settings use storage through a narrow seam | Tests can substitute network/storage at boundaries without replacing component behavior |
+| Principle | Concrete application                                                                             | Review check                                                                            |
+| --------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------- |
+| SRP       | Page composes; hook manages search; mapper shapes data; provider owns preferences; card renders  | A product card neither fetches nor persists settings                                    |
+| OCP       | Add a complete palette or language resource through its defined contract                         | Existing product components remain unchanged                                            |
+| LSP       | Theme definitions and shared component variants preserve required behavior                       | Every supported variant preserves focus, disabled behavior, labels and readable states  |
+| ISP       | ProductCard takes only the fields and callbacks it uses                                          | No whole Redux store or unrelated reservation service in props                          |
+| DIP       | Presentational UI consumes view models and callbacks; settings use storage through a narrow seam | Tests can substitute network/storage at boundaries without replacing component behavior |
 
 Use functions, props and composition where sufficient. Introduce ports at actual external boundaries; do not add an interface and class for every component. TypeScript contracts also require runtime parsing for HTTP, URL and storage input.
 

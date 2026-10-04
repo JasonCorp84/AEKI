@@ -5,6 +5,11 @@ import { createApplicationStore } from './app/store';
 import { HealthPage } from './features/health/HealthPage';
 import './shared/theme/tokens.css';
 const applicationRootElement = document.getElementById('root');
-if (!applicationRootElement)
-    throw new Error('Missing application root.');
-createRoot(applicationRootElement).render(<StrictMode><Provider store={createApplicationStore()}><HealthPage /></Provider></StrictMode>);
+if (!applicationRootElement) throw new Error('Missing application root.');
+createRoot(applicationRootElement).render(
+  <StrictMode>
+    <Provider store={createApplicationStore()}>
+      <HealthPage />
+    </Provider>
+  </StrictMode>,
+);

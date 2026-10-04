@@ -1,0 +1,11 @@
+node_modules/
+**/dist/
+**/build/
+**/coverage/
+playwright-report/
+test-results/
+.env
+.env.*
+package-lock.json
+# Rendered diagram exports are regenerated from their Mermaid source.
+docs/architecture/diagrams/*.svg

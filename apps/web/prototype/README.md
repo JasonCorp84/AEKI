@@ -12,11 +12,11 @@ node apps/web/prototype/server.mjs
 
 Open the selected direction at `http://127.0.0.1:4320/prototype/search-ui?variant=A`.
 
-| Variant | Structure | Design question |
-| --- | --- | --- |
-| A — Everyday catalog | Warm introduction, filter sidebar, image-led product grid | Does a familiar shopping layout make discovery easiest? |
-| B — Practical shortlist | Utility sidebar, compact product rows, price and availability columns | Is a comparison-first layout more useful? |
-| C — Room-first discovery | Illustrated room, featured product and a supporting shortlist | Does context help users choose a product? |
+| Variant                  | Structure                                                             | Design question                                         |
+| ------------------------ | --------------------------------------------------------------------- | ------------------------------------------------------- |
+| A — Everyday catalog     | Warm introduction, filter sidebar, image-led product grid             | Does a familiar shopping layout make discovery easiest? |
+| B — Practical shortlist  | Utility sidebar, compact product rows, price and availability columns | Is a comparison-first layout more useful?               |
+| C — Room-first discovery | Illustrated room, featured product and a supporting shortlist         | Does context help users choose a product?               |
 
 Switch with the floating bottom arrows or keyboard left/right outside form fields. The `variant` URL parameter survives reload. Search, category, store selection, availability, sorting, favourites and the product detail overlay are in-memory visual stubs. The store selection changes the label, not the synthetic stock data. Room tabs change the featured item, not the static room illustration.
 

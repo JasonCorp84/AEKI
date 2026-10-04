@@ -10,7 +10,8 @@ export const englishReadinessMessages = {
   invalid: 'Invalid readiness response',
   invalidDetail: 'The API responded, but the readiness report did not match the agreed contract.',
   requestFailed: 'Readiness check failed',
-  requestFailedDetail: 'We could not complete the readiness request. Database availability is unknown.',
+  requestFailedDetail:
+    'We could not complete the readiness request. Database availability is unknown.',
   retry: 'Retry database check',
   checkAgain: 'Check database again',
 };

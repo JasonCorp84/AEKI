@@ -14,11 +14,11 @@ Keep the existing `/health` contract and A visual direction. Preserve prototypes
 
 Keep GET `/health` returning its existing 200 liveness payload, independently of database availability. Add GET `/readiness` with generated response types and runtime validation for **both** expected status codes:
 
-| HTTP | Example JSON | Meaning |
-| --- | --- | --- |
-| 200 | `{ "status": "ready", "database": "reachable" }` | A real connectivity query succeeded |
-| 503 | `{ "status": "not_ready", "database": "unreachable", "code": "DATABASE_UNAVAILABLE" }` | The database cannot currently be reached |
-| 503 | `{ "status": "not_ready", "database": "unreachable", "code": "DATABASE_TIMEOUT" }` | The bounded check did not complete |
+| HTTP | Example JSON                                                                           | Meaning                                  |
+| ---- | -------------------------------------------------------------------------------------- | ---------------------------------------- |
+| 200  | `{ "status": "ready", "database": "reachable" }`                                       | A real connectivity query succeeded      |
+| 503  | `{ "status": "not_ready", "database": "unreachable", "code": "DATABASE_UNAVAILABLE" }` | The database cannot currently be reached |
+| 503  | `{ "status": "not_ready", "database": "unreachable", "code": "DATABASE_TIMEOUT" }`     | The bounded check did not complete       |
 
 These originally proposed payloads are now implemented in OpenAPI, generated TypeScript and runtime validation. Known, schema-valid 503 responses are handled as readiness results despite RTK Query's usual non-2xx error path. Unexpected status/body, malformed JSON and network failure remain distinct outcomes. Readiness proves connectivity, not product-schema completeness, database write permissions or business correctness.
 
@@ -34,17 +34,17 @@ See the [separate Mermaid graph](diagrams/issue-2-mikado.md). Arrows mean **requ
 
 M3 needs the reproducible tooling from M1, not the migrations in M2. M2 can therefore move later if it does not block the smallest connectivity probe. M4 and M5 share the contract prerequisite; frontend fixtures can be implemented before the actual API route if useful.
 
-| Node | Minimal attempt after approval | Keep the change only when |
-| --- | --- | --- |
-| M0 — Protect baseline and agree seams | Record HEAD/local edits; confirm the four test seams below and existing #1 checks | Recovery scope is clear and no user changes are overwritten |
-| M1 — Reproducible PostgreSQL and tooling | Add local Compose setup, example connection variables and separate dev/test databases; record ADR-0005 and pin compatible stable versions | Actual server starts; configuration validation works; test database/role/volume cannot accidentally target development data |
-| M2 — Isolated initialization/migration | Add one minimal foundation-schema migration, plus migration commands | Apply on fresh test DB, inspect schema/history, apply again without duplicate work, roll back/reapply only in the disposable test environment; no product schema invented |
-| C — Shared readiness contract | Define OpenAPI 200/503 responses; regenerate types and runtime schemas | Valid fixtures pass, invalid data fails, generation is reproducible; both consumers can use the contract |
-| M3 — Real bounded database probe | Through a narrow `checkReadiness` interface, run the minimum real connectivity query | Actual PostgreSQL success, connection refusal and controlled nonresponse return within budget; retries recover; checked-out clients are released/destroyed and shutdown closes the pool |
-| M4 — Nest HTTP mapping | Use C; observe HTTP RED; connect readiness orchestration to the real adapter | 200/503 payloads validate; `/health` remains 200 during DB outage; error codes are stable and sanitized; malformed/missing config is actionable |
-| M5 — React readiness feedback | Exercise actual Redux/RTK Query with HTTP interception; handle typed 200 and 503 outcomes | Loading, ready, not-ready, invalid response, request failure and retry work; liveness is presented independently; text/styles retain replacement seams |
-| M6 — Real connected journey | Use actual browser → Nest → PostgreSQL | DB stop leaves API alive and UI not-ready; DB restart + retry restores ready; no mock fallback |
-| M7 — Independent reproduction and teardown | Repeat documented installation, database setup, migration and startup in an isolated candidate | Existing/new checks and builds pass; fresh journey works; owned processes/connections stop; disposal targets only the explicit test environment |
+| Node                                       | Minimal attempt after approval                                                                                                            | Keep the change only when                                                                                                                                                               |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| M0 — Protect baseline and agree seams      | Record HEAD/local edits; confirm the four test seams below and existing #1 checks                                                         | Recovery scope is clear and no user changes are overwritten                                                                                                                             |
+| M1 — Reproducible PostgreSQL and tooling   | Add local Compose setup, example connection variables and separate dev/test databases; record ADR-0005 and pin compatible stable versions | Actual server starts; configuration validation works; test database/role/volume cannot accidentally target development data                                                             |
+| M2 — Isolated initialization/migration     | Add one minimal foundation-schema migration, plus migration commands                                                                      | Apply on fresh test DB, inspect schema/history, apply again without duplicate work, roll back/reapply only in the disposable test environment; no product schema invented               |
+| C — Shared readiness contract              | Define OpenAPI 200/503 responses; regenerate types and runtime schemas                                                                    | Valid fixtures pass, invalid data fails, generation is reproducible; both consumers can use the contract                                                                                |
+| M3 — Real bounded database probe           | Through a narrow `checkReadiness` interface, run the minimum real connectivity query                                                      | Actual PostgreSQL success, connection refusal and controlled nonresponse return within budget; retries recover; checked-out clients are released/destroyed and shutdown closes the pool |
+| M4 — Nest HTTP mapping                     | Use C; observe HTTP RED; connect readiness orchestration to the real adapter                                                              | 200/503 payloads validate; `/health` remains 200 during DB outage; error codes are stable and sanitized; malformed/missing config is actionable                                         |
+| M5 — React readiness feedback              | Exercise actual Redux/RTK Query with HTTP interception; handle typed 200 and 503 outcomes                                                 | Loading, ready, not-ready, invalid response, request failure and retry work; liveness is presented independently; text/styles retain replacement seams                                  |
+| M6 — Real connected journey                | Use actual browser → Nest → PostgreSQL                                                                                                    | DB stop leaves API alive and UI not-ready; DB restart + retry restores ready; no mock fallback                                                                                          |
+| M7 — Independent reproduction and teardown | Repeat documented installation, database setup, migration and startup in an isolated candidate                                            | Existing/new checks and builds pass; fresh journey works; owned processes/connections stop; disposal targets only the explicit test environment                                         |
 
 ## Proposed tooling decision
 
@@ -75,14 +75,14 @@ After approval, first attempt the smallest current goal: determine what is missi
 
 Record each probe, actual blocker, required edge, result and kept/undone scope. Undo only unsuccessful experiment-owned edits while preserving baseline/local edits and previously verified steps. Keep TDD RED tests while implementing their GREEN behavior. Separate expected REDs, dependency discoveries, technical retries and user corrections in the engineering log.
 
-| Experiment | Current evidence | Next action |
-| --- | --- | --- |
-| E0 — Goal probe | Executed after explicit approval: actual readiness HTTP test returned 404 | Added the contracted route and real adapter; HTTP success/outage/recovery verified |
-| E1 — Test-server restart | Docker-assigned port changed across stop/start, breaking the test connection URL | Reserve one loopback port per owned test project and retain it until teardown |
-| E2 — Migration ordering | tmpfs data disappeared across the outage test's stop/start; migration smoke found a fresh history unexpectedly | Use an owned per-run named test volume; preserve it during outage, delete it at final teardown |
-| E3 — Probe deadline | Paused real PostgreSQL exceeded the test timeout before a total deadline was implemented | Share a two-second deadline across acquisition/query and destroy a timed-out checked-out client; recovery/shutdown pass |
-| E4 — React retry observation | A timing-based loading assertion raced with the mocked response | Explicitly release the network fixture after checking loading/stale-success removal |
-| E5 — Independent candidate | Fresh npm install, all 40 tests, lint/types/build and real browser startup passed | Candidate tree `58a3329675983afff40b229503bbc1870d889bd0`; no commit created |
+| Experiment                   | Current evidence                                                                                               | Next action                                                                                                             |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| E0 — Goal probe              | Executed after explicit approval: actual readiness HTTP test returned 404                                      | Added the contracted route and real adapter; HTTP success/outage/recovery verified                                      |
+| E1 — Test-server restart     | Docker-assigned port changed across stop/start, breaking the test connection URL                               | Reserve one loopback port per owned test project and retain it until teardown                                           |
+| E2 — Migration ordering      | tmpfs data disappeared across the outage test's stop/start; migration smoke found a fresh history unexpectedly | Use an owned per-run named test volume; preserve it during outage, delete it at final teardown                          |
+| E3 — Probe deadline          | Paused real PostgreSQL exceeded the test timeout before a total deadline was implemented                       | Share a two-second deadline across acquisition/query and destroy a timed-out checked-out client; recovery/shutdown pass |
+| E4 — React retry observation | A timing-based loading assertion raced with the mocked response                                                | Explicitly release the network fixture after checking loading/stale-success removal                                     |
+| E5 — Independent candidate   | Fresh npm install, all 40 tests, lint/types/build and real browser startup passed                              | Candidate tree `58a3329675983afff40b229503bbc1870d889bd0`; no commit created                                            |
 
 ## Exit conditions
 

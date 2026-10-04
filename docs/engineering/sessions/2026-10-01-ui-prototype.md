@@ -10,10 +10,10 @@ Source: [prototype files and run instructions](../../../apps/web/prototype/READM
 
 ## Sequence and Timing
 
-| Step | Source turn | UTC start | Result |
-| --- | --- | --- | --- |
-| S30 | `01a0f6d3-6d28-7d80-811a-8c57fcac760c` | `2026-10-01T09:37:26.418Z` | Skill/requirements intake; user interrupted before implementation; no completion marker |
-| S31 | `01a0f6d5-91df-7e43-8cd1-61148aab31e1` | `2026-10-01T09:39:46.858Z` | Resumed UI-only exploration; three variants and browser verification |
+| Step | Source turn                            | UTC start                  | Result                                                                                  |
+| ---- | -------------------------------------- | -------------------------- | --------------------------------------------------------------------------------------- |
+| S30  | `01a0f6d3-6d28-7d80-811a-8c57fcac760c` | `2026-10-01T09:37:26.418Z` | Skill/requirements intake; user interrupted before implementation; no completion marker |
+| S31  | `01a0f6d5-91df-7e43-8cd1-61148aab31e1` | `2026-10-01T09:39:46.858Z` | Resumed UI-only exploration; three variants and browser verification                    |
 
 Checkpoint at `2026-10-01T09:54:36Z`: **889.142 seconds (14:49.142)** since S31's task start. This is a delivery-preparation checkpoint, not the final response-complete timestamp. Reconcile completion from the Codex event log on the next turn. Human active time and acceptance time are unknown. The interrupted intake duration is not inferred.
 
