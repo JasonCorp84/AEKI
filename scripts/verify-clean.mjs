@@ -4,7 +4,13 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 // Capture the candidate without modifying the real index or creating a commit.
-const repositoryDirectory = fileURLToPath(new URL('../', import.meta.url));
+const repositoryArgumentIndex = process.argv.indexOf('--repository');
+const repositoryDirectory =
+  repositoryArgumentIndex === -1
+    ? fileURLToPath(new URL('../', import.meta.url))
+    : process.argv[repositoryArgumentIndex + 1];
+const npmCliPath = process.env.npm_execpath;
+if (!npmCliPath) throw new Error('Run this script through npm run verify:clean.');
 const verificationDirectory = mkdtempSync(join(tmpdir(), 'aeki-clean-'));
 const candidateCheckoutDirectory = join(verificationDirectory, 'checkout');
 mkdirSync(candidateCheckoutDirectory);
@@ -29,15 +35,12 @@ runCandidateGitCommand([
   candidateTreeHash,
 ]);
 execFileSync('tar', ['-xf', candidateArchivePath, '-C', candidateCheckoutDirectory]);
-const npmCliPath = process.env.npm_execpath;
-if (!npmCliPath) throw new Error('Run this script through npm run verify:clean.');
 for (const commandArguments of [['ci'], ['run', 'check']]) {
   const commandResult = spawnSync(process.execPath, [npmCliPath, ...commandArguments], {
     cwd: candidateCheckoutDirectory,
     stdio: 'inherit',
     env: process.env,
   });
-  if (commandResult.error) throw commandResult.error;
   if (commandResult.status !== 0)
     throw new Error(`Clean verification failed: npm ${commandArguments.join(' ')}`);
 }

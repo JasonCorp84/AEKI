@@ -6,9 +6,13 @@ import { parseMeasurementCsv, serializeMeasurementCsv } from './measurement-csv.
 
 const commandArguments = process.argv.slice(2);
 const eventPath = commandArguments[commandArguments.indexOf('--events') + 1];
-const logPath = fileURLToPath(
-  new URL('../docs/engineering/sessions/2026-10-01-aeki-turn-timings.csv', import.meta.url),
-);
+const logArgumentIndex = commandArguments.indexOf('--log');
+const logPath =
+  logArgumentIndex === -1
+    ? fileURLToPath(
+        new URL('../docs/engineering/sessions/2026-10-01-aeki-turn-timings.csv', import.meta.url),
+      )
+    : commandArguments[logArgumentIndex + 1];
 try {
   if (!commandArguments.includes('--events') || !eventPath || eventPath.startsWith('--'))
     throw new Error('Provide --events followed by the local Codex JSONL path.');

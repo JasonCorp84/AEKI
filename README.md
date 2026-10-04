@@ -56,9 +56,17 @@ npm run contracts:check
 npm run verify:clean
 npm run test:measurements
 npm run measurements:check
+npm run test:coverage
+npm run coverage:check
 ```
 
-`check` validates OpenAPI/generated-file consistency, lints, type-checks, runs contract/API/frontend tests and builds both apps. Generation updates transport types and runtime health/readiness schemas from the single OpenAPI source. Generated files are versioned and never edited by hand.
+`check` validates OpenAPI/generated-file consistency, lints, type-checks, runs contract/API/frontend/tooling tests with file-level 100% coverage and builds both apps. Generation updates transport types and runtime health/readiness schemas from the single OpenAPI source. Generated files are versioned and never edited by hand.
+
+`npm ci` installs the Husky hooks. Before a commit, lint-staged formats staged supported files with native Prettier and preserves unstaged edits. Before every push, `format:check` checks the whole supported project scope and blocks on unformatted files. Run `npm run format`, review the changes and commit them before retrying a blocked push.
+
+GitHub Actions runs the same `check` command on every push and pull request. `main` requires a pull request and a successful, up-to-date `Quality gate`, including for administrators. CI uses pinned official actions and uploads coverage evidence for 14 days. AWS deployment remains later scope.
+
+Coverage must be 100% for lines, statements, functions and branches **in each executable handwritten application/tooling file**. A missing file/report or any uncovered counter fails; rounded percentages cannot hide gaps. The archived prototype, tests/fixtures, generated code, configuration-only files and type-only declarations are excluded from coverage. The prototype remains formatted. SQL migrations receive real PostgreSQL apply/rollback/reapply tests. Reports are in `coverage/{web,api,contracts,processes}/`; `coverage:check` validates reports from a completed `test:coverage` run, rather than running tests itself. See [ADR-0006](docs/architecture/adr/0006-ci-formatting-and-complete-coverage.md) for the agreed scope and collection strategy.
 
 It also validates the engineering measurement CSV; `npm test` includes its dedicated tests. See [measurement validation and reconciliation](docs/engineering/measurement-validation.md) for mandatory new-record fields, historical warnings and how to recover actual turn timing without guessing.
 
@@ -101,6 +109,7 @@ The frontend separates composition/store, feature transport, connected state sel
 - [Issue #1 Mikado plan](docs/planning/issue-1-mikado-plan.md).
 - [Issue #2 Mikado plan and implementation evidence](docs/planning/issue-2-mikado-plan.md).
 - [ADR-0005: PostgreSQL readiness and migrations](docs/architecture/adr/0005-postgresql-readiness-and-migrations.md).
+- [ADR-0006: CI, formatting and complete coverage](docs/architecture/adr/0006-ci-formatting-and-complete-coverage.md).
 
 Accepted principles: SOLID, TDD, TypeScript contracts with runtime validation, OpenAPI, ADR and C4; meaningful integration and critical end-to-end verification accompany unit tests.
 

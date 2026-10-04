@@ -11,7 +11,7 @@ export function HealthPage({
   readinessMessages = englishReadinessMessages,
 }: HealthPageProps) {
   const healthQuery = useGetHealthQuery();
-  let healthState: HealthState;
+  let healthState: HealthState = healthQuery.data ? { kind: 'reachable' } : { kind: 'checking' };
 
   if (healthQuery.isFetching) {
     healthState = { kind: 'checking' };
@@ -22,10 +22,6 @@ export function HealthPage({
       'status' in queryError &&
       (queryError.status === 'CUSTOM_ERROR' || queryError.status === 'PARSING_ERROR');
     healthState = { kind: hasInvalidResponse ? 'invalid' : 'unreachable' };
-  } else if (healthQuery.data) {
-    healthState = { kind: 'reachable' };
-  } else {
-    healthState = { kind: 'checking' };
   }
 
   function retryHealthRequest() {

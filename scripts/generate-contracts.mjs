@@ -1,5 +1,6 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { resolve, sep } from 'node:path';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import openapiTS, { astToString } from 'openapi-typescript';
 import { parse } from 'yaml';
@@ -10,10 +11,11 @@ const openApiSpecificationUrl = new URL('../contracts/openapi.yaml', import.meta
 await SwaggerParser.validate(fileURLToPath(openApiSpecificationUrl));
 
 const openApiSpecification = parse(await readFile(openApiSpecificationUrl, 'utf8'));
-const generatedContractsDirectoryUrl = new URL(
-  '../packages/api-contracts/src/generated/',
-  import.meta.url,
-);
+const outputArgumentIndex = process.argv.indexOf('--output');
+const generatedContractsDirectoryUrl =
+  outputArgumentIndex === -1
+    ? new URL('../packages/api-contracts/src/generated/', import.meta.url)
+    : pathToFileURL(resolve(process.argv[outputArgumentIndex + 1]) + sep);
 const generatedContractContents = {
   'openapi.ts': astToString(await openapiTS(openApiSpecificationUrl)),
   'health-schema.ts': `// Generated from OpenAPI. Do not edit.\nexport const healthSchema = ${JSON.stringify(openApiSpecification.components.schemas.HealthResponse, null, 2)};\n`,

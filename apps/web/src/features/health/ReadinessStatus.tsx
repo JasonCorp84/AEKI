@@ -9,6 +9,14 @@ export function ReadinessStatus({
 }) {
   const readinessQuery = useGetReadinessQuery();
   let readinessState: ReadinessState = { kind: 'requestFailed' };
+  if (readinessQuery.data?.status === 'ready') {
+    readinessState = { kind: 'ready' };
+  } else if (readinessQuery.data?.status === 'not_ready') {
+    readinessState = {
+      kind: 'notReady',
+      hasTimedOut: readinessQuery.data.code === 'DATABASE_TIMEOUT',
+    };
+  }
   if (readinessQuery.isFetching) {
     readinessState = { kind: 'checking' };
   } else if (readinessQuery.isError) {
@@ -18,13 +26,6 @@ export function ReadinessStatus({
       'status' in queryError &&
       (queryError.status === 'CUSTOM_ERROR' || queryError.status === 'PARSING_ERROR');
     readinessState = { kind: hasInvalidResponse ? 'invalid' : 'requestFailed' };
-  } else if (readinessQuery.data?.status === 'ready') {
-    readinessState = { kind: 'ready' };
-  } else if (readinessQuery.data?.status === 'not_ready') {
-    readinessState = {
-      kind: 'notReady',
-      hasTimedOut: readinessQuery.data.code === 'DATABASE_TIMEOUT',
-    };
   }
 
   function retryReadinessRequest() {
