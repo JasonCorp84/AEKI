@@ -40,14 +40,14 @@ After the API build, `npm run start -w @aeki/api` runs compiled output. Dev comm
 
 ## Checks and contracts
 
-Prettier is pinned as a local development dependency and uses one root configuration for all workspaces, tooling, prototypes and documentation. Format supported project files with its built-in formatter:
+Formatting and linting use the existing [Google TypeScript Style (`gts`)](https://github.com/google/gts) preset, without handwritten style rules. The root Prettier configuration directly references `gts/.prettierrc.json`; ESLint imports the shared Google configuration. `npm run format` applies native ESLint fixes and then native Prettier across the supported project scope:
 
 ```sh
 npm run format
 npm run format:check
 ```
 
-The formatting check runs first in `npm run check`. Editor integrations use `.prettierrc.json` and `.editorconfig`; select Prettier as the formatter in your editor. Generated TypeScript contracts are formatted by the same Prettier API during generation, so regenerated output remains reproducible. Lockfiles, build/dependency output, local environment files and rendered diagram exports are excluded. CSV and SQL have no built-in Prettier parser; their data/migration syntax is preserved. Markdown examples and Mermaid fences retain their embedded contents.
+The formatting check runs first in `npm run check`. Editor integrations use `.prettierrc.json` and `.editorconfig`; select Prettier as the formatter in your editor and use ESLint's fix action for lint fixes. Generated TypeScript contracts are formatted by the same Prettier API during generation, so regenerated output remains reproducible. Lockfiles, build/dependency output, local environment files, ignored teaching materials and rendered diagram exports are excluded. CSV and SQL have no built-in Prettier parser; their data/migration syntax is preserved. Embedded formatting follows the shared preset. Prettier preserves existing blank lines; the preset does not promise to invent semantic paragraph breaks. See [ADR-0007](docs/architecture/adr/0007-google-typescript-style.md).
 
 ```sh
 npm run check
@@ -62,7 +62,7 @@ npm run coverage:check
 
 `check` validates OpenAPI/generated-file consistency, lints, type-checks, runs contract/API/frontend/tooling tests with file-level 100% coverage and builds both apps. Generation updates transport types and runtime health/readiness schemas from the single OpenAPI source. Generated files are versioned and never edited by hand.
 
-`npm ci` installs the Husky hooks. Before a commit, lint-staged formats staged supported files with native Prettier and preserves unstaged edits. Before every push, `format:check` checks the whole supported project scope and blocks on unformatted files. Run `npm run format`, review the changes and commit them before retrying a blocked push.
+`npm ci` installs the Husky hooks. Before a commit, lint-staged applies the Google ESLint fixes and Prettier to staged JS/TS files, and native Prettier to other supported files. These file groups do not overlap, and unstaged edits are preserved. Before every push, `format:check` checks the whole supported project scope and blocks on unformatted files. Run `npm run format`, review the changes and commit them before retrying a blocked push.
 
 GitHub Actions runs the same `check` command on every push and pull request. `main` requires a pull request and a successful, up-to-date `Quality gate`, including for administrators. CI uses pinned official actions and uploads coverage evidence for 14 days. AWS deployment remains later scope.
 

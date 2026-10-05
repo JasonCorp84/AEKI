@@ -1,16 +1,23 @@
-import { runner } from 'node-pg-migrate';
-import { fileURLToPath } from 'node:url';
+import {runner} from 'node-pg-migrate';
+import {fileURLToPath} from 'node:url';
 
-export async function migrateDatabase(databaseUrl, direction = 'up', migrationRunner = runner) {
+export async function migrateDatabase(
+  databaseUrl,
+  direction = 'up',
+  migrationRunner = runner,
+) {
   const parsedUrl = new URL(databaseUrl);
   if (!['postgres:', 'postgresql:'].includes(parsedUrl.protocol)) {
     throw new Error('DATABASE_URL must be a PostgreSQL connection URL.');
   }
   if (
     direction === 'down' &&
-    (databaseUrl !== process.env.TEST_DATABASE_URL || parsedUrl.pathname !== '/aeki_test')
+    (databaseUrl !== process.env.TEST_DATABASE_URL ||
+      parsedUrl.pathname !== '/aeki_test')
   ) {
-    throw new Error('Rollback is restricted to the owned isolated test database.');
+    throw new Error(
+      'Rollback is restricted to the owned isolated test database.',
+    );
   }
   return migrationRunner({
     databaseUrl,
@@ -18,7 +25,7 @@ export async function migrateDatabase(databaseUrl, direction = 'up', migrationRu
     direction,
     migrationsTable: 'aeki_migrations',
     count: direction === 'down' ? 1 : Infinity,
-    logger: { info: () => {}, warn: () => {}, error: () => {} },
+    logger: {info: () => {}, warn: () => {}, error: () => {}},
   });
 }
 

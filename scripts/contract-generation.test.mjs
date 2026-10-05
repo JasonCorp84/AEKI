@@ -1,18 +1,27 @@
 import assert from 'node:assert/strict';
-import { test } from 'node:test';
-import { mkdtempSync, readFileSync, writeFileSync, unlinkSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import { spawnSync } from 'node:child_process';
+import {test} from 'node:test';
+import {mkdtempSync, readFileSync, writeFileSync, unlinkSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {spawnSync} from 'node:child_process';
 
 test('contract CLI produces reproducible formatted output and rejects drift or missing files', () => {
-  const outputDirectory = mkdtempSync(join(tmpdir(), 'aeki-generated-contracts-'));
-  const run = (argumentsList) =>
-    spawnSync(process.execPath, ['scripts/generate-contracts.mjs', ...argumentsList], {
-      encoding: 'utf8',
-    });
+  const outputDirectory = mkdtempSync(
+    join(tmpdir(), 'aeki-generated-contracts-'),
+  );
+  const run = argumentsList =>
+    spawnSync(
+      process.execPath,
+      ['scripts/generate-contracts.mjs', ...argumentsList],
+      {
+        encoding: 'utf8',
+      },
+    );
   assert.equal(run(['--output', outputDirectory]).status, 0);
-  const generatedSchema = readFileSync(join(outputDirectory, 'health-schema.ts'), 'utf8');
+  const generatedSchema = readFileSync(
+    join(outputDirectory, 'health-schema.ts'),
+    'utf8',
+  );
   assert.match(generatedSchema, /healthSchema/);
   assert.equal(run(['--output', outputDirectory, '--check']).status, 0);
   writeFileSync(join(outputDirectory, 'health-schema.ts'), '// stale output\n');

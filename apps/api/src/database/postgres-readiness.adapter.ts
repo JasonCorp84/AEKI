@@ -1,6 +1,6 @@
-import type { ReadinessResponse } from '@aeki/contracts';
-import { Pool, type PoolClient } from 'pg';
-import type { DatabaseReadinessProbe } from './readiness-probe.js';
+import type {ReadinessResponse} from '@aeki/contracts';
+import {Pool, type PoolClient} from 'pg';
+import type {DatabaseReadinessProbe} from './readiness-probe.js';
 
 const databaseProbeBudgetMillis = 2000;
 class DatabaseProbeTimeout extends Error {}
@@ -48,7 +48,7 @@ export class PostgresReadinessAdapter implements DatabaseReadinessProbe {
 
     try {
       await Promise.race([connectivityQuery, probeDeadline]);
-      return { status: 'ready', database: 'reachable' };
+      return {status: 'ready', database: 'reachable'};
     } catch (error: unknown) {
       shouldDestroyClient = true;
       const hasTimedOut =

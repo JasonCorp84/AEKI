@@ -14,8 +14,10 @@ export const englishHealthMessages = {
   invalid: 'Invalid API response',
   checkingDetail: 'Connecting to your workspace. This will only take a moment.',
   reachableDetail: 'The API is responding with a valid health report.',
-  unreachableDetail: 'We could not reach the API. Check that it is running, then try again.',
-  invalidDetail: 'The API responded, but its health report did not match the agreed contract.',
+  unreachableDetail:
+    'We could not reach the API. Check that it is running, then try again.',
+  invalidDetail:
+    'The API responded, but its health report did not match the agreed contract.',
   retry: 'Retry connection',
   checkAgain: 'Check again',
   scope:
@@ -23,4 +25,6 @@ export const englishHealthMessages = {
   footer: 'Built one thoughtful step at a time.',
 };
 
-export type HealthMessages = { readonly [Key in keyof typeof englishHealthMessages]: string };
+export type HealthMessages = {
+  readonly [Key in keyof typeof englishHealthMessages]: string;
+};

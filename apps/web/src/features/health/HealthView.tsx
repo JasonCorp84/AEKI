@@ -1,9 +1,12 @@
-import type { HealthMessages } from './health.messages';
+import type {HealthMessages} from './health.messages';
 import styles from './HealthView.module.css';
-import type { ReactNode } from 'react';
+import type {ReactNode} from 'react';
 
 export type HealthState =
-  { kind: 'checking' } | { kind: 'reachable' } | { kind: 'unreachable' } | { kind: 'invalid' };
+  | {kind: 'checking'}
+  | {kind: 'reachable'}
+  | {kind: 'unreachable'}
+  | {kind: 'invalid'};
 
 type HealthViewProps = {
   healthState: HealthState;
@@ -12,7 +15,12 @@ type HealthViewProps = {
   children?: ReactNode;
 };
 
-export function HealthView({ healthState, messages, onRetry, children }: HealthViewProps) {
+export function HealthView({
+  healthState,
+  messages,
+  onRetry,
+  children,
+}: HealthViewProps) {
   const isCheckingConnection = healthState.kind === 'checking';
   const isApiReachable = healthState.kind === 'reachable';
   const detailMessagesByState = {

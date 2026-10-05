@@ -1,8 +1,7 @@
-import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
+import googleTypeScriptStyle from 'gts';
 import globals from 'globals';
 
-export default tseslint.config(
+export default [
   {
     ignores: [
       '**/dist/**',
@@ -10,12 +9,17 @@ export default tseslint.config(
       '**/coverage/**',
       '**/generated/**',
       'apps/web/prototype/**',
+      '.teaching/**',
     ],
   },
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...googleTypeScriptStyle,
   {
-    languageOptions: { globals: { ...globals.node, ...globals.browser } },
-    rules: { '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }] },
+    languageOptions: {globals: {...globals.node, ...globals.browser}},
   },
-);
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parserOptions: {project: './tsconfig.eslint.json'},
+    },
+  },
+];
