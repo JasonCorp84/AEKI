@@ -1,4 +1,24 @@
 export interface paths {
+  '/products': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Search products by name or article number
+     * @description Case-insensitive substring matching with stable name and product-ID ordering. Stock is indicative and tied to the identified store.
+     */
+    get: operations['searchProducts'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/health': {
     parameters: {
       query?: never;
@@ -37,6 +57,33 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
+    Product: {
+      id: string;
+      name: string;
+      articleNumber: string;
+      description: string;
+      image: {
+        url: string;
+        alt: string;
+      };
+      price: {
+        /** @description Amount in the specified currency's minor units; use its standard fractional precision when formatting. */
+        amountMinor: number;
+        currency: string;
+      };
+      stock: {
+        storeId: string;
+        storeName: string;
+        quantity: number;
+      };
+    };
+    ProductSearchResponse: {
+      items: components['schemas']['Product'][];
+    };
+    ProductSearchErrorResponse: {
+      /** @enum {string} */
+      code: 'PRODUCT_SEARCH_UNAVAILABLE';
+    };
     HealthResponse: {
       /** @enum {string} */
       status: 'ok';
@@ -69,6 +116,42 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+  searchProducts: {
+    parameters: {
+      query: {
+        query: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Matching products, including an empty collection when there are no matches */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ProductSearchResponse'];
+        };
+      };
+      /** @description Product search is temporarily unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "code": "PRODUCT_SEARCH_UNAVAILABLE"
+           *     }
+           */
+          'application/json': components['schemas']['ProductSearchErrorResponse'];
+        };
+      };
+    };
+  };
   getHealth: {
     parameters: {
       query?: never;

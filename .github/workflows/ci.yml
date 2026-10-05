@@ -33,6 +33,23 @@ jobs:
         run: docker compose version
       - name: Verify formatting, contracts, code and full coverage
         run: npm run check
+      - name: Install the pinned Chromium browser and system dependencies
+        run: npx --no-install playwright install --with-deps --no-shell chromium
+      - name: Verify the built application in a real browser
+        run: npm run test:browser
+      - name: Verify contracted search fixtures and production isolation
+        run: npm run test:search:browser
+      - name: Preserve browser and service failure evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: browser-${{ github.run_id }}
+          path: |
+            playwright-report/
+            test-results/
+            browser-services/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Preserve coverage evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
