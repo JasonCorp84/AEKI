@@ -118,3 +118,5 @@ Useful initial measurements:
 The existing Linear project also tracks token/active engineering hour, validated ECU/hour, token/validated ECU, rework ratio and exploration-to-convergence ratio. This baseline does **not** calculate them: tokens, active engineering time, validated ECU and activity classification are not yet sufficiently instrumented. Do not substitute assistant wall time for active engineering time or invent token costs.
 
 An initial hypothesis is that providing a concrete visual reference before diagram generation reduces user-requested revisions. The current session provides one observation, not a controlled comparison or proof. A future experiment needs comparable tasks, stable acceptance criteria and several observations.
+
+S63 implements the explicitly approved issue #3 Mikado plan on a separate CI branch. See [built browser CI evidence](sessions/2026-10-05-issue-3-browser-ci.md) for actual experiments, retry classification and remote verification. The current turn duration remains pending its completion event; no human active time is inferred.

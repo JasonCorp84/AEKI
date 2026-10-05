@@ -4,6 +4,66 @@ import {EventEmitter} from 'node:events';
 import {spawnSync} from 'node:child_process';
 import {runApiTests} from '../run-api-tests.mjs';
 import {migrateDatabase} from '../migrate-database.mjs';
+import {resolve} from 'node:path';
+import {readFileSync} from 'node:fs';
+
+test('the public browser command uses isolated migrations and reports actual child command outcomes', () => {
+  for (const [arguments_, expectedExitCode] of [
+    [['--list'], 0],
+    [['--project=does-not-exist'], 1],
+  ]) {
+    const result = spawnSync(
+      process.execPath,
+      [resolve('../../scripts/run-browser-tests.mjs'), ...arguments_],
+      {
+        cwd: resolve('../..'),
+        encoding: 'utf8',
+        timeout: 150000,
+      },
+    );
+    assert.equal(
+      result.status,
+      expectedExitCode,
+      result.stdout + result.stderr,
+    );
+    const ownership = JSON.parse(
+      readFileSync(resolve('../../browser-services/ownership.json'), 'utf8'),
+    );
+    for (const arguments_ of [
+      [
+        'ps',
+        '--all',
+        '--quiet',
+        '--filter',
+        `label=com.docker.compose.project=${ownership.projectName}`,
+      ],
+      [
+        'volume',
+        'ls',
+        '--quiet',
+        '--filter',
+        `label=com.docker.compose.project=${ownership.projectName}`,
+      ],
+    ]) {
+      const remainingResources = spawnSync('docker', arguments_, {
+        encoding: 'utf8',
+        timeout: 10000,
+      });
+      assert.equal(remainingResources.status, 0, remainingResources.stderr);
+      assert.equal(
+        remainingResources.stdout.trim(),
+        '',
+        'The browser command must remove only its owned resources.',
+      );
+    }
+  }
+  const log = readFileSync(
+    resolve('../../browser-services/browser.log'),
+    'utf8',
+  );
+  assert.match(log, /does-not-exist/);
+  assert.doesNotMatch(log, /aeki_test_only|postgresql:\/\//);
+});
 
 const originalTestDatabaseUrl = process.env.TEST_DATABASE_URL;
 afterEach(() => {

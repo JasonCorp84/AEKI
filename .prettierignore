@@ -4,6 +4,8 @@ node_modules/
 **/coverage/
 playwright-report/
 test-results/
+browser-services/
+.conversations/
 .env
 .env.*
 package-lock.json

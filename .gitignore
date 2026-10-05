@@ -4,6 +4,7 @@ build/
 coverage/
 playwright-report/
 test-results/
+browser-services/
 .env
 .env.*
 !.env.example
@@ -13,3 +14,5 @@ test-results/
 Thumbs.db
 # Local teaching materials and learning state.
 /.teaching/
+# Private conversation evidence is not a project deliverable.
+/.conversations/

@@ -40,6 +40,7 @@ test('coverage runner propagates failed tests, process signals and launch failur
     './scripts/run-coverage.mjs',
     './scripts/check-coverage.mjs',
     './scripts/run-api-tests.mjs',
+    './scripts/run-browser-tests.mjs',
   ]) {
     const imported = spawnSync(
       process.execPath,
