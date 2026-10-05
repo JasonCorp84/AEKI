@@ -1,5 +1,5 @@
-import { afterEach, expect, it } from 'vitest';
-import { PostgresReadinessAdapter } from '../dist/database/postgres-readiness.adapter.js';
+import {afterEach, expect, it} from 'vitest';
+import {PostgresReadinessAdapter} from '../dist/database/postgres-readiness.adapter.js';
 import {
   runTestDatabaseCommand,
   resumeTestDatabase,
@@ -14,7 +14,10 @@ afterEach(async () => {
 
 it('reports ready only after a query against actual PostgreSQL succeeds', async () => {
   databaseProbe = new PostgresReadinessAdapter(testDatabaseUrl);
-  expect(await databaseProbe.checkReadiness()).toEqual({ status: 'ready', database: 'reachable' });
+  expect(await databaseProbe.checkReadiness()).toEqual({
+    status: 'ready',
+    database: 'reachable',
+  });
 });
 
 it('times out a nonresponding real PostgreSQL connection within budget and recovers', async () => {
@@ -30,7 +33,10 @@ it('times out a nonresponding real PostgreSQL connection within budget and recov
   });
   expect(performance.now() - checkStartedAt).toBeLessThan(2500);
   runTestDatabaseCommand('unpause');
-  expect(await databaseProbe.checkReadiness()).toEqual({ status: 'ready', database: 'reachable' });
+  expect(await databaseProbe.checkReadiness()).toEqual({
+    status: 'ready',
+    database: 'reachable',
+  });
   await databaseProbe.onModuleDestroy();
   databaseProbe = undefined;
 }, 5000);

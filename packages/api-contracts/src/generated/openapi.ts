@@ -58,7 +58,8 @@ export interface components {
       code: 'DATABASE_UNAVAILABLE' | 'DATABASE_TIMEOUT';
     };
     ReadinessResponse:
-      components['schemas']['ReadyResponse'] | components['schemas']['NotReadyResponse'];
+      | components['schemas']['ReadyResponse']
+      | components['schemas']['NotReadyResponse'];
   };
   responses: never;
   parameters: never;

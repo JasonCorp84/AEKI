@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: AEKI API
   version: 0.1.0
-  description: API liveness contract. Database readiness is a separate future operation.
+  description: API process liveness and separate database readiness contracts.
 paths:
   /health:
     get:

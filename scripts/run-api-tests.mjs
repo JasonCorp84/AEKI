@@ -1,17 +1,27 @@
-import { execFileSync, spawn } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
-import { migrateDatabase } from './migrate-database.mjs';
-import { createRequire } from 'node:module';
-import { dirname, join, resolve } from 'node:path';
-import { createServer } from 'node:net';
+import {execFileSync, spawn} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+import {migrateDatabase} from './migrate-database.mjs';
+import {createRequire} from 'node:module';
+import {dirname, join, resolve} from 'node:path';
+import {createServer} from 'node:net';
 
 const repositoryDirectory = fileURLToPath(new URL('../', import.meta.url));
 export async function runApiTests(
   testArguments = [],
-  { runCommand = execFileSync, startProcess = spawn, createPortServer = createServer } = {},
+  {
+    runCommand = execFileSync,
+    startProcess = spawn,
+    createPortServer = createServer,
+  } = {},
 ) {
   const testProjectName = `aeki-test-${process.pid}-${Date.now()}`;
-  const composeArguments = ['compose', '-f', 'compose.test.yaml', '-p', testProjectName];
+  const composeArguments = [
+    'compose',
+    '-f',
+    'compose.test.yaml',
+    '-p',
+    testProjectName,
+  ];
   function runTestCompose(commandArguments) {
     return runCommand('docker', [...composeArguments, ...commandArguments], {
       cwd: repositoryDirectory,
@@ -31,7 +41,9 @@ export async function runApiTests(
       });
     });
     runTestCompose(['up', '--detach', '--wait', '--wait-timeout', '90']);
-    const publishedPort = runTestCompose(['port', 'postgres', '5432']).split(':').at(-1);
+    const publishedPort = runTestCompose(['port', 'postgres', '5432'])
+      .split(':')
+      .at(-1);
     if (!publishedPort || !/^\d+$/.test(publishedPort))
       throw new Error('Unable to determine test database port.');
     const testDatabaseUrl = `postgresql://aeki_test:aeki_test_only@127.0.0.1:${publishedPort}/aeki_test`;
@@ -40,19 +52,23 @@ export async function runApiTests(
     const require = createRequire(import.meta.url);
     const vitestPackagePath = require.resolve('vitest/package.json');
     const vitestExecutable = join(dirname(vitestPackagePath), 'vitest.mjs');
-    const startTestSuite = (testCommandArguments) =>
+    const startTestSuite = testCommandArguments =>
       new Promise((resolve, reject) => {
-        const testProcess = startProcess(process.execPath, testCommandArguments, {
-          cwd: fileURLToPath(new URL('../apps/api', import.meta.url)),
-          stdio: 'inherit',
-          env: {
-            ...process.env,
-            DATABASE_URL: testDatabaseUrl,
-            TEST_COMPOSE_PROJECT: testProjectName,
+        const testProcess = startProcess(
+          process.execPath,
+          testCommandArguments,
+          {
+            cwd: fileURLToPath(new URL('../apps/api', import.meta.url)),
+            stdio: 'inherit',
+            env: {
+              ...process.env,
+              DATABASE_URL: testDatabaseUrl,
+              TEST_COMPOSE_PROJECT: testProjectName,
+            },
           },
-        });
+        );
         testProcess.on('error', reject);
-        testProcess.on('exit', (exitCode) => resolve(exitCode ?? 1));
+        testProcess.on('exit', exitCode => resolve(exitCode ?? 1));
       });
     const toolingExitCode = await startTestSuite([
       '--test',

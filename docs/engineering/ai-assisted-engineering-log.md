@@ -83,6 +83,14 @@ Latest quality-gate work: [S54 — CI, Git hooks and complete coverage](sessions
 
 Latest coverage correction: [S55 — reject empty instrumentation](sessions/2026-10-04-empty-coverage-instrumentation.md), with a real CLI RED/GREEN regression and compatibility verification for files without functions or branches.
 
+S56 established a local NestJS teaching workspace after Csaba confirmed the goal of independently understanding and extending AEKI. The `teach` skill grounded the first routing lesson in the actual controller and official documentation. All teaching content and local session evidence live under Git-ignored `.teaching/nestjs/`; no learner mastery is claimed before a demonstrated answer. Native formatting and ignore checks passed; technical retries: 0. Turn timing is recorded in the measurement CSV and completion is reconciled on a later turn.
+
+S57 continued after Csaba reported the first lesson complete. The reused `teach` workflow produced a local controller-registration lesson grounded in AppModule and official NestJS module documentation, using the existing shared stylesheet. Lesson files remain Git-ignored. Reported completion is distinguished from demonstrated mastery; the learner's prediction is pending. Technical retries: 0. S56 timing was reconciled to 281.720 seconds; S57 completion awaits its actual event.
+
+S58 prepared the next local lesson on constructor injection using AEKI's existing token and factory provider. The `teach` workflow and shared assets were reused; source code and official custom-provider documentation were checked. The learner demonstrated the previous import/registration distinction; injection understanding remains unassessed. Teaching content and detailed evidence stay Git-ignored. Technical retries: 0. S57 timing reconciled to 157.047 seconds; S58 completion awaits its actual event.
+
+Latest formatting work: [S59 — existing Google TypeScript Style](sessions/2026-10-05-google-typescript-style.md). The published gts ESLint and Prettier presets replace local style rules; native automatic fixes, staged-content preservation and full verification are recorded in the session evidence. Teaching materials remain ignored, and their completed-turn timing was reconciled independently.
+
 Latest tooling setup: [S53 — project-wide Prettier](sessions/2026-10-04-prettier-setup.md), including native formatting, reproducible contract generation, formatter/check integration and verified regression checks.
 
 Latest review fixes: [S52 — measurement validation and C4](sessions/2026-10-04-code-review-fixes.md), including two RED/GREEN regressions, frozen historical identities, strict calendar validation and the Docker interruption that prevented a fresh database test run.

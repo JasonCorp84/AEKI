@@ -1,4 +1,4 @@
-import { afterEach, expect, it, vi } from 'vitest';
+import {afterEach, expect, it, vi} from 'vitest';
 
 afterEach(() => {
   vi.useRealTimers();
@@ -21,14 +21,20 @@ async function createProbeWithDatabaseFault(databaseBehavior) {
       }
     },
   }));
-  const { PostgresReadinessAdapter } =
+  const {PostgresReadinessAdapter} =
     await import('../dist/database/postgres-readiness.adapter.js');
-  return new PostgresReadinessAdapter('postgresql://test:test@localhost/aeki_test');
+  return new PostgresReadinessAdapter(
+    'postgresql://test:test@localhost/aeki_test',
+  );
 }
 
-it.each([new Error('Connection refused'), 'Connection refused', new Error('Query timeout')])(
+it.each([
+  new Error('Connection refused'),
+  'Connection refused',
+  new Error('Query timeout'),
+])(
   'maps a database SDK failure to contracted readiness and releases acquired resources: %s',
-  async (databaseFailure) => {
+  async databaseFailure => {
     let hasBeenReleased = false;
     const behavior = {
       connect: async () => ({
@@ -46,7 +52,8 @@ it.each([new Error('Connection refused'), 'Connection refused', new Error('Query
       status: 'not_ready',
       database: 'unreachable',
       code:
-        databaseFailure instanceof Error && databaseFailure.message.includes('timeout')
+        databaseFailure instanceof Error &&
+        databaseFailure.message.includes('timeout')
           ? 'DATABASE_TIMEOUT'
           : 'DATABASE_UNAVAILABLE',
     });
@@ -62,7 +69,7 @@ it('destroys a hung query and releases a connection acquired after the probe dea
   let connectionDestroyed = false;
   const behavior = {
     connect: () =>
-      new Promise((resolve) => {
+      new Promise(resolve => {
         deliverConnection = resolve;
       }),
   };
@@ -75,7 +82,7 @@ it('destroys a hung query and releases a connection acquired after the probe dea
     code: 'DATABASE_TIMEOUT',
   });
   deliverConnection({
-    release: (destroy) => {
+    release: destroy => {
       connectionDestroyed = destroy;
     },
     query: async () => {

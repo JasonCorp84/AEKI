@@ -1,15 +1,19 @@
-import { afterAll, afterEach, beforeAll, expect, it, vi } from 'vitest';
-import { screen, waitFor } from '@testing-library/react';
-import { act } from 'react';
-import { http, HttpResponse } from 'msw';
-import { setupServer } from 'msw/node';
+import {afterAll, afterEach, beforeAll, expect, it, vi} from 'vitest';
+import {screen, waitFor} from '@testing-library/react';
+import {act} from 'react';
+import {http, HttpResponse} from 'msw';
+import {setupServer} from 'msw/node';
 
 const apiServer = setupServer(
-  http.get('*/api/health', () => HttpResponse.json({ status: 'ok', service: 'aeki-api' })),
-  http.get('*/api/readiness', () => HttpResponse.json({ status: 'ready', database: 'reachable' })),
+  http.get('*/api/health', () =>
+    HttpResponse.json({status: 'ok', service: 'aeki-api'}),
+  ),
+  http.get('*/api/readiness', () =>
+    HttpResponse.json({status: 'ready', database: 'reachable'}),
+  ),
 );
 
-beforeAll(() => apiServer.listen({ onUnhandledRequest: 'error' }));
+beforeAll(() => apiServer.listen({onUnhandledRequest: 'error'}));
 afterEach(() => {
   document.body.innerHTML = '';
   vi.resetModules();

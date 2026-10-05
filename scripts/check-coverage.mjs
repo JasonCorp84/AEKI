@@ -1,6 +1,6 @@
-import { globSync, readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import {globSync, readFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
 import coverageLibrary from 'istanbul-lib-coverage';
 import ts from 'typescript';
 
@@ -16,20 +16,26 @@ export function checkCoverage(repositoryDirectory, reportPaths) {
       'packages/*/src/**/*.{ts,tsx,js,jsx,mjs,cjs}',
       'scripts/**/*.{mjs,js,cjs,ts,tsx}',
     ],
-    { cwd: repositoryDirectory },
-  ).filter((path) => !/[/\\](?:generated|test)[/\\]|\.test\.[^/\\]+$|\.d\.ts$/.test(path));
+    {cwd: repositoryDirectory},
+  ).filter(
+    path =>
+      !/[/\\](?:generated|test)[/\\]|\.test\.[^/\\]+$|\.d\.ts$/.test(path),
+  );
   const sourceFiles = [];
   for (const sourceFile of candidates) {
     const absolutePath = resolve(repositoryDirectory, sourceFile);
     if (/\.tsx?$/.test(sourceFile)) {
-      const emittedCode = ts.transpileModule(readFileSync(absolutePath, 'utf8'), {
-        compilerOptions: {
-          removeComments: true,
-          jsx: ts.JsxEmit.ReactJSX,
-          target: ts.ScriptTarget.ESNext,
-          module: ts.ModuleKind.ESNext,
+      const emittedCode = ts.transpileModule(
+        readFileSync(absolutePath, 'utf8'),
+        {
+          compilerOptions: {
+            removeComments: true,
+            jsx: ts.JsxEmit.ReactJSX,
+            target: ts.ScriptTarget.ESNext,
+            module: ts.ModuleKind.ESNext,
+          },
         },
-      }).outputText;
+      ).outputText;
       if (!emittedCode.replace(/export\s*\{\s*\};?/g, '').trim()) continue;
     }
     sourceFiles.push(sourceFile);
@@ -49,8 +55,9 @@ export function checkCoverage(repositoryDirectory, reportPaths) {
       }
     }
   }
-  if (!sourceFiles.length) errors.push('No source files found; coverage cannot pass vacuously.');
-  return { errors, coverage, sourceFiles };
+  if (!sourceFiles.length)
+    errors.push('No source files found; coverage cannot pass vacuously.');
+  return {errors, coverage, sourceFiles};
 }
 
 if (resolve(process.argv[1] ?? '') === fileURLToPath(import.meta.url)) {
@@ -66,8 +73,13 @@ if (resolve(process.argv[1] ?? '') === fileURLToPath(import.meta.url)) {
     );
     const reportPaths = explicitReports.length
       ? explicitReports
-      : ['contracts', 'web', 'api', 'processes'].map((suite) =>
-          resolve(repositoryDirectory, 'coverage', suite, 'coverage-final.json'),
+      : ['contracts', 'web', 'api', 'processes'].map(suite =>
+          resolve(
+            repositoryDirectory,
+            'coverage',
+            suite,
+            'coverage-final.json',
+          ),
         );
     const result = checkCoverage(repositoryDirectory, reportPaths);
     for (const error of result.errors) console.error(error);

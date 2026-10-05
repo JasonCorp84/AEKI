@@ -1,4 +1,6 @@
-export function requireDatabaseUrl(configuredDatabaseUrl: string | undefined): string {
+export function requireDatabaseUrl(
+  configuredDatabaseUrl: string | undefined,
+): string {
   if (!configuredDatabaseUrl) {
     throw new Error(
       'DATABASE_URL is required. Copy .env.example to .env and configure PostgreSQL.',

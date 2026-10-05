@@ -1,9 +1,9 @@
-import { afterEach, expect, it } from 'vitest';
-import { Test } from '@nestjs/testing';
-import { parseHealthResponse, parseReadinessResponse } from '@aeki/contracts';
-import { AppModule } from '../dist/app.module.js';
-import { runTestDatabaseCommand } from './postgres-fixture.mjs';
-import { spawnSync } from 'node:child_process';
+import {afterEach, expect, it} from 'vitest';
+import {Test} from '@nestjs/testing';
+import {parseHealthResponse, parseReadinessResponse} from '@aeki/contracts';
+import {AppModule} from '../dist/app.module.js';
+import {runTestDatabaseCommand} from './postgres-fixture.mjs';
+import {spawnSync} from 'node:child_process';
 let apiApplication;
 afterEach(async () => {
   runTestDatabaseCommand('start');
@@ -12,7 +12,9 @@ afterEach(async () => {
 });
 
 it('keeps liveness while PostgreSQL is stopped, returns contracted 503 and recovers', async () => {
-  const testingModule = await Test.createTestingModule({ imports: [AppModule] }).compile();
+  const testingModule = await Test.createTestingModule({
+    imports: [AppModule],
+  }).compile();
   apiApplication = testingModule.createNestApplication();
   await apiApplication.listen(0, '127.0.0.1');
   const apiUrl = await apiApplication.getUrl();
@@ -33,8 +35,8 @@ it('keeps liveness while PostgreSQL is stopped, returns contracted 503 and recov
 
 it.each([undefined, 'https://secret-user:secret-password@host/database'])(
   'fails startup with actionable sanitized database configuration feedback: %s',
-  (databaseUrl) => {
-    const startupEnvironment = { ...process.env };
+  databaseUrl => {
+    const startupEnvironment = {...process.env};
     if (databaseUrl === undefined) delete startupEnvironment.DATABASE_URL;
     else startupEnvironment.DATABASE_URL = databaseUrl;
     const startup = spawnSync(process.execPath, ['dist/main.js'], {
@@ -49,10 +51,14 @@ it.each([undefined, 'https://secret-user:secret-password@host/database'])(
   },
 );
 it('reports API liveness through the actual HTTP boundary', async () => {
-  const testingModule = await Test.createTestingModule({ imports: [AppModule] }).compile();
+  const testingModule = await Test.createTestingModule({
+    imports: [AppModule],
+  }).compile();
   apiApplication = testingModule.createNestApplication();
   await apiApplication.listen(0, '127.0.0.1');
-  const healthHttpResponse = await fetch(`${await apiApplication.getUrl()}/health`);
+  const healthHttpResponse = await fetch(
+    `${await apiApplication.getUrl()}/health`,
+  );
   expect(healthHttpResponse.status).toBe(200);
   expect(parseHealthResponse(await healthHttpResponse.json())).toEqual({
     status: 'ok',
@@ -61,10 +67,14 @@ it('reports API liveness through the actual HTTP boundary', async () => {
 });
 
 it('reports database readiness through an actual Nest HTTP response', async () => {
-  const testingModule = await Test.createTestingModule({ imports: [AppModule] }).compile();
+  const testingModule = await Test.createTestingModule({
+    imports: [AppModule],
+  }).compile();
   apiApplication = testingModule.createNestApplication();
   await apiApplication.listen(0, '127.0.0.1');
-  const readinessHttpResponse = await fetch(`${await apiApplication.getUrl()}/readiness`);
+  const readinessHttpResponse = await fetch(
+    `${await apiApplication.getUrl()}/readiness`,
+  );
   expect(readinessHttpResponse.status).toBe(200);
   expect(parseReadinessResponse(await readinessHttpResponse.json())).toEqual({
     status: 'ready',

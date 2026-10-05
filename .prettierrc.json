@@ -1,18 +1,1 @@
-{
-  "$schema": "https://json.schemastore.org/prettierrc",
-  "singleQuote": true,
-  "tabWidth": 2,
-  "printWidth": 100,
-  "trailingComma": "all",
-  "endOfLine": "lf",
-  "proseWrap": "preserve",
-  "embeddedLanguageFormatting": "auto",
-  "overrides": [
-    {
-      "files": "*.md",
-      "options": {
-        "embeddedLanguageFormatting": "off"
-      }
-    }
-  ]
-}
+"gts/.prettierrc.json"

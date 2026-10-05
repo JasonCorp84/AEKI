@@ -1,11 +1,14 @@
 import assert from 'node:assert/strict';
-import { test } from 'node:test';
-import { mkdtempSync, writeFileSync, unlinkSync, rmdirSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import { spawnSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
-import { extractTurnTimings, validateMeasurementRows } from './engineering-measurements.mjs';
+import {test} from 'node:test';
+import {mkdtempSync, writeFileSync, unlinkSync, rmdirSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+import {
+  extractTurnTimings,
+  validateMeasurementRows,
+} from './engineering-measurements.mjs';
 
 const completedMeasurement = {
   step: 'S48',
@@ -27,22 +30,22 @@ test('pairs interleaved turn events by ID and excludes idle gaps between turns',
     {
       timestamp: '2026-10-03T10:00:00.000Z',
       type: 'event_msg',
-      payload: { type: 'task_started', turn_id: 'first' },
+      payload: {type: 'task_started', turn_id: 'first'},
     },
     {
       timestamp: '2026-10-03T10:00:02.500Z',
       type: 'event_msg',
-      payload: { type: 'task_complete', turn_id: 'first' },
+      payload: {type: 'task_complete', turn_id: 'first'},
     },
     {
       timestamp: '2026-10-04T10:00:00.000Z',
       type: 'event_msg',
-      payload: { type: 'task_started', turn_id: 'second' },
+      payload: {type: 'task_started', turn_id: 'second'},
     },
     {
       timestamp: '2026-10-04T10:00:03.000Z',
       type: 'event_msg',
-      payload: { type: 'task_complete', turn_id: 'second' },
+      payload: {type: 'task_complete', turn_id: 'second'},
     },
   ];
   assert.deepEqual(extractTurnTimings(events), [
@@ -61,8 +64,10 @@ test('pairs interleaved turn events by ID and excludes idle gaps between turns',
   ]);
 });
 
-test('measurement command accepts valid CSV and rejects invalid timing and unaudited ID aliases', (context) => {
-  const fixtureDirectory = mkdtempSync(join(tmpdir(), 'aeki-measurement-test-'));
+test('measurement command accepts valid CSV and rejects invalid timing and unaudited ID aliases', context => {
+  const fixtureDirectory = mkdtempSync(
+    join(tmpdir(), 'aeki-measurement-test-'),
+  );
   const fixturePath = join(fixtureDirectory, 'measurements.csv');
   context.after(() => {
     unlinkSync(fixturePath);
@@ -70,21 +75,30 @@ test('measurement command accepts valid CSV and rejects invalid timing and unaud
   });
   const fields = Object.keys(completedMeasurement);
   function writeFixture(row) {
-    const quote = (value) => `"${String(value).replaceAll('"', '""')}"`;
+    const quote = value => `"${String(value).replaceAll('"', '""')}"`;
     writeFileSync(
       fixturePath,
-      [fields.map(quote).join(','), fields.map((field) => quote(row[field])).join(',')].join(
-        '\r\n',
-      ),
+      [
+        fields.map(quote).join(','),
+        fields.map(field => quote(row[field])).join(','),
+      ].join('\r\n'),
     );
   }
-  const commandPath = new URL('./check-engineering-measurements.mjs', import.meta.url);
+  const commandPath = new URL(
+    './check-engineering-measurements.mjs',
+    import.meta.url,
+  );
   const runMeasurementCheck = () =>
-    spawnSync(process.execPath, [fileURLToPath(commandPath), fixturePath], { encoding: 'utf8' });
-  writeFixture({ ...completedMeasurement, task: 'Check "quoted", multiline\nmeasurement' });
+    spawnSync(process.execPath, [fileURLToPath(commandPath), fixturePath], {
+      encoding: 'utf8',
+    });
+  writeFixture({
+    ...completedMeasurement,
+    task: 'Check "quoted", multiline\nmeasurement',
+  });
   const validResult = runMeasurementCheck();
   assert.equal(validResult.status, 0, validResult.stderr);
-  writeFixture({ ...completedMeasurement, ended_at_utc: 'unknown' });
+  writeFixture({...completedMeasurement, ended_at_utc: 'unknown'});
   const invalidResult = runMeasurementCheck();
   assert.equal(invalidResult.status, 1);
   assert.match(invalidResult.stderr, /S48.*ended_at_utc/);
@@ -97,7 +111,11 @@ test('measurement command accepts valid CSV and rejects invalid timing and unaud
   const invalidDateResult = runMeasurementCheck();
   assert.equal(invalidDateResult.status, 1);
   assert.match(invalidDateResult.stderr, /S48.*started_at_utc/);
-  writeFixture({ ...completedMeasurement, step: 'S1', technical_retry_count: 'not audited' });
+  writeFixture({
+    ...completedMeasurement,
+    step: 'S1',
+    technical_retry_count: 'not audited',
+  });
   const aliasResult = runMeasurementCheck();
   assert.equal(aliasResult.status, 1);
   assert.match(aliasResult.stderr, /S1.*technical_retry_count/);
@@ -105,22 +123,30 @@ test('measurement command accepts valid CSV and rejects invalid timing and unaud
 
 test('rejects a completed measurement with an unknown completion instead of treating it as zero', () => {
   const result = validateMeasurementRows([
-    { ...completedMeasurement, ended_at_utc: 'unknown', assistant_turn_wall_seconds: 'unknown' },
+    {
+      ...completedMeasurement,
+      ended_at_utc: 'unknown',
+      assistant_turn_wall_seconds: 'unknown',
+    },
   ]);
-  assert.ok(result.errors.some((error) => error.includes('S48') && error.includes('ended_at_utc')));
+  assert.ok(
+    result.errors.some(
+      error => error.includes('S48') && error.includes('ended_at_utc'),
+    ),
+  );
 });
 
 test('rejects contradictory duration and reversed timestamps, but accepts independently known elapsed time', () => {
   assert.deepEqual(validateMeasurementRows([completedMeasurement]).errors, []);
   assert.ok(
     validateMeasurementRows([
-      { ...completedMeasurement, assistant_turn_wall_seconds: '0' },
-    ]).errors.some((error) => error.includes('duration')),
+      {...completedMeasurement, assistant_turn_wall_seconds: '0'},
+    ]).errors.some(error => error.includes('duration')),
   );
   assert.ok(
     validateMeasurementRows([
-      { ...completedMeasurement, ended_at_utc: '2026-10-03T09:59:59.000Z' },
-    ]).errors.some((error) => error.includes('precedes')),
+      {...completedMeasurement, ended_at_utc: '2026-10-03T09:59:59.000Z'},
+    ]).errors.some(error => error.includes('precedes')),
   );
 });
 
@@ -132,9 +158,9 @@ test('requires an audited retry count, skill evidence and turn ID for new measur
     ['turn_id', 'unknown'],
   ]) {
     assert.ok(
-      validateMeasurementRows([{ ...completedMeasurement, [field]: value }]).errors.some((error) =>
-        error.includes(field),
-      ),
+      validateMeasurementRows([
+        {...completedMeasurement, [field]: value},
+      ]).errors.some(error => error.includes(field)),
       field,
     );
   }
@@ -152,7 +178,7 @@ test('keeps historical missing evidence visible and permits only the final row t
   };
   const result = validateMeasurementRows([historical]);
   assert.deepEqual(result.errors, []);
-  assert.ok(result.warnings.some((warning) => warning.includes('S14')));
+  assert.ok(result.warnings.some(warning => warning.includes('S14')));
   const active = {
     ...completedMeasurement,
     status: 'in progress',
@@ -161,9 +187,10 @@ test('keeps historical missing evidence visible and permits only the final row t
   };
   assert.deepEqual(validateMeasurementRows([active]).errors, []);
   assert.ok(
-    validateMeasurementRows([active, { ...completedMeasurement, step: 'S49' }]).errors.some(
-      (error) => error.includes('in progress'),
-    ),
+    validateMeasurementRows([
+      active,
+      {...completedMeasurement, step: 'S49'},
+    ]).errors.some(error => error.includes('in progress')),
   );
 });
 
@@ -171,7 +198,7 @@ test('never invents an end for an interrupted turn and rejects conflicting timin
   const started = {
     timestamp: '2026-10-03T10:00:00.000Z',
     type: 'event_msg',
-    payload: { type: 'task_started', turn_id: 'unfinished' },
+    payload: {type: 'task_started', turn_id: 'unfinished'},
   };
   assert.deepEqual(extractTurnTimings([started]), [
     {
@@ -182,13 +209,17 @@ test('never invents an end for an interrupted turn and rejects conflicting timin
     },
   ]);
   assert.throws(
-    () => extractTurnTimings([started, { ...started, timestamp: '2026-10-03T10:00:01.000Z' }]),
+    () =>
+      extractTurnTimings([
+        started,
+        {...started, timestamp: '2026-10-03T10:00:01.000Z'},
+      ]),
     /Conflicting timing/,
   );
   assert.throws(
     () =>
       extractTurnTimings([
-        { ...started, payload: { type: 'task_complete', turn_id: 'unfinished' } },
+        {...started, payload: {type: 'task_complete', turn_id: 'unfinished'}},
       ]),
     /no start/,
   );
@@ -196,14 +227,15 @@ test('never invents an end for an interrupted turn and rejects conflicting timin
 
 test('rejects missing start, duplicate task IDs and an empty measurement log', () => {
   assert.ok(
-    validateMeasurementRows([{ ...completedMeasurement, started_at_utc: 'unknown' }]).errors.some(
-      (error) => error.includes('started_at_utc'),
-    ),
+    validateMeasurementRows([
+      {...completedMeasurement, started_at_utc: 'unknown'},
+    ]).errors.some(error => error.includes('started_at_utc')),
   );
   assert.ok(
-    validateMeasurementRows([completedMeasurement, completedMeasurement]).errors.some((error) =>
-      error.includes('unique'),
-    ),
+    validateMeasurementRows([
+      completedMeasurement,
+      completedMeasurement,
+    ]).errors.some(error => error.includes('unique')),
   );
   assert.ok(validateMeasurementRows([]).errors.length > 0);
 });
@@ -211,10 +243,10 @@ test('rejects missing start, duplicate task IDs and an empty measurement log', (
 test('new records cannot inherit historical retry exemptions through aliases or reused low IDs', () => {
   for (const step of ['S1', 'S00', 'S001', 'S01', 'S14']) {
     const validation = validateMeasurementRows([
-      { ...completedMeasurement, step, technical_retry_count: 'not audited' },
+      {...completedMeasurement, step, technical_retry_count: 'not audited'},
     ]);
     assert.ok(
-      validation.errors.some((error) => error.includes('technical_retry_count')),
+      validation.errors.some(error => error.includes('technical_retry_count')),
       step,
     );
   }
@@ -228,7 +260,9 @@ test('rejects normalized impossible calendar dates while accepting actual leap d
     assistant_turn_wall_seconds: '2',
   };
   assert.ok(
-    validateMeasurementRows([invalid]).errors.some((error) => error.includes('started_at_utc')),
+    validateMeasurementRows([invalid]).errors.some(error =>
+      error.includes('started_at_utc'),
+    ),
   );
   const valid = {
     ...completedMeasurement,
@@ -243,7 +277,7 @@ test('rejects normalized impossible calendar dates while accepting actual leap d
         {
           timestamp: invalid.started_at_utc,
           type: 'event_msg',
-          payload: { type: 'task_started', turn_id: 'invalid-date' },
+          payload: {type: 'task_started', turn_id: 'invalid-date'},
         },
       ]),
     /Invalid timing/,
