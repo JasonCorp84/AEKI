@@ -124,3 +124,9 @@ Useful initial measurements:
 The existing Linear project also tracks token/active engineering hour, validated ECU/hour, token/validated ECU, rework ratio and exploration-to-convergence ratio. This baseline does **not** calculate them: tokens, active engineering time, validated ECU and activity classification are not yet sufficiently instrumented. Do not substitute assistant wall time for active engineering time or invent token costs.
 
 An initial hypothesis is that providing a concrete visual reference before diagram generation reduces user-requested revisions. The current session provides one observation, not a controlled comparison or proof. A future experiment needs comparable tasks, stable acceptance criteria and several observations.
+
+S63 implements the explicitly approved issue #3 Mikado plan on a separate CI branch. See [built browser CI evidence](sessions/2026-10-05-issue-3-browser-ci.md) for actual experiments, retry classification and remote verification. The current turn duration remains pending its completion event; no human active time is inferred.
+
+S64 resolves the updated main merge for issue #3 using the resolving-merge-conflicts skill. See [merge resolution evidence](sessions/2026-10-05-issue-3-merge-resolution.md). Both dashboard and CI records are retained; S63 completion is reconciled to 3380.153 seconds from its actual event.
+
+S65 reviews the complete approved PR #18 diff using independent Standards and Spec axes. See [review evidence](sessions/2026-10-05-issue-3-review.md). Two reproduced Spec defects remain open; all eight runner regressions pass with the required Windows process permissions. No issue completion or application fix is implied.
