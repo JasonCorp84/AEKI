@@ -79,6 +79,12 @@ The timing CSV is a snapshot extracted from the local Codex event log. It stores
 
 ## Comparing Techniques
 
+Latest UI exploration: S62 — engineering dashboard prototype, with three read-only variants, five proposed task histories, actual browser interaction checks and explicitly provisional cause interpretations. See the [prototype instructions](../../apps/web/prototype/engineering-dashboard.README.md). Csaba accepted B; detailed current-conversation notes are retained locally under Git-ignored `.conversations/`.
+
+Dashboard discovery: S61 — first decision frontier, using `grill-with-docs`, `grilling` and `domain-modeling`. Existing timing evidence is separated from proposed quality constructs. Detailed current-conversation records are local and Git-ignored. The deferred cross-project design task is [Linear BAL-16](https://linear.app/balogh-csaba/issue/BAL-16/design-c4-context-and-cross-project-ai-workflow-benchmarking), Backlog; current dashboard data remains CSV-based.
+
+Latest readiness review: [S60 — complete issue #2 review](sessions/2026-10-05-issue-2-review.md). Independent Standards and Spec reviews found no actionable defects in the confirmed diff; fresh contract, frontend, Nest and isolated PostgreSQL checks passed. Browser evidence was inspected rather than rerun. Issue status is unchanged.
+
 Latest quality-gate work: [S54 — CI, Git hooks and complete coverage](sessions/2026-10-04-ci-quality-gates.md), including approved coverage scope, actual Git-hook behavior, PostgreSQL verification and per-file coverage enforcement.
 
 Latest coverage correction: [S55 — reject empty instrumentation](sessions/2026-10-04-empty-coverage-instrumentation.md), with a real CLI RED/GREEN regression and compatibility verification for files without functions or branches.
@@ -120,3 +126,5 @@ The existing Linear project also tracks token/active engineering hour, validated
 An initial hypothesis is that providing a concrete visual reference before diagram generation reduces user-requested revisions. The current session provides one observation, not a controlled comparison or proof. A future experiment needs comparable tasks, stable acceptance criteria and several observations.
 
 S63 implements the explicitly approved issue #3 Mikado plan on a separate CI branch. See [built browser CI evidence](sessions/2026-10-05-issue-3-browser-ci.md) for actual experiments, retry classification and remote verification. The current turn duration remains pending its completion event; no human active time is inferred.
+
+S64 resolves the updated main merge for issue #3 using the resolving-merge-conflicts skill. See [merge resolution evidence](sessions/2026-10-05-issue-3-merge-resolution.md). Both dashboard and CI records are retained; S63 completion is reconciled to 3380.153 seconds from its actual event.

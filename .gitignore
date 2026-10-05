@@ -14,5 +14,5 @@ browser-services/
 Thumbs.db
 # Local teaching materials and learning state.
 /.teaching/
-# Private conversation evidence is not a project deliverable.
+# Local conversation records and design discussion.
 /.conversations/

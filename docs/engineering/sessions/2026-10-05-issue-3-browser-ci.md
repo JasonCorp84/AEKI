@@ -55,4 +55,4 @@ Removed the two temporary remote proof branches after verification. Local proof 
 
 ## Timing
 
-Turn ID: `01a10c49-e7ae-7f60-84fe-453fd2da534f`. Recorded start: `2026-10-05T13:38:52.615Z`. The completed-turn event does not exist until delivery, so its duration remains pending rather than fabricated. The CSV checkpoint records observable progress, not human active time.
+Turn ID: `01a10c49-e7ae-7f60-84fe-453fd2da534f`. Recorded start: `2026-10-05T13:38:52.615Z`. Recorded completion: `2026-10-05T14:35:12.768Z`. Reconciled during S64 from actual timing events: **3380.153 seconds**. The earlier delivery checkpoint records observable progress, not human active time or acceptance.
