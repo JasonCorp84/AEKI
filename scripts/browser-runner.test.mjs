@@ -70,30 +70,34 @@ test('failed startup still removes its owned project when database logs are unav
   );
 });
 
-test('interruption stops the real child before removing the owned database and returns failure', async () => {
-  const signals = new EventEmitter();
-  let child;
-  let wasChildStoppedAtCleanup = false;
-  const exitCode = await runBrowserTests([], {
-    artifactDirectory: mkdtempSync(join(tmpdir(), 'aeki-browser-interrupt-')),
-    signals,
-    runCommand: (_command, arguments_) => {
-      if (arguments_.includes('down'))
-        wasChildStoppedAtCleanup =
-          child.exitCode !== null || child.signalCode !== null;
-      return '';
-    },
-    applyMigrations: async () => {},
-    startProcess: () => {
-      child = spawn(process.execPath, ['-e', 'setInterval(()=>{},1000)']);
-      child.once('spawn', () => signals.emit('SIGTERM'));
-      return child;
-    },
-  });
-  assert.equal(exitCode, 1);
-  assert.equal(wasChildStoppedAtCleanup, true);
-  assert.equal(signals.listenerCount('SIGTERM'), 0);
-});
+test(
+  'interruption stops the real child before removing the owned database and returns failure',
+  {timeout: 5000},
+  async () => {
+    const signals = new EventEmitter();
+    let child;
+    let wasChildStoppedAtCleanup = false;
+    const exitCode = await runBrowserTests([], {
+      artifactDirectory: mkdtempSync(join(tmpdir(), 'aeki-browser-interrupt-')),
+      signals,
+      runCommand: (_command, arguments_) => {
+        if (arguments_.includes('down'))
+          wasChildStoppedAtCleanup =
+            child.exitCode !== null || child.signalCode !== null;
+        return '';
+      },
+      applyMigrations: async () => {},
+      startProcess: () => {
+        child = spawn(process.execPath, ['-e', 'setInterval(()=>{},1000)']);
+        child.once('spawn', () => signals.emit('SIGTERM'));
+        return child;
+      },
+    });
+    assert.equal(exitCode, 1);
+    assert.equal(wasChildStoppedAtCleanup, true);
+    assert.equal(signals.listenerCount('SIGTERM'), 0);
+  },
+);
 
 test('a browser deadline stops a real hung child and a cleanup failure cannot produce success', async () => {
   const artifactDirectory = mkdtempSync(
