@@ -37,6 +37,8 @@ jobs:
         run: npx --no-install playwright install --with-deps --no-shell chromium
       - name: Verify the built application in a real browser
         run: npm run test:browser
+      - name: Verify contracted search fixtures and production isolation
+        run: npm run test:search:browser
       - name: Preserve browser and service failure evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

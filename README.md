@@ -1,6 +1,6 @@
 # AEKI
 
-AEKI is a product discovery and stock-reservation practice application using synthetic data. Its implemented foundation is a React → HTTP → NestJS → PostgreSQL journey with separate API liveness and database readiness. Product search remains later scope.
+AEKI is a product discovery and stock-reservation practice application using synthetic data. Its implemented foundation is a React → HTTP → NestJS → PostgreSQL journey with separate API liveness and database readiness. The `/search` page implements the A catalog layout through contracted development HTTP fixtures; the real Nest product endpoint remains later scope.
 
 ## Quick start
 
@@ -16,7 +16,9 @@ npm run dev
 
 In PowerShell, use `Copy-Item .env.example .env` for the copy step. Preserve an existing `.env` and add missing variables instead of overwriting it.
 
-Open **http://127.0.0.1:5173/**. Nest serves **http://127.0.0.1:3000/health** and `/readiness`. Vite proxies `/api/` to Nest; the browser uses the real RTK Query client. No mock server or fallback runs in the application.
+Open **http://127.0.0.1:5173/**. Nest serves **http://127.0.0.1:3000/health** and `/readiness`. Vite proxies `/api/` to Nest; the browser uses the real RTK Query client. Ordinary development and production do not enable product fixtures.
+
+To explore product search without starting the backend, run `npm run dev:search` and open **http://127.0.0.1:5173/search**. Try `LINDEN`, `00012345` or `0`. This explicit development mode displays its fixture banner and uses MSW at the HTTP boundary. See [search fixtures and verification](docs/engineering/product-search-fixtures.md) for startup, mode isolation and browser checks.
 
 `DATABASE_URL` is required. Missing or malformed configuration fails API startup with a sanitized, actionable message. A valid URL pointing at an unavailable database allows startup and yields not-ready. If changing the API port, also update `VITE_API_PROXY_TARGET`. `VITE_*` values become public browser configuration: never put secrets in them. Example database credentials are disposable local development values.
 

@@ -16,6 +16,9 @@ await SwaggerParser.validate(fileURLToPath(openApiSpecificationUrl));
 const openApiSpecification = parse(
   await readFile(openApiSpecificationUrl, 'utf8'),
 );
+const resolvedSpecification = await SwaggerParser.dereference(
+  structuredClone(openApiSpecification),
+);
 const outputArgumentIndex = process.argv.indexOf('--output');
 const generatedContractsDirectoryUrl =
   outputArgumentIndex === -1
@@ -25,6 +28,7 @@ const generatedContractContents = {
   'openapi.ts': astToString(await openapiTS(openApiSpecificationUrl)),
   'health-schema.ts': `// Generated from OpenAPI. Do not edit.\nexport const healthSchema = ${JSON.stringify(openApiSpecification.components.schemas.HealthResponse, null, 2)};\n`,
   'readiness-schema.ts': `// Generated from OpenAPI. Do not edit.\nexport const readinessSchema = ${JSON.stringify({oneOf: [openApiSpecification.components.schemas.ReadyResponse, openApiSpecification.components.schemas.NotReadyResponse]}, null, 2)};\n`,
+  'product-search-schema.ts': `// Generated from OpenAPI. Do not edit.\nexport const productSearchSchema = ${JSON.stringify(resolvedSpecification.components.schemas.ProductSearchResponse, null, 2)};\nexport const productSearchErrorSchema = ${JSON.stringify(resolvedSpecification.components.schemas.ProductSearchErrorResponse, null, 2)};\n`,
 };
 for (const [generatedFileName, generatedFileContent] of Object.entries(
   generatedContractContents,
