@@ -79,6 +79,12 @@ The timing CSV is a snapshot extracted from the local Codex event log. It stores
 
 ## Comparing Techniques
 
+Latest UI exploration: S62 — engineering dashboard prototype, with three read-only variants, five proposed task histories, actual browser interaction checks and explicitly provisional cause interpretations. See the [prototype instructions](../../apps/web/prototype/engineering-dashboard.README.md). Csaba accepted B; detailed current-conversation notes are retained locally under Git-ignored `.conversations/`.
+
+Dashboard discovery: S61 — first decision frontier, using `grill-with-docs`, `grilling` and `domain-modeling`. Existing timing evidence is separated from proposed quality constructs. Detailed current-conversation records are local and Git-ignored. The deferred cross-project design task is [Linear BAL-16](https://linear.app/balogh-csaba/issue/BAL-16/design-c4-context-and-cross-project-ai-workflow-benchmarking), Backlog; current dashboard data remains CSV-based.
+
+Latest readiness review: [S60 — complete issue #2 review](sessions/2026-10-05-issue-2-review.md). Independent Standards and Spec reviews found no actionable defects in the confirmed diff; fresh contract, frontend, Nest and isolated PostgreSQL checks passed. Browser evidence was inspected rather than rerun. Issue status is unchanged.
+
 Latest quality-gate work: [S54 — CI, Git hooks and complete coverage](sessions/2026-10-04-ci-quality-gates.md), including approved coverage scope, actual Git-hook behavior, PostgreSQL verification and per-file coverage enforcement.
 
 Latest coverage correction: [S55 — reject empty instrumentation](sessions/2026-10-04-empty-coverage-instrumentation.md), with a real CLI RED/GREEN regression and compatibility verification for files without functions or branches.

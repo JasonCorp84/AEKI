@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AEKI • Engineering Observatory — prototype</title>
+    <style>
+      :root {
+        --bg: #f4f6fa;
+        --surface: #fff;
+        --ink: #182437;
+        --muted: #5b687c;
+        --line: #dce3ed;
+        --accent: #3159d5;
+        --good: #126447;
+        --warn: #986019;
+        --bad: #ae3847;
+        --radius: 16px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font:
+          15px/1.55 system-ui,
+          sans-serif;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      a {
+        color: var(--accent);
+      }
+      header {
+        background: #15223b;
+        color: white;
+        padding: 28px max(24px, calc((100vw - 1380px) / 2));
+      }
+      header h1 {
+        font-size: 30px;
+        letter-spacing: -1px;
+        margin: 4px 0;
+      }
+      header p {
+        color: #bcc9e2;
+        margin: 0;
+        max-width: 900px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 750;
+      }
+      main {
+        max-width: 1428px;
+        margin: auto;
+        padding: 24px 24px 110px;
+      }
+      .filters {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: end;
+        margin: 0 0 22px;
+      }
+      .filters label {
+        font-size: 12px;
+        font-weight: 650;
+        display: grid;
+        gap: 5px;
+      }
+      .filters input {
+        width: 320px;
+      }
+      .filters input,
+      .filters select {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        padding: 9px 12px;
+        color: var(--ink);
+      }
+      .filters button,
+      .secondary {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        padding: 9px 14px;
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 22px;
+      }
+      .metric {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 18px;
+      }
+      .metric strong {
+        display: block;
+        font-size: 31px;
+        letter-spacing: -1px;
+      }
+      .muted,
+      small {
+        color: var(--muted);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(360px, 1fr);
+        gap: 20px;
+        align-items: start;
+      }
+      .panel {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+        margin-bottom: 18px;
+      }
+      .panel-heading {
+        padding: 20px;
+        border-bottom: 1px solid var(--line);
+      }
+      h2 {
+        font-size: 19px;
+        margin: 0 0 5px;
+      }
+      h3 {
+        font-size: 15px;
+        margin: 0 0 6px;
+      }
+      .panel-heading p {
+        margin: 0;
+      }
+      .task-button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        background: white;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 18px 20px;
+      }
+      .task-button:hover {
+        background: #f4f7ff;
+      }
+      .task-button.selected {
+        background: #edf2ff;
+        box-shadow: inset 4px 0 var(--accent);
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .tag {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: 5px;
+        padding: 3px 7px;
+        background: #edf1f7;
+        color: #43516a;
+        margin: 2px 3px 2px 0;
+      }
+      .tag.good {
+        background: #e4f4eb;
+        color: var(--good);
+      }
+      .tag.warn {
+        background: #fff0d9;
+        color: var(--warn);
+      }
+      .tag.bad {
+        background: #ffe8ed;
+        color: var(--bad);
+      }
+      .bar {
+        height: 6px;
+        background: #e7ecf7;
+        border-radius: 4px;
+        margin: 12px 0 5px;
+      }
+      .bar span {
+        display: block;
+        height: 100%;
+        background: var(--accent);
+        border-radius: 4px;
+      }
+      .detail {
+        padding: 22px;
+      }
+      .detail section {
+        margin: 20px 0;
+      }
+      .callout {
+        border-left: 3px solid #d89932;
+        background: #fff8ea;
+        padding: 12px 15px;
+        font-size: 13px;
+      }
+      .prompt {
+        background: #f3f5fa;
+        border-radius: 10px;
+        padding: 14px;
+        white-space: pre-wrap;
+        margin: 8px 0;
+      }
+      .prompt-card {
+        background: #eef0ff;
+        border: 1px solid #c8cff8;
+        border-left: 4px solid #5965c7;
+        border-radius: 10px;
+        padding: 14px;
+        margin-bottom: 16px;
+        color: #263567;
+      }
+      .prompt-card h3 {
+        color: #354399;
+        margin-bottom: 10px;
+      }
+      .prompt-card blockquote {
+        margin: 0 0 10px;
+        white-space: pre-wrap;
+        font-size: 14px;
+      }
+      .prompt-card small {
+        color: #4d5b83;
+      }
+      .context-card {
+        background: #f6f3ff;
+        border: 1px solid #dcd2f2;
+        border-left: 4px solid #9272be;
+        border-radius: 10px;
+        padding: 14px;
+        margin-top: 12px;
+        color: #3d3155;
+      }
+      .context-card h3 {
+        color: #654b88;
+      }
+      .timeline {
+        list-style: none;
+        padding: 0;
+      }
+      .timeline li {
+        position: relative;
+        border-left: 2px solid var(--line);
+        padding: 0 0 20px 18px;
+        margin-left: 5px;
+      }
+      .timeline li:before {
+        content: '';
+        position: absolute;
+        left: -5px;
+        top: 6px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .timeline strong {
+        display: block;
+      }
+      .timeline p {
+        margin: 3px 0;
+        font-size: 13px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 13px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+      th {
+        background: #f5f7fb;
+        color: var(--muted);
+      }
+      td button {
+        background: none;
+        border: 0;
+        color: var(--accent);
+        font-weight: 650;
+        text-align: left;
+        padding: 0;
+      }
+      .table-wrap {
+        overflow: auto;
+      }
+      .matrix-layout .panel {
+        border-radius: 8px;
+      }
+      .matrix-layout .detail {
+        columns: 2;
+        column-gap: 28px;
+      }
+      .matrix-layout .detail section {
+        break-inside: avoid;
+      }
+      .investigation-layout {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        gap: 20px;
+      }
+      .investigation-layout .task-button {
+        padding: 14px;
+      }
+      .investigation-layout .detail {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 28px;
+      }
+      .investigation-layout .detail > .wide {
+        grid-column: 1/-1;
+      }
+      .trace-step {
+        background: #f5f7fc;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 16px;
+        margin-bottom: 10px;
+      }
+      .trace-step .eyebrow {
+        color: var(--accent);
+      }
+      .source {
+        font-size: 12px;
+      }
+      .switcher {
+        position: fixed;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        background: #14233c;
+        color: white;
+        border-radius: 40px;
+        padding: 10px 14px;
+        box-shadow: 0 10px 35px #14233c40;
+        z-index: 10;
+        max-width: 95vw;
+        white-space: nowrap;
+      }
+      .switcher button {
+        border: 0;
+        border-radius: 50%;
+        background: #314766;
+        color: white;
+        width: 34px;
+        height: 34px;
+      }
+      .notice {
+        font-size: 12px;
+        color: var(--muted);
+        margin: 18px 0;
+      }
+      .empty {
+        padding: 30px;
+        color: var(--muted);
+      }
+      #state {
+        font-size: 11px;
+        color: var(--muted);
+        white-space: pre-wrap;
+      }
+      .skill-summary {
+        padding: 16px 20px;
+      }
+      .skill-summary .row {
+        margin-bottom: 9px;
+      }
+      .chart-caption {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      @media (max-width: 900px) {
+        .grid,
+        .investigation-layout {
+          grid-template-columns: 1fr;
+        }
+        .metrics {
+          grid-template-columns: 1fr 1fr;
+        }
+        .matrix-layout .detail {
+          columns: 1;
+        }
+        .investigation-layout .detail {
+          display: block;
+        }
+        header {
+          padding: 22px;
+        }
+        .filters input {
+          width: min(320px, 85vw);
+        }
+        main {
+          padding: 18px 14px 110px;
+        }
+        th,
+        td {
+          padding: 10px;
+        }
+        .switcher {
+          font-size: 12px;
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Three structurally different read-only dashboard variants on one throwaway route. -->
+    <header>
+      <div class="eyebrow">AEKI / AI-assisted engineering practice</div>
+      <h1>What worked. What needs investigation.</h1>
+      <p>
+        Trace skills and prompt excerpts to observed results, then follow
+        problems back to evidence. Five reconstructed tasks — grouping and cause
+        hypotheses await your review.
+      </p>
+    </header>
+    <main>
+      <div class="filters">
+        <label
+          >Find a task, prompt or observed event<input
+            id="search"
+            placeholder="Try: diagram, Docker, coverage…" /></label
+        ><label
+          >Applied skill<select id="skill">
+            <option value="all">All skills</option>
+          </select></label
+        ><label
+          >Observed outcome<select id="outcome">
+            <option value="all">All outcomes</option>
+            <option value="correction">Correction observed</option>
+            <option value="verified">Verification passed</option>
+            <option value="direction">Direction changed</option>
+          </select></label
+        ><button id="reset">Reset filters</button>
+      </div>
+      <div id="content"></div>
+      <p class="notice">
+        PROTOTYPE · Static local snapshot · No telemetry, persistence or
+        automatic cause attribution · Durations are summed assistant-turn wall
+        time, including tools and waiting; not human effort. Expected TDD RED is
+        not failure or rework.
+      </p>
+      <details>
+        <summary class="muted">Current view state / data provenance</summary>
+        <pre id="state"></pre>
+      </details>
+    </main>
+    <nav class="switcher" aria-label="Prototype variants">
+      <button id="previous" aria-label="Previous variant">←</button
+      ><span id="variant-label"></span
+      ><button id="next" aria-label="Next variant">→</button>
+    </nav>
+    <script>
+      const taskDefinitions = [
+        {
+          id: 'diagram',
+          context:
+            'Architecture documentation task · no ticket mapping established',
+          intendedOutcome:
+            'Make the backend component boundaries and request/data paths legible, including visible arrowheads in the exported viewer.',
+          contextUrl: '/docs/architecture/03-components.md',
+          contextLinkLabel: 'Component documentation',
+          title: 'Make the component data flow readable',
+          steps: ['S20', 'S23', 'S24', 'S25', 'S26'],
+          outcome: 'correction',
+          badge: '2 quality corrections documented',
+          prompt:
+            '“Implementald ugy hogy olvashato legyen”\n“Ilyen formatumban szeretnem. Az a fontos elso korben hogy hogyan aramlik az adat”',
+          promptNote:
+            'User prompt excerpts from the conversation; S24 / S25. S25 also included a reference image. Excerpts are not complete prompts.',
+          evidence: '2026-10-01-aeki.md',
+          result:
+            'Readability and arrow-contrast corrections were documented. The reference-image request changed the format/scope; it is not automatically classified as rework.',
+          problem:
+            'The diagram was hard to follow; arrows were later invisible in the user’s viewer.',
+          trigger:
+            'Reported layout/readability mismatch, followed by viewer-specific arrow contrast.',
+          hypothesis:
+            'Possible missed acceptance check: exported arrow visibility in the user’s viewer. Reference images clarified the desired flow, but do not establish a causal skill benefit.',
+          detection:
+            'Assistant preview inspection did not establish visibility in the user’s viewer.',
+          action:
+            'Proposed: agree legibility and export checks before the next diagram.',
+          followup:
+            'Not measured. Compare similar future diagrams; do not claim prevention has succeeded.',
+        },
+        {
+          id: 'ui',
+          context:
+            'Pre-implementation UI exploration · later input to React ticket #4',
+          intendedOutcome:
+            'Explore three catalog layouts and record the selected visual direction; B was initially chosen, then explicitly replaced by A.',
+          contextUrl: '/docs/planning/react-ui-implementation-plan.md',
+          contextLinkLabel: 'React implementation plan',
+          title: 'Explore the search UI and choose a direction',
+          steps: ['S31', 'S32', 'S37'],
+          outcome: 'direction',
+          badge: 'B → A scope change',
+          prompt:
+            '“[$prototype] UI”\n“A B variaciot valasztom”\n“Terjunk at megis az A prototipusra.”',
+          promptNote:
+            'User conversation excerpts; prototype intake precedes the measured S31 continuation. The entire intake is not included in this task total.',
+          evidence: '2026-10-01-ui-direction-a.md',
+          result:
+            'Three alternatives were produced. B was selected, then A explicitly replaced it. Existing issues were updated without duplicating the backlog.',
+          problem:
+            'No implementation-quality failure is established by a direction change.',
+          trigger:
+            'An explicit user design choice superseded the previous choice.',
+          hypothesis:
+            'Unresolved: exploration preference changed. No evidence that poor planning or AI slop caused the switch.',
+          detection:
+            'Not applicable to a confirmed defect; this is scope/design evolution.',
+          action:
+            'Proposed: preserve the decision history and state the current direction.',
+          followup:
+            'Current A direction documented. No comparable skill effectiveness experiment.',
+        },
+        {
+          id: 'database',
+          context:
+            'Ticket #2 · Show PostgreSQL readiness through the running application',
+          intendedOutcome:
+            'Distinguish API liveness from database readiness, with bounded failure, retry/recovery, isolated migrations and real database verification.',
+          contextUrl: 'https://github.com/JasonCorp84/AEKI/issues/2',
+          contextLinkLabel: 'Open ticket #2',
+          title: 'Deliver PostgreSQL readiness',
+          steps: ['S44', 'S45', 'S46', 'S47', 'S60'],
+          outcome: 'verified',
+          badge: 'Real database + HTTP verified',
+          prompt:
+            '“Approved. implement it”\n“continue”\n“elinditottam a dockert a megfelelo imagel”',
+          promptNote:
+            'Conversation excerpts plus the accepted issue #2 Mikado plan. The brief depends on that earlier specification; these short prompts are not self-contained.',
+          evidence: '2026-10-03-postgresql-readiness-implementation.md',
+          result:
+            '40 tests and a real browser outage/recovery were recorded at implementation. The later S60 review passed 67 tests with no actionable #2 defect found; no new browser run in S60.',
+          problem:
+            'Execution was interrupted; database-test infrastructure needed changes.',
+          trigger:
+            'Approval-service quota and Docker availability interrupted verification. Restart changed a test port; tmpfs lost history.',
+          hypothesis:
+            'Documented prerequisites explain infrastructure changes. Individual planning responsibility is not established. Multiple skills were used together; contribution cannot be isolated.',
+          detection:
+            'Real outage/restart and migration checks exposed unstable test resources.',
+          action:
+            'Implemented: stable per-run port, owned persistent-within-run test volume, total query deadline.',
+          followup:
+            'Real PostgreSQL outage, timeout, recovery and teardown passed. Overall acceptance timestamp is not recorded.',
+        },
+        {
+          id: 'measurements',
+          context:
+            'Cross-cutting engineering measurement task · not the PostgreSQL feature itself',
+          intendedOutcome:
+            'Recover timing evidence and enforce truthful measurement records through tested event extraction, row validation and CLI failure behavior.',
+          contextUrl: '/docs/engineering/measurement-validation.md',
+          contextLinkLabel: 'Measurement requirements and validation policy',
+          title: 'Make engineering measurements trustworthy',
+          steps: ['S49', 'S50', 'S51', 'S52'],
+          outcome: 'correction',
+          badge: 'Validator defects reproduced + fixed',
+          prompt:
+            '“A meresi eredmenyek unknownok. Ennek mi az oka?”\n“Ez fontos hogy merjuk. Erre kulon tesztet szeretnek”\n“apply fixes”',
+          promptNote:
+            'Conversation excerpts, S49 / S50 / S52; the approved testing boundaries form part of the specification.',
+          evidence: '2026-10-04-code-review-fixes.md',
+          result:
+            'Review reproduced historical-ID exemption bypass and impossible calendar-date acceptance. Public-boundary regressions and validation fixes were recorded.',
+          problem:
+            'The validator accepted inputs that should violate the measurement policy.',
+          trigger:
+            'Aliases and low task IDs inherited historical exceptions; Date.parse normalized impossible dates.',
+          hypothesis:
+            'Possible missed boundary cases in the first validation design. The review demonstrates defects, not who was responsible for the omission.',
+          detection:
+            'Review probes exposed cases not covered by the initial suite.',
+          action:
+            'Implemented: frozen historical identities, canonical IDs and strict calendar validation; regression checks added.',
+          followup:
+            '41 non-Docker tests and build passed during the fixes. Docker crash blocked fresh DB checks at that checkpoint.',
+        },
+        {
+          id: 'coverage',
+          context:
+            'CI / coverage quality-gate task · related to ticket #3, not its complete delivery',
+          intendedOutcome:
+            'Enforce formatting and per-file complete coverage, verify actual Git hooks and fix the empty-instrumentation false positive.',
+          contextUrl: 'https://github.com/JasonCorp84/AEKI/issues/3',
+          contextLinkLabel: 'Related ticket #3',
+          title: 'Build CI and correct the coverage gate',
+          steps: ['S54', 'S55'],
+          outcome: 'correction',
+          badge: 'Coverage false positive fixed',
+          prompt:
+            '“pusholas elott pedig a prettiernek minden fileon futnia kell es at kell mennie. TDD-nel 100%os test coveraget varok kotelezoen.”\n“javitsd”',
+          promptNote:
+            'User conversation excerpts; the accepted design/testing boundaries preceded S54. “javitsd” is abbreviated here and refers to the review finding, not a standalone specification.',
+          evidence: '2026-10-04-empty-coverage-instrumentation.md',
+          result:
+            'Hooks and per-file gates were verified. Review found empty instrumentation could pass; the CLI regression then failed before the fix and passed after it.',
+          problem:
+            'An executable file with empty coverage maps could be reported as fully covered.',
+          trigger:
+            'No measured statements were treated like a valid zero-counter case.',
+          hypothesis:
+            'Possible missing measurement-completeness invariant. Four 100% percentages alone did not establish that executable statements were measured.',
+          detection:
+            'Initial gate lacked an explicit empty-instrumentation check.',
+          action:
+            'Implemented: require measured statements for inventoried executable files while allowing valid zero functions/branches.',
+          followup:
+            '95 tests and four 100% metrics for 29 executable sources passed. This is verification evidence, not proof of long-term code health.',
+        },
+      ];
+      let snapshot,
+        selectedTaskId = 'diagram';
+      const variants = ['A', 'B', 'C'];
+      const variantNames = {
+        A: 'Overview & drill-down',
+        B: 'Skill / prompt evidence matrix',
+        C: 'Cause investigation workspace',
+      };
+      const parameters = new URLSearchParams(location.search);
+      let activeVariant = variants.includes(parameters.get('variant'))
+        ? parameters.get('variant')
+        : 'B';
+      const escapeHtml = value =>
+        String(value).replace(
+          /[&<>"']/g,
+          character =>
+            ({
+              '&': '&amp;',
+              '<': '&lt;',
+              '>': '&gt;',
+              '"': '&quot;',
+              "'": '&#39;',
+            })[character],
+        );
+      const durationLabel = seconds => `${(seconds / 60).toFixed(1)} min`;
+      function taskRows(task) {
+        return snapshot.rows.filter(row => task.steps.includes(row.step));
+      }
+      function taskSeconds(task) {
+        return taskRows(task).reduce(
+          (sum, row) =>
+            sum +
+            (Number.isFinite(Number(row.assistant_turn_wall_seconds))
+              ? Number(row.assistant_turn_wall_seconds)
+              : 0),
+          0,
+        );
+      }
+      function taskSkills(task) {
+        return [
+          ...new Set(
+            taskRows(task).flatMap(row =>
+              row.skills_applied
+                .split(';')
+                .map(skill => skill.trim().replace(/\s*\([^)]*\)/g, '')),
+            ),
+          ),
+        ].filter(skill => !['None', 'None observed'].includes(skill));
+      }
+      function visibleTasks() {
+        const query = document.querySelector('#search').value.toLowerCase();
+        const skill = document.querySelector('#skill').value;
+        const outcome = document.querySelector('#outcome').value;
+        return taskDefinitions.filter(
+          task =>
+            (skill === 'all' || taskSkills(task).includes(skill)) &&
+            (outcome === 'all' || task.outcome === outcome) &&
+            `${task.title} ${task.context} ${task.intendedOutcome} ${task.prompt} ${task.result} ${task.problem} ${task.trigger}`
+              .toLowerCase()
+              .includes(query),
+        );
+      }
+      function evidenceLink(task) {
+        return `<a class="source" target="_blank" rel="noopener" href="/docs/engineering/sessions/${task.evidence}">Read the session evidence ↗</a>`;
+      }
+      function taskContext(task) {
+        return `<section class="context-card"><h3>Context for this prompt</h3><span class="tag">AEKI</span><p><strong>${escapeHtml(task.context)}</strong></p><p>${escapeHtml(task.intendedOutcome)}</p><a class="source" href="${task.contextUrl}" target="_blank" rel="noopener">${task.contextLinkLabel} ↗</a><p class="muted">Selected source turns: ${task.steps.join(' · ')}. Task grouping remains a reconstruction.</p></section>`;
+      }
+      function promptCard(task) {
+        return `<section class="prompt-card" aria-label="User prompt excerpts"><h3>User prompt · excerpts</h3><blockquote>${escapeHtml(task.prompt)}</blockquote></section>`;
+      }
+      function tags(task) {
+        return taskSkills(task)
+          .map(skill => `<span class="tag">${escapeHtml(skill)}</span>`)
+          .join('');
+      }
+      function taskList(tasks) {
+        const maxSeconds = Math.max(...tasks.map(taskSeconds), 1);
+        return tasks
+          .map(
+            task =>
+              `<button class="task-button ${selectedTaskId === task.id ? 'selected' : ''}" data-task="${task.id}"><div class="row"><h3>${task.title}</h3><strong>${durationLabel(taskSeconds(task))}</strong></div><span class="tag ${task.outcome === 'verified' ? 'good' : 'warn'}">${task.badge}</span><div class="bar"><span style="width:${(taskSeconds(task) / maxSeconds) * 100}%"></span></div><div>${tags(task)}</div><small>${task.steps.join(' · ')} · reconstructed task boundary</small></button>`,
+          )
+          .join('');
+      }
+      function investigation(task) {
+        return [
+          ['Problem & impact', task.problem],
+          ['Events / observed trigger', task.trigger],
+          ['Contributing causes — hypothesis', task.hypothesis],
+          ['Missed detection opportunity', task.detection],
+          ['Preventive change', task.action],
+          ['Outcome verification', task.followup],
+        ]
+          .map(
+            ([label, text], index) =>
+              `<div class="trace-step"><div class="eyebrow">${index + 1} / ${label}</div><p>${escapeHtml(text)}</p></div>`,
+          )
+          .join('');
+      }
+      function detail(task, traceFirst = false) {
+        if (!task)
+          return '<div class="empty">No tasks match these filters.</div>';
+        const rows = taskRows(task);
+        const numericRetryRows = rows.filter(row =>
+          /^\d+$/.test(row.technical_retry_count),
+        );
+        return `<div class="panel-heading"><div class="eyebrow">Task evidence / ${task.id}</div><h2>${task.title}</h2><span class="tag warn">Grouping and cause attribution: review pending</span></div><div class="detail"><section class="wide"><h3>Observed result</h3><p>${task.result}</p>${evidenceLink(task)}</section>${taskContext(task)}<section><h3>Prompt excerpt</h3><div class="prompt">${escapeHtml(task.prompt)}</div><small>${task.promptNote}</small></section><section><h3>Applied skills, not causal credit</h3>${tags(task)}<p class="muted">Used together across ${rows.length} turns. No controlled comparison, prompt version or individual skill effectiveness score.</p><p><strong>${durationLabel(taskSeconds(task))}</strong> measured turn time · numeric retries: ${numericRetryRows.length ? numericRetryRows.reduce((sum, row) => sum + Number(row.technical_retry_count), 0) : 'unknown'} across ${numericRetryRows.length}/${rows.length} audited rows. Unaudited rows are excluded, not zero.</p></section><section class="wide"><h3>${traceFirst ? 'Follow the causes' : 'Investigation chain'}</h3>${investigation(task)}</section><section class="wide"><h3>Source turn timeline</h3><ol class="timeline">${rows.map(row => `<li><strong>${row.step} · ${escapeHtml(row.task)}</strong><small>${new Date(row.started_at_utc).toLocaleString('en-GB', {timeZone: 'Europe/Budapest'})} Europe/Budapest · ${Number.isFinite(Number(row.assistant_turn_wall_seconds)) ? durationLabel(Number(row.assistant_turn_wall_seconds)) : 'Duration unknown'}</small><p>${escapeHtml(row.status)}</p><p>${escapeHtml(row.skill_evidence)}</p><small>Retry evidence: ${escapeHtml(row.technical_retry_count)} · skills: ${escapeHtml(row.skills_applied)}</small></li>`).join('')}</ol></section></div>`;
+      }
+      function render() {
+        const tasks = visibleTasks();
+        if (!tasks.some(task => task.id === selectedTaskId))
+          selectedTaskId = tasks[0]?.id;
+        const selectedTask = tasks.find(task => task.id === selectedTaskId);
+        const measured = snapshot.rows.filter(row =>
+          Number.isFinite(Number(row.assistant_turn_wall_seconds)),
+        );
+        const numericRetries = snapshot.rows.filter(row =>
+          /^\d+$/.test(row.technical_retry_count),
+        );
+        const metrics = `<div class="metrics"><div class="metric"><small>Reconstructed tasks shown</small><strong>${tasks.length} / 5</strong><small>Human grouping review pending</small></div><div class="metric"><small>Timing completeness • snapshot</small><strong>${measured.length}/${snapshot.rows.length}</strong><small>Not an outcome success rate</small></div><div class="metric"><small>Audited numeric retry rows</small><strong>${numericRetries.length}/${snapshot.rows.length}</strong><small>Missing does not mean zero</small></div><div class="metric"><small>Prompt / skill causal comparisons</small><strong>0</strong><small>No comparable controlled trials</small></div></div>`;
+        let body = '';
+        if (activeVariant === 'A') {
+          body = `${metrics}<div class="grid"><div><div class="panel"><div class="panel-heading"><h2>Follow the work, not just the clock</h2><p class="muted">Select a task to inspect prompt context, verification and causes.</p></div>${taskList(tasks) || '<div class="empty">No matching tasks.</div>'}</div><div class="callout">We can see where skills were used and what was observed. A shorter task is not automatically a better task, and a correction is not automatically AI slop.</div></div><div class="panel">${detail(selectedTask)}</div></div>`;
+        } else if (activeVariant === 'B') {
+          body = `<div class="matrix-layout"><div class="panel"><div class="panel-heading"><h2>Skill / prompt evidence matrix</h2><p class="muted">One row per reconstructed task; multiple skills share the same outcome.</p></div><div class="table-wrap"><table><thead><tr><th>Task / ticket context and prompt</th><th>Applied skills</th><th>What was observed</th><th>Time / confidence</th></tr></thead><tbody>${tasks.map(task => `<tr><td>${promptCard(task)}<button data-task="${task.id}">${task.title}</button>${taskContext(task)}</td><td>${tags(task)}</td><td><span class="tag ${task.outcome === 'verified' ? 'good' : 'warn'}">${task.badge}</span><p>${task.result}</p></td><td><strong>${durationLabel(taskSeconds(task))}</strong><p class="muted">Cause / grouping unconfirmed</p></td></tr>`).join('')}</tbody></table></div></div><div class="panel">${detail(selectedTask)}</div></div>`;
+        } else {
+          body = `<div class="investigation-layout"><aside class="panel"><div class="panel-heading"><h2>Case files</h2><p class="muted">Pick a problem or successful verification.</p></div>${taskList(tasks)}</aside><div><div class="callout">Investigation mode · Facts and hypothesis are separate. Planning responsibility and AI responsibility have not been assigned automatically.</div><div class="panel" style="margin-top:16px">${detail(selectedTask, true)}</div></div></div>`;
+        }
+        document.querySelector('#content').innerHTML = body;
+        document.querySelector('#variant-label').textContent =
+          `${activeVariant} · ${variantNames[activeVariant]}`;
+        document.querySelector('#state').textContent = JSON.stringify(
+          {
+            variant: activeVariant,
+            task: selectedTaskId,
+            skill: document.querySelector('#skill').value,
+            outcome: document.querySelector('#outcome').value,
+            query: document.querySelector('#search').value,
+            snapshot: snapshot.capturedAt,
+            source: snapshot.source,
+            rows: snapshot.rows.length,
+            taskGrouping: 'reconstruction pending review',
+            promptSource: 'conversation excerpts, not full prompt captures',
+            causeAttribution: 'hypotheses; no automatic acceptance',
+          },
+          null,
+          2,
+        );
+        document.querySelectorAll('[data-task]').forEach(button =>
+          button.addEventListener('click', () => {
+            selectedTaskId = button.dataset.task;
+            render();
+          }),
+        );
+      }
+      function cycleVariant(offset) {
+        activeVariant =
+          variants[
+            (variants.indexOf(activeVariant) + offset + variants.length) %
+              variants.length
+          ];
+        const url = new URL(location.href);
+        url.searchParams.set('variant', activeVariant);
+        history.replaceState({}, '', url);
+        render();
+      }
+      document.querySelector('#previous').onclick = () => cycleVariant(-1);
+      document.querySelector('#next').onclick = () => cycleVariant(1);
+      document.addEventListener('keydown', event => {
+        if (event.target.closest('input,textarea,select,[contenteditable]'))
+          return;
+        if (event.key === 'ArrowLeft') cycleVariant(-1);
+        if (event.key === 'ArrowRight') cycleVariant(1);
+      });
+      ['search', 'skill', 'outcome'].forEach(id =>
+        document
+          .querySelector(`#${id}`)
+          .addEventListener(id === 'search' ? 'input' : 'change', render),
+      );
+      document.querySelector('#reset').onclick = () => {
+        document.querySelector('#search').value = '';
+        document.querySelector('#skill').value = 'all';
+        document.querySelector('#outcome').value = 'all';
+        render();
+      };
+      fetch('/dashboard-data.json')
+        .then(response => response.json())
+        .then(data => {
+          snapshot = data;
+          [...new Set(taskDefinitions.flatMap(taskSkills))]
+            .sort()
+            .forEach(skill => {
+              const option = document.createElement('option');
+              option.value = skill;
+              option.textContent = skill;
+              document.querySelector('#skill').append(option);
+            });
+          render();
+        })
+        .catch(() => {
+          document.querySelector('#content').innerHTML =
+            '<div class="callout">Data could not load. Run npm run prototype:dashboard and open its local URL.</div>';
+        });
+    </script>
+  </body>
+</html>
