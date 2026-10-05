@@ -1,6 +1,6 @@
 # Issue #3 — Proposed Mikado Graph
 
-Status: explicitly approved; implementation in progress. Arrows mean **requires**; the goal is at the bottom. The graph records the accepted dependency plan; observed experiments are tracked in the [implementation session](../../engineering/sessions/2026-10-05-issue-3-browser-ci.md). See the [plan](../issue-3-mikado-plan.md).
+Status: implementation verified; delivery acceptance pending. Arrows mean **requires**; the goal is at the bottom. The graph records the accepted dependency plan; observed experiments are tracked in the [implementation session](../../engineering/sessions/2026-10-05-issue-3-browser-ci.md). See the [plan](../issue-3-mikado-plan.md).
 
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"primaryColor":"#eff6ff","primaryTextColor":"#111827","primaryBorderColor":"#2563eb","lineColor":"#1f2937","fontFamily":"Arial","fontSize":"16px"},"flowchart":{"curve":"linear","nodeSpacing":45,"rankSpacing":50}}}%%

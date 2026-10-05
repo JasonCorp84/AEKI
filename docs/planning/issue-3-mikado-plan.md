@@ -1,6 +1,6 @@
 # Mikado Plan — Issue #3: Real Application Journey in CI
 
-Date: 2026-10-05. Status: **explicitly approved by Csaba; implementation in progress**. Parent: [GitHub issue #3](https://github.com/JasonCorp84/AEKI/issues/3). Issue #2 was closed as completed at Csaba's request. Approval authorizes the scope and three test boundaries below; silence or elapsed time never counts as approval.
+Date: 2026-10-05. Status: **implementation verified; awaiting Csaba's delivery acceptance**. Parent: [GitHub issue #3](https://github.com/JasonCorp84/AEKI/issues/3). Issue #2 was closed as completed at Csaba's request. Approval authorized the scope and three test boundaries below; silence or elapsed time never counts as approval.
 
 ## Goal and observed baseline
 
@@ -60,28 +60,28 @@ Keep the existing 20-minute job limit initially; measure actual duration and rev
 
 ## Experiment and undo ledger
 
-No experiments have run in this planning task. After approval, attempt the smallest missing browser journey and record actual blockers and prerequisite edges. Keep successful prerequisites and intentional RED tests. Undo only unsuccessful experiment-owned changes; protect existing user work. Temporary negative-proof commits stay off main and are reverted/restored before the final passing candidate. Record failing and passing run URLs, not just a summary of intended behavior.
+The approved experiments are now recorded in the [implementation session](../engineering/sessions/2026-10-05-issue-3-browser-ci.md). Observed prerequisites included the full Chromium channel and keeping service logs outside Playwright's cleared output directory. Both temporary proof mutations remained off main; the implementation branch was restored and their remote branches removed after inspection. Local proof commits remain recoverable. No user-owned resources were removed.
 
-| Probe                                | Status  | Expected evidence                                                  |
-| ------------------------------------ | ------- | ------------------------------------------------------------------ |
-| Browser launch / compatible pin      | Planned | Actual launch and runtime/package metadata                         |
-| Built web to actual API              | Planned | Actual browser-visible responses, correct proxy/URL and migrations |
-| Outage and retry recovery            | Planned | Visible state changes with PG stopped/restarted                    |
-| Failing assertion / partial startup  | Planned | Nonzero exit, safe artifacts and owned cleanup                     |
-| Remote contract and browser failures | Planned | Failing Actions runs and browser failure artifacts                 |
-| Final clean reproduction             | Planned | Full checks, smoke, cleanup and final green Actions run            |
+| Probe                                | Status   | Expected evidence                                                                                                                     |
+| ------------------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Browser launch / compatible pin      | Verified | Playwright 1.63.0, Node 24.18.1; full Chromium on Windows and Linux                                                                   |
+| Built web to actual API              | Verified | Actual browser-visible responses, test-only proxy and migrations                                                                      |
+| Outage and retry recovery            | Verified | Real PG stop/restart, HTTP 503/200 and visible UI recovery                                                                            |
+| Failing assertion / partial startup  | Verified | Nonzero results, real subprocess/filesystem regressions and owned cleanup                                                             |
+| Remote contract and browser failures | Verified | Runs 37323688463 and 37323816953; screenshot, trace and logs inspected                                                                |
+| Final clean reproduction             | Verified | Independent locked install, final checks and smoke; green candidate run 37323547722; documentation follow-up check recorded in PR #18 |
 
 ## Exit conditions
 
 - [x] Csaba explicitly approves this plan and its public test boundaries.
-- [ ] Locked browser tooling and isolated stack launch are reproducible.
-- [ ] Committed browser checks verify real health/readiness, outage and recovery.
-- [ ] Startup/failure/shutdown preserve diagnostics and clean owned resources.
-- [ ] The existing required quality outcome includes browser smoke failures.
-- [ ] Safe logs/browser artifacts survive failed runs.
-- [ ] Intentional remote contract/browser failures and final green run are verified.
-- [ ] Existing checks, production builds and required coverage remain passing.
-- [ ] Local/CI commands, evidence limitations, timings, skills and retries are documented.
+- [x] Locked browser tooling and isolated stack launch are reproducible.
+- [x] Committed browser checks verify real health/readiness, outage and recovery.
+- [x] Startup/failure/shutdown preserve diagnostics and clean owned resources.
+- [x] The existing required quality outcome includes browser smoke failures.
+- [x] Safe logs/browser artifacts survive failed runs.
+- [x] Intentional remote contract/browser failures and the runtime candidate green run are verified; final documentation-only follow-up is checked in PR #18.
+- [x] Existing checks, production builds and required coverage remain passing.
+- [x] Local/CI commands, evidence limitations, timings, skills and retries are documented.
 - [ ] Csaba reviews the result before issue completion.
 
 ## Primary references
