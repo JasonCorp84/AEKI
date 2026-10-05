@@ -13,3 +13,5 @@ test-results/
 Thumbs.db
 # Local teaching materials and learning state.
 /.teaching/
+# Local conversation records and design discussion.
+/.conversations/
